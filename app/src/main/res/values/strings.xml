@@ -6,6 +6,8 @@
     <string name="title_add_product">Jual</string>
     <string name="title_sell_list">Daftar Jual</string>
     <string name="title_account">Akun</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="tab_sell_list_1">Produk</string>
+    <string name="tab_sell_list_2">Diminati</string>
+    <string name="tab_sell_list_3">Terjual</string>
 </resources>
