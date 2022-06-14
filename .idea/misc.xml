@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_sell_list.xml" value="0.184375" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/drawable-v24/tab_indicator.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/drawable/bg_tab.xml" value="0.104" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/drawable/bg_tabs.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/drawable/tab_indicator.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_sell_list.xml" value="0.39803439803439805" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_sell_list_interested.xml" value="0.2" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_sell_list_product.xml" value="0.23876404494382023" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_sell_list_sold.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/item_sell_list_interested.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/item_sell_list_product.xml" value="0.2537313432835821" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/menu/nav_menu.xml" value="0.1" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2115" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/drawable/ic_bell.xml" value="0.2115" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/drawable/ic_box.xml" value="0.197" />

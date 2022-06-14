@@ -9,4 +9,9 @@
         android:name="id.binar.fp.secondhand.ui.main.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_sell_list"
+        android:name="id.binar.fp.secondhand.ui.main.sell.SellListFragment"
+        android:label="fragment_sell_list"
+        tools:layout="@layout/fragment_sell_list" />
 </navigation>

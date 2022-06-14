@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
@@ -21,8 +24,22 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupBottomNavigationBar()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupBottomNavigationBar() {
+        val navView = binding.bottomNavigationView
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.main_nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navView.setupWithNavController(navController)
     }
 }
