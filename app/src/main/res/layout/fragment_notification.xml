@@ -5,8 +5,10 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".ui.main.notification.NotificationFragment"
-    android:padding="10dp">
+    tools:context=".ui.main.notification.list.NotificationFragment"
+    android:paddingTop="5dp"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
 
     <TextView
         android:id="@+id/tv_notifikasi"
