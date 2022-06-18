@@ -8,7 +8,6 @@
     tools:context=".ui.auth.RegisterFragment"
     android:padding="10dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_arrow_left"
         android:layout_width="24dp"
@@ -139,6 +138,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_daftar"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginTop="88dp"
