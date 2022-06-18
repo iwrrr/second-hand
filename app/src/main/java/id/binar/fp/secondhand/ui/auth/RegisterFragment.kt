@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.register
+package id.binar.fp.secondhand.ui.auth
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
