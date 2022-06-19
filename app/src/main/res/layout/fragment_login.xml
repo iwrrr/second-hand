@@ -61,7 +61,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_email">
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiet_login_nama"
+            android:id="@+id/tiet_login_email"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Contoh: johndee@gmail.com"/>
