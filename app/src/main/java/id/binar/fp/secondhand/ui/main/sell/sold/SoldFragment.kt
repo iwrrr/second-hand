@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.databinding.FragmentSellListSoldBinding
+import id.binar.fp.secondhand.databinding.FragmentSoldBinding
 
 @AndroidEntryPoint
-class SellListSoldFragment : Fragment() {
+class SoldFragment : Fragment() {
 
-    private var _binding: FragmentSellListSoldBinding? = null
+    private var _binding: FragmentSoldBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,7 +19,7 @@ class SellListSoldFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSellListSoldBinding.inflate(inflater, container, false)
+        _binding = FragmentSoldBinding.inflate(inflater, container, false)
         return binding.root
     }
 

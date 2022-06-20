@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.sell.interested
+package id.binar.fp.secondhand.ui.main.sell.product
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.databinding.FragmentSellListInterestedBinding
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
+import id.binar.fp.secondhand.databinding.FragmentProductBinding
+import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
 import id.binar.fp.secondhand.util.dummy.Product
 
 @AndroidEntryPoint
-class SellListInterestedFragment : Fragment() {
+class ProductFragment : Fragment() {
 
-    private var _binding: FragmentSellListInterestedBinding? = null
+    private var _binding: FragmentProductBinding? = null
     private val binding get() = _binding!!
 
-    private val interestedAdapter by lazy {
-        SellListInterestedAdapter {
+    private val productAdapter by lazy {
+        SellListProductAdapter {
             Toast.makeText(
                 requireContext(),
                 it.name,
@@ -34,7 +33,7 @@ class SellListInterestedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSellListInterestedBinding.inflate(inflater, container, false)
+        _binding = FragmentProductBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -50,21 +49,13 @@ class SellListInterestedFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvInterested.adapter = interestedAdapter
-        binding.rvInterested.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvInterested.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.VERTICAL
-            )
-        )
+        binding.rvProduct.adapter = productAdapter
+        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        interestedAdapter.submitList(setDummyData())
+        productAdapter.submitList(setDummyData())
     }
 
     private fun setDummyData(): ArrayList<Product> {
-
-
         val product1 = Product(
             1,
             "Jam Tangan Casio",
