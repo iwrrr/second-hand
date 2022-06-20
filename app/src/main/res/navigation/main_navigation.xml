@@ -3,15 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/navigation_home">
+    app:startDestination="@id/notificationFragment">
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="id.binar.fp.secondhand.ui.main.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/notificationFragment"
+        android:name="id.binar.fp.secondhand.ui.main.notification.list.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" >
+        <action
+            android:id="@+id/action_notificationFragment_to_notificationDetailFragment"
+            app:destination="@id/notificationDetailFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/navigation_sell_list"
-        android:name="id.binar.fp.secondhand.ui.main.sell.SellListFragment"
-        android:label="fragment_sell_list"
-        tools:layout="@layout/fragment_sell_list" />
+        android:id="@+id/notificationDetailFragment"
+        android:name="id.binar.fp.secondhand.ui.main.notification.list.detail.NotificationDetailFragment"
+        android:label="fragment_notification_detail"
+        tools:layout="@layout/fragment_notification_detail" />
 </navigation>
