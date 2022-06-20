@@ -15,6 +15,11 @@
         android:label="fragment_sell_list"
         tools:layout="@layout/fragment_sell_list" />
     <fragment
+        android:id="@+id/navigation_account"
+        android:name="id.binar.fp.secondhand.ui.main.profile.ProfileSettingFragment"
+        android:label="fragment_profile_setting"
+        tools:layout="@layout/fragment_profile_setting" />
+    <fragment
         android:id="@+id/bidderInfoFragment"
         android:name="id.binar.fp.secondhand.ui.main.sell.interested.bidder.BidderInfoFragment"
         android:label="fragment_bidder_info"
