@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.main.home.homeDetailProduct.homeDetailProductFragment">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_homeDetailBanner"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background"
+        android:scaleType="centerCrop"
+        />
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/btn_homeDetailBackButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_arrow_left"
+        android:scaleType="centerCrop"
+        android:foreground="?selectableItemBackground"
+        />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardviewJudulProduk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0.1dp"
+        app:strokeColor="@android:color/darker_gray"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            >
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailJudulProduk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Jam Tangan"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailKategoriProduk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Aksesoris"
+                android:maxLines="1"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="20dp"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/tv_homeDetailJudulProduk"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailHargaProduk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_homeDetailKategoriProduk"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Rp 250.000"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="5dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardviewNamaPenjual"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0.1dp"
+        app:strokeColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/cardviewJudulProduk"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            >
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_akunPenjual"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginHorizontal="20dp"
+                app:srcCompat="@drawable/ic_launcher_background"
+                android:theme="@style/ShapeAppearanceOverlay.App.CornerSize12"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailNamaPenjual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_akunPenjual"
+                android:text="Nama Penjual"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="5dp"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailDomisiliPenjual"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_homeDetailNamaPenjual"
+                app:layout_constraintStart_toEndOf="@id/iv_akunPenjual"
+                android:text="Kota"
+                android:maxLines="1"
+                android:textSize="12sp"
+                android:layout_marginHorizontal="20dp"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardviewDeskripsi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:strokeWidth="0.1dp"
+        app:strokeColor="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/cardviewNamaPenjual"
+        app:layout_constraintStart_toStartOf="parent"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            >
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailDeskripsiProduk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Deskripsi"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_homeDetailValueDeskripsiProduk"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Keterangan atau deskripsi barangnya"
+                android:textSize="12sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_homeDetailDeskripsiProduk"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_homeDetailTerbitkan"
+        android:layout_width="328dp"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Terbitkan"
+        android:textAllCaps="false"
+        android:layout_marginBottom="40dp"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="14sp"
+        app:cornerRadius="20dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+
+
