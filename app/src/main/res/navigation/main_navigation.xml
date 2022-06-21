@@ -20,7 +20,7 @@
         android:label="fragment_profile_setting"
         tools:layout="@layout/fragment_profile_setting" />
     <fragment
-        android:id="@+id/notificationFragment"
+        android:id="@+id/navigation_notification"
         android:name="id.binar.fp.secondhand.ui.main.notification.list.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification">
@@ -38,4 +38,9 @@
         android:name="id.binar.fp.secondhand.ui.main.sell.interested.bidder.BidderInfoFragment"
         android:label="fragment_bidder_info"
         tools:layout="@layout/fragment_bidder_info" />
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment"
+        android:label="fragment_profile_edit"
+        tools:layout="@layout/fragment_profile_edit" />
 </navigation>
