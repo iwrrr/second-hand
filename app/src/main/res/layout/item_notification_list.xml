@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_notif_product_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:theme="@style/ShapeAppearanceOverlay.App.CornerSize12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Penawaran produk"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toTopOf="@+id/iv_notif_product_image" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="20 Apr, 14:04"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_notif_product_image" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Jam Tangan Casio"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_status" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Rp250.000"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_bid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Berhasil ditawar Rp200.000"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_price" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/notif_bid_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Kamu akan dihubungi penjual via whatsapp"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_bid" />
+
+    <View
+        android:layout_width="370dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="40dp"
+        android:background="#C6C1C1"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/notif_bid_desc" />
+</androidx.constraintlayout.widget.ConstraintLayout>

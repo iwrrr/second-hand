@@ -20,6 +20,20 @@
         android:label="fragment_profile_setting"
         tools:layout="@layout/fragment_profile_setting" />
     <fragment
+        android:id="@+id/notificationFragment"
+        android:name="id.binar.fp.secondhand.ui.main.notification.list.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification">
+        <action
+            android:id="@+id/action_notificationFragment_to_notificationDetailFragment"
+            app:destination="@id/notificationDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/notificationDetailFragment"
+        android:name="id.binar.fp.secondhand.ui.main.notification.list.detail.NotificationDetailFragment"
+        android:label="fragment_notification_detail"
+        tools:layout="@layout/fragment_notification_detail" />
+    <fragment
         android:id="@+id/bidderInfoFragment"
         android:name="id.binar.fp.secondhand.ui.main.sell.interested.bidder.BidderInfoFragment"
         android:label="fragment_bidder_info"
