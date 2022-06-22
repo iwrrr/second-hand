@@ -15,11 +15,6 @@
         android:label="fragment_sell_list"
         tools:layout="@layout/fragment_sell_list" />
     <fragment
-        android:id="@+id/navigation_account"
-        android:name="id.binar.fp.secondhand.ui.main.profile.ProfileSettingFragment"
-        android:label="fragment_profile_setting"
-        tools:layout="@layout/fragment_profile_setting" />
-    <fragment
         android:id="@+id/navigation_notification"
         android:name="id.binar.fp.secondhand.ui.main.notification.list.NotificationFragment"
         android:label="fragment_notification"
@@ -28,6 +23,16 @@
             android:id="@+id/action_notificationFragment_to_notificationDetailFragment"
             app:destination="@id/notificationDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_add_product"
+        android:name="id.binar.fp.secondhand.ui.main.product.AddProductFragment"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" />
+    <fragment
+        android:id="@+id/navigation_account"
+        android:name="id.binar.fp.secondhand.ui.main.profile.ProfileSettingFragment"
+        android:label="fragment_profile_setting"
+        tools:layout="@layout/fragment_profile_setting" />
     <fragment
         android:id="@+id/notificationDetailFragment"
         android:name="id.binar.fp.secondhand.ui.main.notification.list.detail.NotificationDetailFragment"
