@@ -7,22 +7,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import id.binar.fp.secondhand.databinding.FragmentHomeBinding
+import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
-import id.binar.fp.secondhand.util.dummy.Product
+import id.binar.fp.secondhand.util.dummy.DataDummy.setCategories
+import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+    private val categoryAdapter by lazy {
+        CategoryAdapter {
+            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private val productAdapter by lazy {
         SellListProductAdapter {
-            Toast.makeText(
-                requireContext(),
-                it.name,
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -36,11 +41,13 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun setupRecyclerView() {
-        binding.rvListProductHomeProduct.adapter = productAdapter
-        binding.rvListProductHomeProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
 
-        productAdapter.submitList(setDummyData())
+        binding.etSearch.setOnClickListener {
+            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroyView() {
@@ -48,89 +55,16 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
+    private fun setupRecyclerView() {
+        binding.rvCategory.adapter = categoryAdapter
+        binding.rvCategory.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        categoryAdapter.submitList(setCategories())
+
+        binding.rvProduct.adapter = productAdapter
+        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        productAdapter.submitList(setDummyProducts())
     }
-
-    private fun setDummyData(): ArrayList<Product> {
-        val product1 = Product(
-            1,
-            "Jam Tangan Casio",
-            "Rp210.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product2 = Product(
-            2,
-            "Jam Tangan Casio",
-            "Rp220.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product3 = Product(
-            3,
-            "Jam Tangan Casio",
-            "Rp230.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product4 = Product(
-            4,
-            "Jam Tangan Casio",
-            "Rp230.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product5 = Product(
-            5,
-            "Jam Tangan Casio",
-            "Rp230.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product6 = Product(
-            6,
-            "Jam Tangan Casio",
-            "Rp230.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product7 = Product(
-            7,
-            "Jam Tangan Casio",
-            "Rp230.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-        val product8 = Product(
-            8,
-            "Jam Tangan Casio",
-            "Rp230.000",
-            "Penawaran Produk",
-            "20 Apr, 14:04",
-            "Ditawar Rp150.000"
-        )
-
-        val products = ArrayList<Product>()
-
-        products.add(product1)
-        products.add(product2)
-        products.add(product3)
-        products.add(product4)
-        products.add(product5)
-        products.add(product6)
-        products.add(product7)
-        products.add(product8)
-
-        return products
-    }
-
 }
