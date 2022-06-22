@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/ic_profile" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_edit"
+        android:id="@+id/ly_edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
@@ -80,13 +80,13 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_setting"
+        android:id="@+id/ly_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_edit">
+        app:layout_constraintTop_toBottomOf="@id/ly_edit">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_setting"
@@ -127,13 +127,13 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_logout"
+        android:id="@+id/ly_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_setting">
+        app:layout_constraintTop_toBottomOf="@id/ly_setting">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_logout"
@@ -179,7 +179,7 @@
         android:text="Version 1.0.0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_logout" />
+        app:layout_constraintTop_toBottomOf="@id/ly_logout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

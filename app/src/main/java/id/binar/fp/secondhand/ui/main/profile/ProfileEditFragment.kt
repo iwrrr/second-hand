@@ -28,6 +28,9 @@ class ProfileEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dropDownMenu()
+
+        binding.contentToolbar.toolbarTitle.text = "Lengkapi Info Akun"
+
     }
 
     override fun onDestroy() {
