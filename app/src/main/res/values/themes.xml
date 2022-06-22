@@ -35,4 +35,8 @@
     <style name="BottomSheetWrapper" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bg_bottom_sheet</item>
     </style>
+
+    <style name="Search">
+        <item name="android:textSize">14sp</item>
+    </style>
 </resources>

@@ -3,11 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/drawable/bg_search.xml" value="0.2245" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/drawable/ic_search.xml" value="0.2245" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_home.xml" value="0.37513513513513513" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_interested.xml" value="0.2965811965811966" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_notification_detail.xml" value="0.15256410256410258" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_product.xml" value="0.2965811965811966" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_profile_edit.xml" value="0.2965811965811966" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_profile_setting.xml" value="0.2965811965811966" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_register.xml" value="0.15256410256410258" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_register.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_search.xml" value="0.2965811965811966" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/fragment_sold.xml" value="0.2965811965811966" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/item_home_product_category.xml" value="0.67" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/forked-second-hand/app/src/main/res/layout/item_sell_list_interested.xml" value="0.29282700421940927" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/drawable/ic_arrow_left.xml" value="0.2115" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/drawable/ic_bell.xml" value="0.2115" />
