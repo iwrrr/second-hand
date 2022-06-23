@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentHomeBinding
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
@@ -28,6 +30,7 @@ class HomeFragment : Fragment() {
     private val productAdapter by lazy {
         SellListProductAdapter {
             Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.productDetailFragment)
         }
     }
 

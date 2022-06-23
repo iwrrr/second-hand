@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.notification.list.detail
+package id.binar.fp.secondhand.ui.main.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater

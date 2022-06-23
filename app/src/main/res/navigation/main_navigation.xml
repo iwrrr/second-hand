@@ -16,7 +16,7 @@
         tools:layout="@layout/fragment_sell_list" />
     <fragment
         android:id="@+id/navigation_notification"
-        android:name="id.binar.fp.secondhand.ui.main.notification.list.NotificationFragment"
+        android:name="id.binar.fp.secondhand.ui.main.notification.NotificationFragment"
         android:label="fragment_notification"
         tools:layout="@layout/fragment_notification">
         <action
@@ -29,13 +29,13 @@
         android:label="fragment_add_product"
         tools:layout="@layout/fragment_add_product" />
     <fragment
-        android:id="@+id/navigation_account"
-        android:name="id.binar.fp.secondhand.ui.main.profile.ProfileSettingFragment"
+        android:id="@+id/navigation_profile"
+        android:name="id.binar.fp.secondhand.ui.main.profile.ProfileFragment"
         android:label="fragment_profile_setting"
-        tools:layout="@layout/fragment_profile_setting" />
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/notificationDetailFragment"
-        android:name="id.binar.fp.secondhand.ui.main.notification.list.detail.NotificationDetailFragment"
+        android:name="id.binar.fp.secondhand.ui.main.notification.NotificationDetailFragment"
         android:label="fragment_notification_detail"
         tools:layout="@layout/fragment_notification_detail" />
     <fragment
@@ -48,4 +48,9 @@
         android:name="id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment"
         android:label="fragment_profile_edit"
         tools:layout="@layout/fragment_profile_edit" />
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="id.binar.fp.secondhand.ui.main.product.ProductDetailFragment"
+        android:label="fragment_product_detail"
+        tools:layout="@layout/fragment_product_detail" />
 </navigation>

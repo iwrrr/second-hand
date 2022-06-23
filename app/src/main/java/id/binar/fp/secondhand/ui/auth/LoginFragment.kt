@@ -36,14 +36,14 @@ class LoginFragment : Fragment() {
     }
 
     private fun login() {
-        binding.btnMasuk.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             val directions = LoginFragmentDirections.actionLoginFragmentToMainFragment()
             findNavController().navigate(directions)
         }
     }
 
     private fun register() {
-        binding.tvDaftarDisini.setOnClickListener {
+        binding.tvRegister.setOnClickListener {
             val directions = LoginFragmentDirections.actionLoginFragmentToRegisterFragment()
             findNavController().navigate(directions)
         }

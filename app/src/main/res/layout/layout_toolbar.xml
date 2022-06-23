@@ -31,7 +31,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btn_back"
-            tools:text="Info Penawar" />
+            tools:text="@tools:sample/lorem" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
