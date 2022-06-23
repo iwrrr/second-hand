@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.sell.interested.bidder.BidderInfoFragment">
 
-
     <include
         android:id="@+id/content_toolbar"
         layout="@layout/layout_toolbar"
