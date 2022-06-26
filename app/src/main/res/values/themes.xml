@@ -12,8 +12,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@android:color/transparent</item>
         <!-- Customize your theme here. -->
-        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="bottomSheetDialogTheme">@style/BottomSheetDialog</item>
     </style>
 
     <style name="ShapeAppearanceOverlay.App.Circle" parent="">

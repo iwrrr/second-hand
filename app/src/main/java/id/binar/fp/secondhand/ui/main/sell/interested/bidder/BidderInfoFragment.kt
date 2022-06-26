@@ -5,9 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentBidderInfoBinding
 import id.binar.fp.secondhand.ui.main.sell.interested.bidder.bottomsheet.ContactBottomSheetFragment
 import id.binar.fp.secondhand.ui.main.sell.interested.bidder.bottomsheet.StatusBottomSheetFragment
@@ -29,16 +31,17 @@ class BidderInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
+            false
 
         binding.contentToolbar.toolbarTitle.text = "Info Penawar"
-        binding.contentToolbar.btnBack.setOnClickListener { findNavController().popBackStack() }
+        binding.contentToolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
 
         val contact = ContactBottomSheetFragment()
         val status = StatusBottomSheetFragment()
 
         binding.contentBtnNotAcceptedYet.btnAccept.setOnClickListener {
             contact.show(childFragmentManager, ContactBottomSheetFragment.TAG)
-
             binding.contentBtnNotAcceptedYet.root.isInvisible = true
             binding.contentBtnAccepted.root.isInvisible = false
         }

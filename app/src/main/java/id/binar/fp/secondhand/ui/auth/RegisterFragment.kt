@@ -1,15 +1,12 @@
 package id.binar.fp.secondhand.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.FragmentRegisterBinding
-import id.binar.fp.secondhand.ui.main.MainActivity
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -39,14 +36,13 @@ class RegisterFragment : Fragment() {
 
     private fun register() {
         binding.btnRegister.setOnClickListener {
-            startActivity(Intent(requireContext(), MainActivity::class.java))
+//            startActivity(Intent(requireContext(), MainActivity::class.java))
             requireActivity().finish()
         }
     }
 
     private fun backToLogin() {
-        binding.tvLogin.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        binding.tvLogin.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
     }
 }

@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentInterestedBinding
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
+import id.binar.fp.secondhand.ui.main.sell.interested.bidder.BidderInfoFragment
 import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 
 @AndroidEntryPoint
@@ -28,7 +28,12 @@ class InterestedFragment : Fragment() {
                 it.name,
                 Toast.LENGTH_SHORT
             ).show()
-            findNavController().navigate(R.id.bidderInfoFragment)
+            requireParentFragment().parentFragmentManager.beginTransaction().apply {
+                replace(R.id.main_nav_host, BidderInfoFragment())
+                addToBackStack(null)
+                commit()
+            }
+//            findNavController().navigate(R.id.bidderInfoFragment)
         }
     }
 

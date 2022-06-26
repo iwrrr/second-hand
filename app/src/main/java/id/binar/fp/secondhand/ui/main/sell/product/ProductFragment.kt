@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProductBinding
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
+import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 
 @AndroidEntryPoint
@@ -25,6 +27,11 @@ class ProductFragment : Fragment() {
                 it.name,
                 Toast.LENGTH_SHORT
             ).show()
+            requireParentFragment().parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, ProductDetailFragment())
+                addToBackStack(null)
+                commit()
+            }
         }
     }
 
