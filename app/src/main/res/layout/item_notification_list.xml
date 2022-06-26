@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:paddingHorizontal="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_notif_product_image"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerCrop"
+        android:theme="@style/ShapeAppearanceOverlay.App.CornerSize12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_product_offer"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toTopOf="@+id/iv_notif_product_image"
+        tools:ignore="SmallSp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_product_date"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/iv_notif_product_image"
+        tools:ignore="SmallSp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_product_name"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_status" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_price"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_product_price"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_name" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_notif_product_bid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/text_product_bid"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_price" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/notif_bid_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/text_contact"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_notif_product_image"
+        app:layout_constraintTop_toBottomOf="@+id/tv_notif_product_bid" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

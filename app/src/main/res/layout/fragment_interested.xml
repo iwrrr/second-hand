@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.SignInFragment">
+    android:background="?android:windowBackground"
+    tools:context=".ui.main.sell.interested.InterestedFragment">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_move"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_interested"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="move to main"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:overScrollMode="never"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_sell_list_interested" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
