@@ -225,7 +225,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="21dp"
-            android:theme="@style/ShapeAppearanceOverlay.App.CornerSize12"
+            android:theme="@style/ShapeAppearanceOverlay.App.CornerSize.12"
             app:layout_constraintBottom_toTopOf="@+id/btn_preview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_product_image"
