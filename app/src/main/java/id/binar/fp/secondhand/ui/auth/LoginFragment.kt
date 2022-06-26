@@ -1,5 +1,6 @@
 package id.binar.fp.secondhand.ui.auth
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.FragmentLoginBinding
+import id.binar.fp.secondhand.ui.main.MainActivity
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -16,10 +18,10 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -28,6 +30,8 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         login()
         register()
+
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     override fun onDestroyView() {
@@ -37,8 +41,8 @@ class LoginFragment : Fragment() {
 
     private fun login() {
         binding.btnLogin.setOnClickListener {
-            val directions = LoginFragmentDirections.actionLoginFragmentToMainFragment()
-            findNavController().navigate(directions)
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
         }
     }
 

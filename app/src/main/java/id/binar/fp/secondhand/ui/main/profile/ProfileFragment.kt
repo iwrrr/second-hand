@@ -1,13 +1,14 @@
 package id.binar.fp.secondhand.ui.main.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProfileBinding
+import id.binar.fp.secondhand.ui.auth.AuthActivity
 
 
 class ProfileFragment : Fragment() {
@@ -27,7 +28,12 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.menu.edit.setOnClickListener {
-            findNavController().navigate(R.id.profileEditFragment)
+//            findNavController().navigate(R.id.profileEditFragment)
+            startActivity(Intent(requireContext(), AuthActivity::class.java))
+        }
+        binding.menu.logout.isVisible = false
+        binding.btnLogin.setOnClickListener {
+            startActivity(Intent(requireContext(), AuthActivity::class.java))
         }
     }
 
