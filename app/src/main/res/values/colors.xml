@@ -9,7 +9,13 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="colorPrimary">#7126B5</color>
+    <color name="colorSecondary">#E2D4F0</color>
     <color name="colorAccent">#8A8A8A</color>
 
     <color name="iconTintPrimary">#151515</color>
+
+    <color name="colorTab">#F9F8FD</color>
+    <color name="colorTabSelected">#575CE4</color>
+    <color name="colorTabText">#A0A0B0</color>
+    <color name="colorTabTextSelected">#FFFFFF</color>
 </resources>
