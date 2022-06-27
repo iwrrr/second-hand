@@ -12,6 +12,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentSellListBinding
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListPagerAdapter
+import id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment
 
 @AndroidEntryPoint
 class SellListFragment : Fragment() {
@@ -32,6 +33,14 @@ class SellListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewPager()
+
+        binding.btnEditProfile.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, ProfileEditFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProfileEditBinding
 
 
@@ -23,9 +26,12 @@ class ProfileEditFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
+            false
         dropDownMenu()
 
         binding.contentToolbar.toolbarTitle.text = "Lengkapi Info Akun"
+        binding.contentToolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     override fun onDestroy() {

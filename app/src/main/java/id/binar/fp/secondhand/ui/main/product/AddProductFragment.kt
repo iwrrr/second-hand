@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentAddProductBinding
 
@@ -19,7 +18,7 @@ class AddProductFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,7 +33,7 @@ class AddProductFragment : Fragment() {
         dropDownMenu()
 
         binding.contentToolbar.toolbarTitle.text = "Lengkapi Detail Produk"
-        binding.contentToolbar.btnBack.setOnClickListener { findNavController().popBackStack() }
+        binding.contentToolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun dropDownMenu() {

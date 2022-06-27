@@ -8,6 +8,10 @@
     <string name="title_sell_list">Daftar Jual</string>
     <string name="title_account">Akun</string>
 
+    <string name="text_title_page_notification">Notifikasi</string>
+    <string name="text_title_page_profile">Akun Saya</string>
+    <string name="text_title_page_sell_list">Daftar Jual Saya</string>
+
     <string name="tab_sell_list_1">Produk</string>
     <string name="tab_sell_list_2">Diminati</string>
     <string name="tab_sell_list_3">Terjual</string>
@@ -57,4 +61,40 @@
     <string name="text_edit_profile_hint_address">Contoh: Jalan Ikan Hiu 33</string>
     <string name="text_edit_profile_hint_phone">Contoh: 08123456789</string>
     <string name="text_edit_profile_btn_save">Simpan</string>
+
+    <string name="text_update_status_product_title">Perbarui status penjualan produkmu</string>
+    <string name="text_update_status_product_success_title">Berhasil terjual</string>
+    <string name="text_update_status_product_cancel_title">Batalkan transaksi</string>
+    <string name="text_update_status_product_success_content">Kamu telah sepakat menjual produk ini kepada pembeli</string>
+    <string name="text_update_status_product_cancel_content">Kamu membatalkan transaksi produk ini dengan pembeli</string>
+
+    <string name="text_contact">Kamu akan dihubungi penjual via whatsapp</string>
+    <string name="text_contact_product_title">Yeay kamu berhasil mendapat harga yang sesuai</string>
+    <string name="text_contact_product_subtitle">Segera hubungi pembeli melalui whatsapp untuk transaksi selanjutnya</string>
+
+    <string name="text_seller_name">Nama Penjual</string>
+    <string name="text_seller_city">Kota</string>
+
+    <string name="text_product_match">Produk Cocok</string>
+    <string name="text_product_name">Jam Tangan Casio</string>
+    <string name="text_product_price">Rp250.000</string>
+    <string name="text_product_bid">Ditawar Rp200.000</string>
+    <string name="text_product_date">20 Apr, 14:04</string>
+    <string name="text_product_category">Aksesoris</string>
+    <string name="text_product_desc">Deskripsi</string>
+    <string name="text_product_description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, comes from a line in section 1.10.32.</string>
+    <string name="text_product_offer">Penawaran produk</string>
+    <string name="text_product_offered">Produk yang Ditawar</string>
+
+    <string name="browse_categories">Telusuri Kategori</string>
+    <string name="text_search_hint">Cari di Second Chance</string>
+
+    <string name="text_btn_save">Simpan</string>
+    <string name="text_btn_edit">Edit</string>
+    <string name="text_btn_status">Status</string>
+    <string name="text_btn_contact_1">Hubungi via Whatsapp</string>
+    <string name="text_btn_contact_2">Hubungi</string>
+    <string name="text_btn_buy">Saya Tertarik dan Ingin Nego</string>
+    <string name="text_btn_reject">Tolak</string>
+    <string name="text_btn_accept">Terima</string>
 </resources>

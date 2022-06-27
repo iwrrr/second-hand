@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.FragmentRegisterBinding
 
@@ -37,14 +36,13 @@ class RegisterFragment : Fragment() {
 
     private fun register() {
         binding.btnRegister.setOnClickListener {
-            val directions = RegisterFragmentDirections.actionRegisterFragmentToMainFragment()
-            findNavController().navigate(directions)
+//            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().finish()
         }
     }
 
     private fun backToLogin() {
-        binding.tvLogin.setOnClickListener {
-            findNavController().popBackStack()
-        }
+        binding.tvLogin.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
     }
 }

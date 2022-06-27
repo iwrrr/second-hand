@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?android:windowBackground"
     tools:context=".ui.main.sell.SellListFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="56dp"
-        android:text="Daftar Jual Saya"
+        android:text="@string/text_title_page_sell_list"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -55,7 +56,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Nama Penjual"
+                android:text="@string/text_seller_name"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_city"
@@ -71,7 +72,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Kota"
+                android:text="@string/text_seller_city"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -86,7 +87,7 @@
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:backgroundTint="@android:color/white"
-                android:text="Edit"
+                android:text="@string/text_btn_edit"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
                 android:textColor="@color/colorPrimary"

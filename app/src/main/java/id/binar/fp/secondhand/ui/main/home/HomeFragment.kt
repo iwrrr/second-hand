@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentHomeBinding
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
+import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.dummy.DataDummy.setCategories
 import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
@@ -30,7 +32,12 @@ class HomeFragment : Fragment() {
     private val productAdapter by lazy {
         SellListProductAdapter {
             Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.productDetailFragment)
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, ProductDetailFragment())
+                addToBackStack(null)
+                commit()
+            }
+//            findNavController().navigate(R.id.productDetailFragment)
         }
     }
 
