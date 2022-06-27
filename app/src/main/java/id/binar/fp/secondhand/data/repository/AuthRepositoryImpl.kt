@@ -19,7 +19,7 @@ class AuthRepositoryImpl @Inject constructor(
         fullName: String,
         email: String,
         password: String,
-        phoneNumber: Int,
+        phoneNumber: String,
         city: String,
         address: String
     ): LiveData<Result<UserDto>> = liveData {

@@ -12,6 +12,15 @@ class AuthViewModel @Inject constructor(
 
     fun getToken() = repository.getToken()
 
+    fun register(
+        name: String,
+        email: String,
+        password: String,
+        phoneNumber: String,
+        city: String,
+        address: String
+    ) = repository.register(name, email, password, phoneNumber, city, address)
+
     fun login(email: String, password: String) = repository.login(email, password)
 
     fun logout() = repository.logout()

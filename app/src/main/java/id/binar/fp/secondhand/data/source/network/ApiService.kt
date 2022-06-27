@@ -13,7 +13,7 @@ interface ApiService {
         @Field("full_name") fullName: String,
         @Field("email") email: String,
         @Field("password") password: String,
-        @Field("phone_number") phoneNumber: Int,
+        @Field("phone_number") phoneNumber: String,
         @Field("city") city: String,
         @Field("address") address: String,
     ): UserDto
