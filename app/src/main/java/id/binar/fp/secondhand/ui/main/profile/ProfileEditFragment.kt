@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProfileEditBinding
 
-
+@AndroidEntryPoint
 class ProfileEditFragment : Fragment() {
 
     private var _binding: FragmentProfileEditBinding? = null
@@ -28,20 +29,19 @@ class ProfileEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
             false
-        dropDownMenu()
 
         binding.contentToolbar.toolbarTitle.text = "Lengkapi Info Akun"
         binding.contentToolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
+
+        val chooseImage = ProfileImageBottomSheetFragment()
+
+        binding.ivProfile.setOnClickListener {
+            chooseImage.show(childFragmentManager, ProfileImageBottomSheetFragment.TAG)
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
-    }
-
-    private fun dropDownMenu() {
-//        val city = arrayOf("Jakarta", "Bandung", "Surabaya", "Semarang", "Yogyakarta")
-//        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.item_profile_city, city)
-//        binding.etCity.setAdapter(arrayAdapter)
     }
 }
