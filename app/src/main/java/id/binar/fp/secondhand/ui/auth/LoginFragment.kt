@@ -48,6 +48,7 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val email = binding.etEmail.text.toString()
             val password = binding.etPassword.text.toString()
+
             if (validateData(email, password)) {
                 observeLogin(email, password)
             }
