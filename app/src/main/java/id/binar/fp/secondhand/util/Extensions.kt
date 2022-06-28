@@ -1,6 +1,10 @@
 package id.binar.fp.secondhand.util
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Patterns
+import com.bumptech.glide.Glide
+import com.google.android.material.imageview.ShapeableImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,28 +20,18 @@ object Extensions {
 //            )
 //            .into(this)
 //    }
-//
-//    fun ShapeableImageView.loadImage(uri: Uri) {
-//        Glide.with(this.context)
-//            .load(uri)
-//            .apply(
-//                RequestOptions
-//                    .placeholderOf(R.drawable.ic_loading)
-//                    .error(R.drawable.ic_error_image)
-//            )
-//            .into(this)
-//    }
-//
-//    fun ShapeableImageView.loadImage(bitmap: Bitmap?) {
-//        Glide.with(this.context)
-//            .load(bitmap)
-//            .apply(
-//                RequestOptions
-//                    .placeholderOf(R.drawable.ic_loading)
-//                    .error(R.drawable.ic_error_image)
-//            )
-//            .into(this)
-//    }
+
+    fun ShapeableImageView.loadImage(uri: Uri) {
+        Glide.with(this.context)
+            .load(uri)
+            .into(this)
+    }
+
+    fun ShapeableImageView.loadImage(bitmap: Bitmap) {
+        Glide.with(this.context)
+            .load(bitmap)
+            .into(this)
+    }
 
     fun String.isValidated(): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(this).matches()

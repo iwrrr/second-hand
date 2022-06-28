@@ -15,7 +15,7 @@
         android:fitsSystemWindows="true">
 
         <include
-            android:id="@+id/content_toolbar"
+            android:id="@+id/toolbar"
             layout="@layout/layout_toolbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:theme="@style/ShapeAppearanceOverlay.App.CornerSize.12"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/content_toolbar"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
             app:srcCompat="@drawable/ic_image" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -44,7 +44,6 @@
             android:layout_marginEnd="16dp"
             android:text="@string/text_edit_profile_name"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@+id/etl_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
@@ -79,6 +78,50 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/text_edit_profile_phone"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etl_name" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etl_phone"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_phone">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_edit_profile_hint_phone"
+                android:inputType="phone"
+                android:maxLength="14"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_city"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -87,10 +130,9 @@
             android:layout_marginEnd="16dp"
             android:text="@string/text_edit_profile_city"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@+id/etl_city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_name" />
+            app:layout_constraintTop_toBottomOf="@+id/etl_phone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etl_city"
@@ -131,7 +173,6 @@
             android:layout_marginEnd="16dp"
             android:text="@string/text_edit_profile_address"
             android:textColor="@android:color/black"
-            app:layout_constraintBottom_toTopOf="@+id/etl_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/etl_city" />
@@ -166,57 +207,11 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_edit_profile_phone"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etl_address" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_phone"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="20dp"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="12dp"
-            app:boxCornerRadiusBottomStart="12dp"
-            app:boxCornerRadiusTopEnd="12dp"
-            app:boxCornerRadiusTopStart="12dp"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:hintEnabled="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_phone"
-            app:layout_constraintVertical_bias="0.0">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/text_edit_profile_hint_phone"
-                android:inputType="phone"
-                android:maxLength="14"
-                android:maxLines="1" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/colorPrimary"
             android:padding="14dp"
@@ -225,8 +220,10 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Button"
             app:cornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/etl_phone"
-            app:layout_constraintStart_toStartOf="@id/etl_phone" />
+            app:layout_constraintEnd_toEndOf="@+id/etl_address"
+            app:layout_constraintStart_toStartOf="@+id/etl_address"
+            app:layout_constraintTop_toBottomOf="@+id/etl_address"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

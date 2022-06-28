@@ -1,17 +1,10 @@
 package id.binar.fp.secondhand.di
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.binar.fp.secondhand.BuildConfig
-import id.binar.fp.secondhand.data.repository.AuthRepository
-import id.binar.fp.secondhand.data.repository.AuthRepositoryImpl
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.AuthInterceptor
 import id.binar.fp.secondhand.util.Constants
@@ -25,9 +18,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
-
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "prefs")
+object NetworkModule {
 
     @Provides
     @Singleton
@@ -57,23 +48,5 @@ object AppModule {
             .client(client)
             .build()
             .create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideAuthRepository(apiService: ApiService, prefs: UserPreferences): AuthRepository {
-        return AuthRepositoryImpl(apiService, prefs)
-    }
-
-    @Provides
-    @Singleton
-    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> {
-        return context.dataStore
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserPreference(dataStore: DataStore<Preferences>): UserPreferences {
-        return UserPreferences(dataStore)
     }
 }

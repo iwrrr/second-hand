@@ -2,7 +2,7 @@ package id.binar.fp.secondhand.ui.auth
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.binar.fp.secondhand.data.repository.AuthRepository
+import id.binar.fp.secondhand.domain.repository.AuthRepository
 import javax.inject.Inject
 
 @HiltViewModel

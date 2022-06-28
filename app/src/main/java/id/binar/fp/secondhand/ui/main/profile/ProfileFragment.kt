@@ -21,7 +21,7 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: AuthViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getToken().observe(viewLifecycleOwner) { token ->
+        authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
                 binding.menu.logout.isVisible = true
                 binding.btnLogin.isVisible = false
@@ -57,7 +57,7 @@ class ProfileFragment : Fragment() {
 
     private fun onEditClicked() {
         binding.menu.edit.setOnClickListener {
-            viewModel.getToken().observe(viewLifecycleOwner) { token ->
+            authViewModel.getToken().observe(viewLifecycleOwner) { token ->
                 if (!token.isNullOrBlank()) {
                     parentFragmentManager.beginTransaction().apply {
                         add(R.id.main_nav_host, ProfileEditFragment())
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
 
     private fun onLogoutClicked() {
         binding.menu.logout.setOnClickListener {
-            viewModel.logout().observe(viewLifecycleOwner) {
+            authViewModel.logout().observe(viewLifecycleOwner) {
                 startActivity(Intent(requireContext(), MainActivity::class.java))
                 requireActivity().finish()
             }

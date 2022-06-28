@@ -98,7 +98,7 @@
     <string name="text_btn_reject">Tolak</string>
     <string name="text_btn_accept">Terima</string>
 
-    <string name="text_profile_image_camera">Kamera</string>
-    <string name="text_profile_image_gallery">Galeri</string>
-    <string name="text_profile_image_title">Foto profil</string>
+    <string name="text_choose_image_title">Pilih gambar</string>
+    <string name="text_choose_image_camera">Kamera</string>
+    <string name="text_choose_image_gallery">Galeri</string>
 </resources>

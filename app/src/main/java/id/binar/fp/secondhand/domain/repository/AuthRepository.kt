@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.data.repository
+package id.binar.fp.secondhand.domain.repository
 
 import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.UserDto

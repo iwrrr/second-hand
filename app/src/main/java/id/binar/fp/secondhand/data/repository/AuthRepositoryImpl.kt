@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.response.UserDto
+import id.binar.fp.secondhand.domain.repository.AuthRepository
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.UserPreferences
 import okhttp3.MultipartBody
@@ -25,8 +26,9 @@ class AuthRepositoryImpl @Inject constructor(
     ): LiveData<Result<UserDto>> = liveData {
         emit(Result.Loading)
         try {
-            val data = apiService.register(fullName, email, password, phoneNumber, city, address)
-            val user = apiService.login(data.email, data.password)
+            apiService.register(fullName, email, password, phoneNumber, city, address)
+
+            val user = apiService.login(email, password)
             user.accessToken?.let { prefs.login(it) }
 
             emit(Result.Success(user))

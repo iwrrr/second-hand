@@ -40,43 +40,6 @@ interface ApiService {
         @Part("image") image: MultipartBody.Part,
     ): UserDto
 
-    @POST(Endpoints.ADD_BANNER)
-    suspend fun addBanner(
-        @Field("address") address: String,
-        @Part("image") image: MultipartBody.Part,
-    )
-
-    @GET(Endpoints.GET_BANNER)
-    suspend fun getBanner()
-
-    @GET(Endpoints.GET_BANNER_BY_ID)
-    suspend fun getBannerById(
-        @Path("id") id: Int
-    )
-
-    @DELETE(Endpoints.DELETE_BANNER_BY_ID)
-    suspend fun deleteBannerById(
-        @Path("id") id: Int
-    )
-
-    @POST(Endpoints.ADD_CATEGORY)
-    suspend fun addCategory(
-        @Field("name") name: String
-    ): CategoryDto
-
-    @GET(Endpoints.GET_CATEGORY)
-    suspend fun getCategory(): List<CategoryDto>
-
-    @GET(Endpoints.GET_CATEGORY_BY_ID)
-    suspend fun getCategoryById(
-        @Path("id") id: Int
-    ): CategoryDto
-
-    @DELETE(Endpoints.DELETE_CATEGORY_BY_ID)
-    suspend fun deleteCategoryById(
-        @Path("id") id: Int
-    ): Boolean
-
     @Multipart
     @POST(Endpoints.ADD_SELLER_PRODUCT)
     suspend fun addSellerProduct(
@@ -110,7 +73,7 @@ interface ApiService {
     @DELETE(Endpoints.DELETE_SELLER_PRODUCT_BY_ID)
     suspend fun deleteSellerProductById(
         @Path("id") id: Int
-    ) // TODO: Response Body Not Yet Implemented
+    ): MessageDto
 
     @GET(Endpoints.GET_SELLER_ORDER)
     suspend fun getSellerOrder() // TODO: Response Body Not Yet Implemented
@@ -129,6 +92,43 @@ interface ApiService {
     suspend fun getSellerOrderByProductId(
         @Path("id") id: Int
     ) // TODO: Response Body Not Yet Implemented
+
+    @POST(Endpoints.ADD_CATEGORY)
+    suspend fun addCategory(
+        @Field("name") name: String
+    ): CategoryDto
+
+    @GET(Endpoints.GET_CATEGORY)
+    suspend fun getCategory(): List<CategoryDto>
+
+    @GET(Endpoints.GET_CATEGORY_BY_ID)
+    suspend fun getCategoryById(
+        @Path("id") id: Int
+    ): CategoryDto
+
+    @DELETE(Endpoints.DELETE_CATEGORY_BY_ID)
+    suspend fun deleteCategoryById(
+        @Path("id") id: Int
+    ): Boolean
+
+    @POST(Endpoints.ADD_BANNER)
+    suspend fun addBanner(
+        @Field("address") address: String,
+        @Part("image") image: MultipartBody.Part,
+    )
+
+    @GET(Endpoints.GET_BANNER)
+    suspend fun getBanner()
+
+    @GET(Endpoints.GET_BANNER_BY_ID)
+    suspend fun getBannerById(
+        @Path("id") id: Int
+    )
+
+    @DELETE(Endpoints.DELETE_BANNER_BY_ID)
+    suspend fun deleteBannerById(
+        @Path("id") id: Int
+    )
 
     @GET(Endpoints.GET_BUYER_PRODUCT)
     suspend fun getBuyerProduct(
