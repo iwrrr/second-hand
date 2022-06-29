@@ -1,11 +1,11 @@
 package id.binar.fp.secondhand.ui.main.adapter.home
 
 import androidx.recyclerview.widget.DiffUtil
-import id.binar.fp.secondhand.util.dummy.Category
+import id.binar.fp.secondhand.data.source.network.response.CategoryDto
 
 class CategoryDiffUtil(
-    private val oldList: List<Category>,
-    private val newList: List<Category>,
+    private val oldList: List<CategoryDto>,
+    private val newList: List<CategoryDto>,
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

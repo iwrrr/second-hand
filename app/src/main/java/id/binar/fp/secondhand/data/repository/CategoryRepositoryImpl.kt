@@ -6,14 +6,24 @@ import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.response.CategoryDto
 import id.binar.fp.secondhand.domain.repository.CategoryRepository
 import id.binar.fp.secondhand.util.Result
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : CategoryRepository {
 
-    override suspend fun getCategory(): LiveData<Result<List<CategoryDto>>> = liveData {
-        TODO("Not yet implemented")
+    override fun getCategory(): LiveData<Result<List<CategoryDto>>> = liveData {
+        emit(Result.Loading)
+        try {
+            emit(Result.Success(apiService.getCategory()))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
     override suspend fun getCategoryById(id: Int): LiveData<Result<CategoryDto>> = liveData {
