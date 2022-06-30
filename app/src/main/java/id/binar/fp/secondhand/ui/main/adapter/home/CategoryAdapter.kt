@@ -4,14 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import id.binar.fp.secondhand.data.source.network.response.CategoryDto
 import id.binar.fp.secondhand.databinding.ItemProductCategoryBinding
-import id.binar.fp.secondhand.util.dummy.Category
 
 class CategoryAdapter(
-    private val onClick: (Category) -> Unit
+    private val onClick: (CategoryDto) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
-    private var oldCategoryList = emptyList<Category>()
+    private var oldCategoryList = emptyList<CategoryDto>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val binding = ItemProductCategoryBinding.inflate(
@@ -28,7 +28,7 @@ class CategoryAdapter(
 
     override fun getItemCount(): Int = oldCategoryList.size
 
-    fun submitList(newCategoryList: List<Category>) {
+    fun submitList(newCategoryList: List<CategoryDto>) {
         val diffUtil = CategoryDiffUtil(oldCategoryList, newCategoryList)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         oldCategoryList = newCategoryList
@@ -38,7 +38,7 @@ class CategoryAdapter(
     inner class CategoryViewHolder(private val binding: ItemProductCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(category: Category) {
+        fun bind(category: CategoryDto) {
             binding.tvCategory.text = category.name
             itemView.setOnClickListener { onClick(category) }
         }
