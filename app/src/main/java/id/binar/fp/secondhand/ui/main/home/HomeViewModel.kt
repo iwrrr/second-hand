@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.binar.fp.secondhand.domain.repository.CategoryRepository
 import id.binar.fp.secondhand.domain.repository.ProductRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: ProductRepository
+    private val productRepository: ProductRepository,
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     val queryChannel = Channel<String>()
@@ -25,7 +27,9 @@ class HomeViewModel @Inject constructor(
         .debounce(300)
         .distinctUntilChanged()
         .flatMapLatest {
-            repository.searchProduct(it)
+            productRepository.searchProduct(it)
         }
         .asLiveData()
+
+    fun getCategory() = categoryRepository.getCategory()
 }
