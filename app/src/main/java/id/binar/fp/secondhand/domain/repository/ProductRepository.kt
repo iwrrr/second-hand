@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
 import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.util.Result
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 
 interface ProductRepository {
@@ -38,4 +39,6 @@ interface ProductRepository {
     ): LiveData<Result<List<ProductDto>>>
 
     fun getBuyerProductById(id: Int): LiveData<Result<ProductDto>>
+
+    fun searchProduct(query: String): Flow<Result<List<ProductDto>>>
 }

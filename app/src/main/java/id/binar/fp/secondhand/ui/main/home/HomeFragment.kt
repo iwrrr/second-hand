@@ -17,7 +17,11 @@ import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -40,7 +44,6 @@ class HomeFragment : Fragment() {
                 addToBackStack(null)
                 commit()
             }
-//            findNavController().navigate(R.id.productDetailFragment)
         }
     }
 
@@ -54,18 +57,36 @@ class HomeFragment : Fragment() {
 
     }
 
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
         binding.etSearch.setOnClickListener {
-            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, SearchFragment())
+                addToBackStack(null)
+                commit()
+            }
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvCategory.adapter = categoryAdapter
+        binding.rvCategory.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        observeCategory()
+
+        binding.rvProduct.adapter = productAdapter
+        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        productAdapter.submitList(setDummyProducts())
     }
 
     private fun observeCategory() {
@@ -87,18 +108,5 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setupRecyclerView() {
-        binding.rvCategory.adapter = categoryAdapter
-        binding.rvCategory.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-        observeCategory()
-
-        binding.rvProduct.adapter = productAdapter
-        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        productAdapter.submitList(setDummyProducts())
     }
 }

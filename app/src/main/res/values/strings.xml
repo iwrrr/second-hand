@@ -101,4 +101,6 @@
     <string name="text_choose_image_title">Pilih gambar</string>
     <string name="text_choose_image_camera">Kamera</string>
     <string name="text_choose_image_gallery">Galeri</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
