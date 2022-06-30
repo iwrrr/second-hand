@@ -20,6 +20,8 @@ import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
@@ -66,13 +68,25 @@ class HomeFragment : Fragment() {
                 addToBackStack(null)
                 commit()
             }
-            Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupRecyclerView() {
+        binding.rvCategory.adapter = categoryAdapter
+        binding.rvCategory.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        observeCategory()
+
+        binding.rvProduct.adapter = productAdapter
+        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        productAdapter.submitList(setDummyProducts())
     }
 
     private fun observeCategory() {
@@ -94,18 +108,5 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setupRecyclerView() {
-        binding.rvCategory.adapter = categoryAdapter
-        binding.rvCategory.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
-        observeCategory()
-
-        binding.rvProduct.adapter = productAdapter
-        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        productAdapter.submitList(setDummyProducts())
     }
 }
