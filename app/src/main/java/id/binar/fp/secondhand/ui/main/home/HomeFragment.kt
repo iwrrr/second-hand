@@ -16,6 +16,8 @@ import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.dummy.DataDummy.setCategories
 import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -37,7 +39,6 @@ class HomeFragment : Fragment() {
                 addToBackStack(null)
                 commit()
             }
-//            findNavController().navigate(R.id.productDetailFragment)
         }
     }
 
@@ -51,11 +52,17 @@ class HomeFragment : Fragment() {
 
     }
 
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
         binding.etSearch.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, SearchFragment())
+                addToBackStack(null)
+                commit()
+            }
             Toast.makeText(requireContext(), "tes", Toast.LENGTH_SHORT).show()
         }
     }
