@@ -13,6 +13,9 @@ data class ProductDto(
     @SerializedName("base_price")
     val basePrice: Int? = null,
 
+    @SerializedName("description")
+    val description: String? = null,
+
     @SerializedName("image_url")
     val imageUrl: String? = null,
 
@@ -22,7 +25,7 @@ data class ProductDto(
     @SerializedName("location")
     val location: String? = null,
 
-    @SerializedName("user")
+    @SerializedName("User")
     val user: UserDto? = null,
 
     @SerializedName("status")
