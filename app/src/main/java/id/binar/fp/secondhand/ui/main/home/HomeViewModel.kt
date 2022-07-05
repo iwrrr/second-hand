@@ -32,4 +32,6 @@ class HomeViewModel @Inject constructor(
         .asLiveData()
 
     fun getCategory() = categoryRepository.getCategory()
+
+    fun getAllProduct() = productRepository.getBuyerProduct()
 }

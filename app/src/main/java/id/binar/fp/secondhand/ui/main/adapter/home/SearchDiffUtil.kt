@@ -25,7 +25,7 @@ class SearchDiffUtil(
             oldList[oldItemPosition].imageName != newList[newItemPosition].imageName -> false
             oldList[oldItemPosition].location != newList[newItemPosition].location -> false
             oldList[oldItemPosition].location != newList[newItemPosition].location -> false
-            oldList[oldItemPosition].userId != newList[newItemPosition].userId -> false
+           // oldList[oldItemPosition].userId != newList[newItemPosition].userId -> false
             oldList[oldItemPosition].status != newList[newItemPosition].status -> false
             oldList[oldItemPosition].categories != newList[newItemPosition].categories -> false
             oldList[oldItemPosition].createdAt != newList[newItemPosition].createdAt -> false
