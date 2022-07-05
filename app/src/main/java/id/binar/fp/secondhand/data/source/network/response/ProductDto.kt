@@ -22,13 +22,13 @@ data class ProductDto(
     @SerializedName("location")
     val location: String? = null,
 
-    @SerializedName("user_id")
-    val userId: Int? = null,
+    @SerializedName("user")
+    val user: UserDto? = null,
 
     @SerializedName("status")
     val status: String? = null,
 
-    @SerializedName("categories")
+    @SerializedName("Categories")
     val categories: List<CategoryDto>? = null,
 
     @SerializedName("created_at")

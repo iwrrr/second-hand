@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,9 +14,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentHomeBinding
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
+import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.UserPreferences
 import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -28,6 +31,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+
     private val viewModel: HomeViewModel by viewModels()
 
     private val categoryAdapter by lazy {
@@ -37,10 +41,14 @@ class HomeFragment : Fragment() {
     }
 
     private val productAdapter by lazy {
-        SellListProductAdapter {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
+        ProductAdapter { result->
+            val bundle = Bundle()
+            bundle.putInt("id",result.id!!)
+            val fragment = ProductDetailFragment()
+            fragment.arguments = bundle
+            Toast.makeText(requireContext(), result.name.toString(), Toast.LENGTH_SHORT).show()
             parentFragmentManager.beginTransaction().apply {
-                add(R.id.main_nav_host, ProductDetailFragment())
+                add(R.id.main_nav_host, fragment)
                 addToBackStack(null)
                 commit()
             }
@@ -80,14 +88,14 @@ class HomeFragment : Fragment() {
         binding.rvCategory.adapter = categoryAdapter
         binding.rvCategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
         observeCategory()
 
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+        observeListProduct()
 
-        productAdapter.submitList(setDummyProducts())
     }
+
 
     private fun observeCategory() {
         viewModel.getCategory().observe(viewLifecycleOwner) { result ->
@@ -105,6 +113,25 @@ class HomeFragment : Fragment() {
                 }
                 else -> {
 
+                }
+            }
+        }
+    }
+
+
+    private fun observeListProduct(){
+        viewModel.getAllProduct().observe(viewLifecycleOwner){result->
+            when(result){
+                is Result.Loading->{
+
+                }
+                is Result.Success->{
+                    result.data.let { response->
+                        productAdapter.submitList(response)
+                    }
+                }
+                is Result.Error->{
+                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
