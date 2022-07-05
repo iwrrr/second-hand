@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,7 +13,6 @@ import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProductBinding
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
-import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 
 @AndroidEntryPoint
 class ProductFragment : Fragment() {
@@ -56,9 +56,12 @@ class ProductFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvProduct.adapter = productAdapter
-        binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.content.root.isVisible = false
+        binding.empty.root.isVisible = true
 
-        productAdapter.submitList(setDummyProducts())
+        binding.content.rvProduct.adapter = productAdapter
+        binding.content.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+
+//        productAdapter.submitList(setDummyProducts())
     }
 }

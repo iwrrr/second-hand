@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,8 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentInterestedBinding
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
-import id.binar.fp.secondhand.ui.main.sell.interested.bidder.BidderInfoFragment
-import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 
 @AndroidEntryPoint
 class InterestedFragment : Fragment() {
@@ -58,15 +57,18 @@ class InterestedFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        binding.rvInterested.adapter = interestedAdapter
-        binding.rvInterested.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvInterested.addItemDecoration(
+        binding.content.root.isVisible = false
+        binding.empty.root.isVisible = true
+
+        binding.content.rvInterested.adapter = interestedAdapter
+        binding.content.rvInterested.layoutManager = LinearLayoutManager(requireContext())
+        binding.content.rvInterested.addItemDecoration(
             DividerItemDecoration(
                 requireContext(),
                 LinearLayoutManager.VERTICAL
             )
         )
 
-        interestedAdapter.submitList(setDummyProducts())
+//        interestedAdapter.submitList(setDummyProducts())
     }
 }

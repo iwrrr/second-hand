@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -9,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ActivityMainBinding
+import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.main.home.HomeFragment
 import id.binar.fp.secondhand.ui.main.notification.NotificationFragment
 import id.binar.fp.secondhand.ui.main.product.AddProductFragment
@@ -19,6 +21,8 @@ import id.binar.fp.secondhand.ui.main.sell.SellListFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val authViewModel: AuthViewModel by viewModels()
 
     private val homeFragment = HomeFragment()
     private val notificationFragment = NotificationFragment()
@@ -57,8 +61,10 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.isVisible = true
                 }
                 R.id.navigation_add_product -> {
+                    authViewModel.getToken().observe(this) { token ->
+                        binding.bottomNavigationView.isVisible = token.isNullOrBlank()
+                    }
                     setTabStateFragment(TabState.ADDPRODUCT).commit()
-                    binding.bottomNavigationView.isVisible = false
                 }
                 R.id.navigation_sell_list -> {
                     setTabStateFragment(TabState.SELLLIST).commit()
@@ -129,7 +135,7 @@ class MainActivity : AppCompatActivity() {
         return transaction
     }
 
-    internal enum class TabState {
+    private enum class TabState {
         HOME,
         NOTIFICATION,
         ADDPRODUCT,
