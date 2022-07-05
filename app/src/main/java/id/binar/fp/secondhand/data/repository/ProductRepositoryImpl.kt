@@ -69,7 +69,16 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override fun getBuyerProductById(id: Int): LiveData<Result<ProductDto>> = liveData {
-        TODO("Not yet implemented")
+        emit(Result.Loading)
+        try {
+            emit(Result.Success(apiService.getBuyerProductById(id)))
+        }catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
     override fun searchProduct(query: String): Flow<Result<List<ProductDto>>> = flow {

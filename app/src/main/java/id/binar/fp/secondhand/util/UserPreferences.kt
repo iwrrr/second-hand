@@ -30,5 +30,6 @@ class UserPreferences @Inject constructor(
 
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("token")
+
     }
 }
