@@ -18,7 +18,7 @@ interface ProductRepository {
         image: MultipartBody.Part,
     ): LiveData<Result<ProductDto>>
 
-    fun getSellerProduct(): LiveData<Result<List<ProductDto>>>
+    fun getSellerProduct(): LiveData<Result<List<ProductDto>?>>
 
     fun getSellerProductById(id: Int): LiveData<Result<ProductDto>>
 
