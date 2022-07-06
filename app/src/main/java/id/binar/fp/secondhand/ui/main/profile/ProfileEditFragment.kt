@@ -8,15 +8,18 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Base64.decode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -35,6 +38,7 @@ import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.createTempFile
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.uriToFile
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -96,11 +100,38 @@ class ProfileEditFragment : Fragment() {
     private val cameraResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                val bitmap = result.data?.extras?.get("data") as Bitmap
-                binding.ivProfile.loadImage(bitmap)
+//                val bitmap = result.data?.extras?.get("data") as Bitmap
+                //BITMAP TO STRING -> get path
+                val file = File(currentPhotoPath)
+                val bitmap = BitmapFactory.decodeFile(file.path)
+
+                getFile = file
+
+                val StringBitmap = bitmap
+                //STRING TO FILE
+//                val file = File(StringBitmap)
+
+                Glide.with(this)
+                    .load(file)
+                    .into(binding.ivProfile)
+//                binding.ivProfile.loadImage(bitmap)
             }
         }
 
+    fun BitMapToString(bitmap: Bitmap): String {
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
+        val b = baos.toByteArray()
+        return Base64.getEncoder().encodeToString(b)
+    }
+
+
+//    private val galleryResult =
+//        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
+//            if (result != null) {
+//                binding.ivProfile.loadImage(result)
+//            }
+//        }
 
 //    private val cameraResult =
 //        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -250,6 +281,27 @@ class ProfileEditFragment : Fragment() {
         launcherGallery.launch(chooser)
     }
 
+//    private fun openCamera() {
+//        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//        intent.resolveActivity(requireActivity().packageManager)
+//
+//        createTempFile(requireContext()).also {
+//            val photoURI: Uri = FileProvider.getUriForFile(
+//                requireContext(),
+//                "id.binar.fp.secondhand",
+//                it
+//            )
+//            currentPhotoPath = it.absolutePath
+//            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+//            launcherCamera.launch(intent)
+//        }
+//    }
+
+
+//    private fun openGallery() {
+//        galleryResult.launch("image/*")
+//    }
+
     private fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         intent.resolveActivity(requireActivity().packageManager)
@@ -265,8 +317,6 @@ class ProfileEditFragment : Fragment() {
             launcherCamera.launch(intent)
         }
     }
-
-
 
 //    private fun openCamera(){
 //        binding.ivProfile.setOnClickListener{ takePhoto()}
@@ -303,7 +353,7 @@ class ProfileEditFragment : Fragment() {
             if (getFile != null){
                 val file = getFile as File
                 upload(name, phoneNumber, city, address, file)
-                Toast.makeText(requireContext(), "Profile berhasil di update", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), "Profile berhasil di update", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(requireContext(), "Silahkan Masukkan foto Profil terlebih dahulu.", Toast.LENGTH_SHORT).show()
             }
@@ -321,6 +371,7 @@ class ProfileEditFragment : Fragment() {
                 when (result) {
                     is Result.Loading -> {
                         binding.progressBar.isVisible = true
+                        Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
@@ -330,7 +381,7 @@ class ProfileEditFragment : Fragment() {
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false
-                        Toast.makeText(requireContext(), "Profile gagal di update.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
                     }
                 }
 

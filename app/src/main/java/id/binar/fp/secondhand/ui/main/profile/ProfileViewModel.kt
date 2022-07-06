@@ -19,11 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val repository: AuthRepository,
-): ViewModel(){
-
-    private val user = MutableLiveData<id.binar.fp.secondhand.util.Result<UserDto>>()
-
-//    fun getProfile() = repository.getUser()
+) : ViewModel() {
 
     fun editProfile(
         fullName: String,
@@ -31,23 +27,18 @@ class ProfileViewModel @Inject constructor(
         city: String,
         address: String,
         image: File
-    ): LiveData<Result<UserDto>>{
-        viewModelScope.launch {
-            val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData (
-                "photo",
-                image.name,
-                requestImageFile
-            )
+    ): LiveData<Result<UserDto>> {
+        val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
 
-            val result = repository.updateUser(fullName, phoneNumber, city, address, imageMultipart)
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("full_name", fullName)
+            .addFormDataPart("phone_number", phoneNumber)
+            .addFormDataPart("city", city)
+            .addFormDataPart("address", address)
+            .addFormDataPart("image", image.name, requestImageFile)
+            .build()
 
-            try {
-                user.value = result.value
-            } catch (e: Exception){
-                user.value = id.binar.fp.secondhand.util.Result.Error(e.message.toString())
-            }
-        }
-        return user
+        return repository.updateUser(requestBody)
     }
 }

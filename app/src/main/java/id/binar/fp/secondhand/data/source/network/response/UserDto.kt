@@ -36,4 +36,10 @@ data class UserDto(
 
     @SerializedName("access_token")
     val accessToken: String? = null,
+
+    @field:SerializedName("error")
+    val error: Boolean = false,
+
+    @field:SerializedName("message")
+    val message: String? = null,
 )

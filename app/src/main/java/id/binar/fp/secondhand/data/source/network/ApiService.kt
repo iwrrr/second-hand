@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.data.source.network
 import id.binar.fp.secondhand.data.source.network.response.*
 import id.binar.fp.secondhand.util.Endpoints
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 interface ApiService {
@@ -28,14 +29,9 @@ interface ApiService {
     @GET(Endpoints.GET_USER)
     suspend fun getUser(): UserDto
 
-    @Multipart
     @PUT(Endpoints.UPDATE_USER)
     suspend fun updateUser(
-        @Field("full_name") fullName: String,
-        @Field("phone_number") phoneNumber: String,
-        @Field("city") city: String,
-        @Field("address") address: String,
-        @Part("image") image: MultipartBody.Part,
+        @Body body: RequestBody
     ): UserDto
 
     @Multipart
