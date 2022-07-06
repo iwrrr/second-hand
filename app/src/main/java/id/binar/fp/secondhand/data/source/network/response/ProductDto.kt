@@ -5,13 +5,16 @@ import com.google.gson.annotations.SerializedName
 data class ProductDto(
 
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int = 0,
 
     @SerializedName("name")
     val name: String? = null,
 
     @SerializedName("base_price")
-    val basePrice: Int? = null,
+    val basePrice: Int = 0,
+
+    @SerializedName("description")
+    val description: String? = null,
 
     @SerializedName("image_url")
     val imageUrl: String? = null,
@@ -22,13 +25,13 @@ data class ProductDto(
     @SerializedName("location")
     val location: String? = null,
 
-    @SerializedName("user_id")
-    val userId: Int? = null,
+    @SerializedName("User")
+    val user: UserDto? = null,
 
     @SerializedName("status")
     val status: String? = null,
 
-    @SerializedName("categories")
+    @SerializedName("Categories")
     val categories: List<CategoryDto>? = null,
 
     @SerializedName("created_at")

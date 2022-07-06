@@ -12,11 +12,16 @@ import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ActivityMainBinding
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.main.home.HomeFragment
+import id.binar.fp.secondhand.ui.main.home.SearchFragment
 import id.binar.fp.secondhand.ui.main.notification.NotificationFragment
 import id.binar.fp.secondhand.ui.main.product.AddProductFragment
 import id.binar.fp.secondhand.ui.main.profile.ProfileFragment
 import id.binar.fp.secondhand.ui.main.sell.SellListFragment
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@ExperimentalCoroutinesApi
+@FlowPreview
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
 
     private val homeFragment = HomeFragment()
+    private val searchFragment = SearchFragment()
     private val notificationFragment = NotificationFragment()
     private val addProductFragment = AddProductFragment()
     private val sellListFragment = SellListFragment()
@@ -81,7 +87,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack()
+            binding.bottomNavigationView.isVisible = false
+        } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
             binding.bottomNavigationView.isVisible = true
         } else {
