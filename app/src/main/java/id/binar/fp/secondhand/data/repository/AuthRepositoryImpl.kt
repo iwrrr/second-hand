@@ -8,7 +8,9 @@ import id.binar.fp.secondhand.domain.repository.AuthRepository
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.UserPreferences
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
+import retrofit2.http.Body
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -71,19 +73,14 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
+
     override fun updateUser(
-        fullName: String,
-        email: String,
-        password: String,
-        phoneNumber: Int,
-        city: String,
-        address: String,
-        image: MultipartBody.Part
+        body: RequestBody
     ): LiveData<Result<UserDto>> = liveData {
         emit(Result.Loading)
         try {
             val user =
-                apiService.updateUser(fullName, email, password, phoneNumber, city, address, image)
+                apiService.updateUser(body)
             emit(Result.Success(user))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
