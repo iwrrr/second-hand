@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
+import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentSearchBinding
 import id.binar.fp.secondhand.ui.main.adapter.home.SearchAdapter
+import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -33,7 +35,7 @@ class SearchFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val searchAdapter: SearchAdapter by lazy { SearchAdapter {} }
+    private val searchAdapter: SearchAdapter by lazy { SearchAdapter(::onProductClicked) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -84,6 +86,7 @@ class SearchFragment : Fragment() {
                     binding.loading.root.isVisible = false
                     binding.rvSearch.isVisible = true
                     binding.placeholder.root.isVisible = false
+//                    val productAvailable = result.data.filter { it.status == "available" }
                     searchAdapter.submitList(result.data)
                 }
                 is Result.Error -> {
@@ -93,6 +96,19 @@ class SearchFragment : Fragment() {
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun onProductClicked(product: ProductDto) {
+        val fragment = ProductDetailFragment()
+        val bundle = Bundle()
+        bundle.putInt("id", product.id)
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction().apply {
+            add(R.id.main_nav_host, fragment)
+            addToBackStack(null)
+            commit()
         }
     }
 }

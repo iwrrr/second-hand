@@ -1,7 +1,6 @@
 package id.binar.fp.secondhand.ui.main.product
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,12 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.CategoryDto
+import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentProductDetailBinding
-import id.binar.fp.secondhand.ui.main.home.HomeViewModel
+import id.binar.fp.secondhand.ui.main.bottomsheet.BidBottomSheet
+import id.binar.fp.secondhand.ui.main.bottomsheet.BottomSheetCallback
 import id.binar.fp.secondhand.util.Extensions.loadImage
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
@@ -39,7 +40,7 @@ class ProductDetailFragment : Fragment() {
         requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
             false
 
-        binding.btnBack.setOnClickListener { requireActivity().onBackPressed() }
+        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
 
         observeDetailProduct()
     }
@@ -51,34 +52,54 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun observeDetailProduct() {
-        val value = this.arguments
-        val inputData = value?.getInt("id")
+        val id = arguments?.getInt("id")
+        id?.let {
+            viewModel.getDetailProduct(it).observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Result.Loading -> {
 
-        viewModel.getDetailProduct(inputData!!).observe(viewLifecycleOwner){ result->
-            when(result){
-                is Result.Loading ->{
+                    }
+                    is Result.Success -> {
+                        binding.tvProductName.text = result.data.name
+                        binding.tvProductCategory.text = Helper.initCategory(result.data.categories)
+                        binding.tvProductPrice.text = result.data.basePrice.toString()
+                        binding.tvName.text = result.data.user?.fullName
+                        binding.tvCity.text = result.data.user?.city
+                        binding.tvProductDescription.text = result.data.description
+                        binding.ivProductImage.loadImage(result.data.imageUrl)
+                        binding.ivProfile.loadImage(result.data.user?.imageUrl)
+                        binding.btnBid.isEnabled = result.data.status == "available"
 
-                }
-                is Result.Success -> {
-                    binding.tvProductName.text = result.data.name
-                    binding.tvProductCategory.text = initCategory(result.data.categories)
-                    binding.tvProductPrice.text = result.data.basePrice.toString()
-                    binding.tvName.text = result.data.user?.fullName
-                    binding.tvCity.text = result.data.user?.city
-                    binding.tvProductDescription.text = result.data.description
-                    binding.ivProductImage.loadImage(result.data.imageUrl)
-                    binding.ivProfile.loadImage(result.data.user?.imageUrl)
-                }
-                is Result.Error -> {
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        initBottomSheet(result.data)
+                    }
+                    is Result.Error -> {
+                        Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
     }
 
-    private fun initCategory(categories:List<CategoryDto>?):String{
-        val list = ArrayList<CategoryDto>()
-        categories?.forEach { category->list.add(category) }
-        return list.joinToString { it.name!! }
+    private fun initBottomSheet(product: ProductDto) {
+        val bidBottomSheet = BidBottomSheet()
+        val bundle = Bundle().apply {
+            putInt("id", product.id)
+            putString("image", product.imageUrl)
+            putString("name", product.name)
+            putInt("price", product.basePrice)
+        }
+
+        bidBottomSheet.arguments = bundle
+
+        binding.btnBid.setOnClickListener {
+            bidBottomSheet.show(parentFragmentManager, BidBottomSheet.TAG)
+        }
+
+        bidBottomSheet.bottomSheetCallback = object : BottomSheetCallback {
+            override fun onDismiss() {
+                binding.btnBid.isEnabled = false
+                binding.btnBid.text = "Menunggu respon penjual"
+            }
+        }
     }
 }

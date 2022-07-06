@@ -30,9 +30,10 @@ class SearchAdapter(
     override fun getItemCount(): Int = oldProductList.size
 
     fun submitList(newProductList: List<ProductDto>) {
-        val diffUtil = SearchDiffUtil(oldProductList, newProductList)
+        val availableProduct = newProductList.filter { it.status == "available" }
+        val diffUtil = SearchDiffUtil(oldProductList, availableProduct)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
-        oldProductList = newProductList
+        oldProductList = availableProduct
         diffResult.dispatchUpdatesTo(this)
     }
 

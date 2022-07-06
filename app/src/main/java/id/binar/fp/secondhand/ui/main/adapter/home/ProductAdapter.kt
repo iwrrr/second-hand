@@ -9,43 +9,43 @@ import id.binar.fp.secondhand.databinding.ItemSellListProductBinding
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 
-class ProductAdapter(private val onClick:(ProductDto)->Unit
-    ):RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
+class ProductAdapter(
+    private val onClick: (ProductDto) -> Unit
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 
     private var oldProductList = emptyList<ProductDto>()
 
-        inner class ProductViewHolder(private val binding: ItemSellListProductBinding):
-                RecyclerView.ViewHolder(binding.root){
-                    fun bind(listProduct : ProductDto){
-                        binding.tvProductName.text = listProduct.name
-                        binding.tvProductCategory.text = Helper.initCategory(listProduct.categories)
-                        binding.tvProductPrice.text = listProduct.basePrice.toString()
-                        binding.ivProductImage.loadImage(listProduct.imageUrl)
-                        itemView.setOnClickListener { onClick(listProduct) }
-                    }
-                }
+    inner class ProductViewHolder(private val binding: ItemSellListProductBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: ProductDto) {
+            binding.tvProductName.text = product.name
+            binding.tvProductCategory.text = Helper.initCategory(product.categories)
+            binding.tvProductPrice.text = product.basePrice.toString()
+            binding.ivProductImage.loadImage(product.imageUrl)
+            itemView.setOnClickListener { onClick(product) }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-       val binding = ItemSellListProductBinding.inflate(
-           LayoutInflater.from(parent.context),
-           parent,
-           false
-       )
+        val binding = ItemSellListProductBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return ProductViewHolder((binding))
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-       holder.bind(oldProductList[position])
+        holder.bind(oldProductList[position])
     }
 
     override fun getItemCount(): Int = oldProductList.size
 
-    fun submitList(newProductList : List<ProductDto>){
-        val diffUtil = ProductDiffutil(oldProductList,newProductList)
+    fun submitList(newProductList: List<ProductDto>) {
+        val availableProduct = newProductList.filter { it.status == "available" }
+        val diffUtil = ProductDiffutil(oldProductList, availableProduct)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
-        oldProductList = newProductList
+        oldProductList = availableProduct
         diffResult.dispatchUpdatesTo(this)
     }
-
-
 }

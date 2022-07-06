@@ -141,10 +141,11 @@ interface ApiService {
         @Path("id") id: Int
     ): ProductDto
 
+    @FormUrlEncoded
     @POST(Endpoints.ADD_BUYER_ORDER)
     suspend fun addBuyerOrder(
         @Field("product_id") productId: Int,
-        @Field("bid_price") bidPrice: Int,
+        @Field("bid_price") bidPrice: String,
     ): OrderDto
 
     @GET(Endpoints.GET_BUYER_ORDER)
