@@ -97,8 +97,10 @@ class ProductDetailFragment : Fragment() {
 
         bidBottomSheet.bottomSheetCallback = object : BottomSheetCallback {
             override fun onDismiss() {
-                binding.btnBid.isEnabled = false
-                binding.btnBid.text = "Menunggu respon penjual"
+                if (bidBottomSheet.statusOrder == 1) {
+                    binding.btnBid.isEnabled = false
+                    binding.btnBid.text = "Menunggu respon penjual"
+                }
             }
         }
     }
