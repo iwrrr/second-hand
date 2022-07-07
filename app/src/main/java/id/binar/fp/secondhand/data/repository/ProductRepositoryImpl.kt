@@ -5,12 +5,14 @@ import androidx.lifecycle.liveData
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
 import id.binar.fp.secondhand.data.source.network.response.ProductDto
+import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.domain.repository.ProductRepository
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
 import retrofit2.HttpException
+import java.io.File
 import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(
@@ -20,12 +22,36 @@ class ProductRepositoryImpl @Inject constructor(
     override fun addSellerProduct(
         name: String,
         description: String,
-        basePrice: String,
+        basePrice: Int,
         categoryIds: List<Int>,
         location: String,
-        image: MultipartBody.Part
+        userId: Int,
+        image: File
     ): LiveData<Result<ProductDto>> = liveData {
-        TODO("Not yet implemented")
+        emit(Result.Loading)
+        try {
+            apiService.addSellerProduct(name, description, basePrice, categoryIds, location, image)
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
+    }
+
+    override fun getUser(): LiveData<Result<UserDto>> = liveData {
+        emit(Result.Loading)
+        try {
+            val user = apiService.getUser()
+            emit(Result.Success(user))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
     override fun getSellerProduct(): LiveData<Result<List<ProductDto>>> = liveData {

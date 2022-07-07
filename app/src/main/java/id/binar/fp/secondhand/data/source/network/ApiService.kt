@@ -4,6 +4,7 @@ import id.binar.fp.secondhand.data.source.network.response.*
 import id.binar.fp.secondhand.util.Endpoints
 import okhttp3.MultipartBody
 import retrofit2.http.*
+import java.io.File
 
 interface ApiService {
 
@@ -45,10 +46,10 @@ interface ApiService {
     suspend fun addSellerProduct(
         @Field("name") name: String,
         @Field("description") description: String,
-        @Field("base_price") basePrice: String,
+        @Field("base_price") basePrice: Int,
         @Field("category_ids") categoryIds: List<Int>,
         @Field("location") location: String,
-        @Part("image") image: MultipartBody.Part,
+        @Part("image") image: File,
     ): ProductDto
 
     @GET(Endpoints.GET_SELLER_PRODUCT)
