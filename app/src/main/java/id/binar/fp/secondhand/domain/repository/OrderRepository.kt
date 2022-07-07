@@ -16,7 +16,7 @@ interface OrderRepository {
 
     fun addBuyerOrder(
         productId: Int,
-        bidPrice: Int,
+        bidPrice: String,
     ): LiveData<Result<OrderDto>>
 
     fun getBuyerOrder(): LiveData<Result<List<OrderDto>>>

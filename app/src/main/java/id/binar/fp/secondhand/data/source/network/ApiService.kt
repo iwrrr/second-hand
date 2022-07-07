@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.data.source.network
 import id.binar.fp.secondhand.data.source.network.response.*
 import id.binar.fp.secondhand.util.Endpoints
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.*
 import java.io.File
 
@@ -29,16 +30,9 @@ interface ApiService {
     @GET(Endpoints.GET_USER)
     suspend fun getUser(): UserDto
 
-    @Multipart
     @PUT(Endpoints.UPDATE_USER)
     suspend fun updateUser(
-        @Field("full_name") fullName: String,
-        @Field("email") email: String,
-        @Field("password") password: String,
-        @Field("phone_number") phoneNumber: Int,
-        @Field("city") city: String,
-        @Field("address") address: String,
-        @Part("image") image: MultipartBody.Part,
+        @Body body: RequestBody
     ): UserDto
 
     @Multipart
@@ -142,10 +136,11 @@ interface ApiService {
         @Path("id") id: Int
     ): ProductDto
 
+    @FormUrlEncoded
     @POST(Endpoints.ADD_BUYER_ORDER)
     suspend fun addBuyerOrder(
         @Field("product_id") productId: Int,
-        @Field("bid_price") bidPrice: Int,
+        @Field("bid_price") bidPrice: String,
     ): OrderDto
 
     @GET(Endpoints.GET_BUYER_ORDER)

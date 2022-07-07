@@ -3,7 +3,7 @@ package id.binar.fp.secondhand.domain.repository
 import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.util.Result
-import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 interface AuthRepository {
 
@@ -24,13 +24,7 @@ interface AuthRepository {
     fun getUser(): LiveData<Result<UserDto>>
 
     fun updateUser(
-        fullName: String,
-        email: String,
-        password: String,
-        phoneNumber: Int,
-        city: String,
-        address: String,
-        image: MultipartBody.Part,
+        body: RequestBody,
     ): LiveData<Result<UserDto>>
 
     fun logout(): LiveData<Unit>

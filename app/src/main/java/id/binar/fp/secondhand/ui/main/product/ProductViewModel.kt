@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main.product
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import id.binar.fp.secondhand.domain.repository.CategoryRepository
+import id.binar.fp.secondhand.domain.repository.OrderRepository
 import id.binar.fp.secondhand.domain.repository.ProductRepository
 import java.io.File
 import javax.inject.Inject
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class ProductViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val categoryRepository: CategoryRepository,
+    private val orderRepository: OrderRepository
 ) : ViewModel() {
 
     fun getCategory() = categoryRepository.getCategory()
@@ -36,4 +38,9 @@ class ProductViewModel @Inject constructor(
 
     fun getUser() = productRepository.getUser()
 
+    fun getDetailProduct(id: Int) = productRepository.getBuyerProductById(id)
+
+    fun addBuyerOrder(productId: Int, bidPrice: String) =
+        orderRepository.addBuyerOrder(productId, bidPrice)
 }
+

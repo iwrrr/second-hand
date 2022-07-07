@@ -6,6 +6,7 @@ import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.response.OrderDto
 import id.binar.fp.secondhand.domain.repository.OrderRepository
 import id.binar.fp.secondhand.util.Result
+import retrofit2.HttpException
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
@@ -28,9 +29,19 @@ class OrderRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun addBuyerOrder(productId: Int, bidPrice: Int): LiveData<Result<OrderDto>> =
+    override fun addBuyerOrder(productId: Int, bidPrice: String): LiveData<Result<OrderDto>> =
         liveData {
-            TODO("Not yet implemented")
+            emit(Result.Loading)
+            try {
+                val response = apiService.addBuyerOrder(productId, bidPrice)
+                emit(Result.Success(response))
+            } catch (e: HttpException) {
+                emit(Result.Error(e.message()))
+            } catch (e: NullPointerException) {
+                emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+            } catch (e: Exception) {
+                emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+            }
         }
 
     override fun getBuyerOrder(): LiveData<Result<List<OrderDto>>> = liveData {

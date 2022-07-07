@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
+import id.binar.fp.secondhand.data.source.network.response.CategoryDto
+import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentHomeBinding
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
+import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.Result
-import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -31,20 +32,11 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private val categoryAdapter by lazy {
-        CategoryAdapter {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
-        }
+        CategoryAdapter(::onCategoryClicked)
     }
 
     private val productAdapter by lazy {
-        SellListProductAdapter {
-            Toast.makeText(requireContext(), it.name, Toast.LENGTH_SHORT).show()
-            parentFragmentManager.beginTransaction().apply {
-                add(R.id.main_nav_host, ProductDetailFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
+        ProductAdapter(::onProductClicked)
     }
 
     override fun onCreateView(
@@ -57,7 +49,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
@@ -80,13 +71,11 @@ class HomeFragment : Fragment() {
         binding.rvCategory.adapter = categoryAdapter
         binding.rvCategory.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-
         observeCategory()
 
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-
-        productAdapter.submitList(setDummyProducts())
+        observeListProduct()
     }
 
     private fun observeCategory() {
@@ -96,9 +85,7 @@ class HomeFragment : Fragment() {
 
                 }
                 is Result.Success -> {
-                    result.data.let { response ->
-                        categoryAdapter.submitList(response)
-                    }
+                    categoryAdapter.submitList(result.data)
                 }
                 is Result.Error -> {
                     Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
@@ -108,5 +95,49 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun observeListProduct() {
+        viewModel.getAllProduct().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+
+                }
+                is Result.Success -> {
+//                    val availableProduct = result.data.filter { it.status == "available" }
+                    productAdapter.submitList(result.data)
+                }
+                is Result.Error -> {
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun onCategoryClicked(category: CategoryDto) {
+        Toast.makeText(requireContext(), category.name, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun onProductClicked(product: ProductDto) {
+        val fragment = ProductDetailFragment()
+        val bundle = Bundle()
+        bundle.putInt("id", product.id)
+        fragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction().apply {
+            add(R.id.main_nav_host, fragment)
+            addToBackStack(null)
+            commit()
+        }
+    }
+
+    private fun filterProduct(products: List<ProductDto>, category: CategoryDto): List<ProductDto> {
+        val filteredList = arrayListOf<ProductDto>()
+        for (product in products) {
+            if (product.categories?.contains(category) == true) {
+                filteredList.add(product)
+            }
+        }
+        return filteredList
     }
 }
