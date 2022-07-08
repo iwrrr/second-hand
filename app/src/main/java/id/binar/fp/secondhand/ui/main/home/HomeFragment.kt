@@ -32,12 +32,15 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels()
 
     private val categoryAdapter by lazy {
-        CategoryAdapter(::onCategoryClicked)
+        CategoryAdapter(::onCategoryClicked, requireContext())
     }
 
     private val productAdapter by lazy {
         ProductAdapter(::onProductClicked)
     }
+
+    private var products = emptyList<ProductDto>()
+    private var categories = emptyList<CategoryDto>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,13 +88,13 @@ class HomeFragment : Fragment() {
 
                 }
                 is Result.Success -> {
-                    categoryAdapter.submitList(result.data)
+                    val allCategory = result.data.toMutableList()
+                    allCategory.add(0, CategoryDto(id = 0, name = "Semua"))
+                    categoryAdapter.submitList(allCategory)
+                    categories = allCategory
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-                }
-                else -> {
-
+                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -104,8 +107,9 @@ class HomeFragment : Fragment() {
 
                 }
                 is Result.Success -> {
-//                    val availableProduct = result.data.filter { it.status == "available" }
-                    productAdapter.submitList(result.data)
+                    val availableProduct = result.data.filter { it.status == "available" }
+                    productAdapter.submitList(availableProduct)
+                    products = availableProduct
                 }
                 is Result.Error -> {
                     Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
@@ -115,17 +119,24 @@ class HomeFragment : Fragment() {
     }
 
     private fun onCategoryClicked(category: CategoryDto) {
-        Toast.makeText(requireContext(), category.name, Toast.LENGTH_SHORT).show()
+        if (category.id != 0) {
+            val filteredProducts = products.filter { data ->
+                data.categories?.map { it.id }?.contains(category.id) == true
+            }
+            productAdapter.submitList(filteredProducts)
+        } else {
+            productAdapter.submitList(products)
+        }
     }
 
     private fun onProductClicked(product: ProductDto) {
-        val fragment = ProductDetailFragment()
+        val detailFragment = ProductDetailFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)
-        fragment.arguments = bundle
+        detailFragment.arguments = bundle
 
         parentFragmentManager.beginTransaction().apply {
-            add(R.id.main_nav_host, fragment)
+            add(R.id.main_nav_host, detailFragment)
             addToBackStack(null)
             commit()
         }

@@ -72,8 +72,8 @@ class ProductFragment : Fragment() {
                 }
                 is Result.Success -> {
                     binding.loading.root.isVisible = false
-                    val availableProduct = result.data?.filter { it.status == "available" }
-                    if (availableProduct != null) {
+                    val availableProduct = result.data.filter { it.status == "available" }
+                    if (availableProduct.isNotEmpty()) {
                         productAdapter.submitList(availableProduct)
                     } else {
                         binding.content.root.isVisible = false

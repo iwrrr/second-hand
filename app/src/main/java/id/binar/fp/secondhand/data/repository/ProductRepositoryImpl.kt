@@ -28,7 +28,7 @@ class ProductRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getSellerProduct(): LiveData<Result<List<ProductDto>?>> = liveData {
+    override fun getSellerProduct(): LiveData<Result<List<ProductDto>>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getSellerProduct()

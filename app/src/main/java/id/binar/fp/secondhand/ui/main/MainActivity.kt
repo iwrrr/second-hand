@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
@@ -39,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars = true
 
         setupBottomNavigationBar()
     }
@@ -85,11 +87,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        val tag = supportFragmentManager.findFragmentByTag(profileFragment::class.java.simpleName)
+        if (tag != null) {
+            profileFragment.observeUser()
+        }
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
             binding.bottomNavigationView.isVisible = false
         } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
+            ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars =
+                true
             binding.bottomNavigationView.isVisible = true
         } else {
             setTabStateFragment(TabState.HOME).commit()

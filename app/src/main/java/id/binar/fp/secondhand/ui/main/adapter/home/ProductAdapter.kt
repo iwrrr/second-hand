@@ -31,10 +31,9 @@ class ProductAdapter(
     override fun getItemCount(): Int = oldProductList.size
 
     fun submitList(newProductList: List<ProductDto>) {
-        val availableProduct = newProductList.filter { it.status == "available" }
-        val diffUtil = ProductDiffutil(oldProductList, availableProduct)
+        val diffUtil = ProductDiffutil(oldProductList, newProductList)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
-        oldProductList = availableProduct
+        oldProductList = newProductList
         diffResult.dispatchUpdatesTo(this)
     }
 
