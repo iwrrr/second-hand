@@ -15,17 +15,6 @@ class ProductAdapter(
 
     private var oldProductList = emptyList<ProductDto>()
 
-    inner class ProductViewHolder(private val binding: ItemSellListProductBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        fun bind(product: ProductDto) {
-            binding.tvProductName.text = product.name
-            binding.tvProductCategory.text = Helper.initCategory(product.categories)
-            binding.tvProductPrice.text = product.basePrice.toString()
-            binding.ivProductImage.loadImage(product.imageUrl)
-            itemView.setOnClickListener { onClick(product) }
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val binding = ItemSellListProductBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -42,10 +31,20 @@ class ProductAdapter(
     override fun getItemCount(): Int = oldProductList.size
 
     fun submitList(newProductList: List<ProductDto>) {
-        val availableProduct = newProductList.filter { it.status == "available" }
-        val diffUtil = ProductDiffutil(oldProductList, availableProduct)
+        val diffUtil = ProductDiffutil(oldProductList, newProductList)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
-        oldProductList = availableProduct
+        oldProductList = newProductList
         diffResult.dispatchUpdatesTo(this)
+    }
+
+    inner class ProductViewHolder(private val binding: ItemSellListProductBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(product: ProductDto) {
+            binding.tvProductName.text = product.name
+            binding.tvProductCategory.text = Helper.initCategory(product.categories)
+            binding.tvProductPrice.text = product.basePrice.toString()
+            binding.ivProductImage.loadImage(product.imageUrl)
+            itemView.setOnClickListener { onClick(product) }
+        }
     }
 }

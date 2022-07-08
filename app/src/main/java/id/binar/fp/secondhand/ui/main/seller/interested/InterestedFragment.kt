@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.sell.product
+package id.binar.fp.secondhand.ui.main.seller.interested
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,31 +7,32 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.databinding.FragmentProductBinding
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListProductAdapter
-import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
+import id.binar.fp.secondhand.databinding.FragmentInterestedBinding
+import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
 
 @AndroidEntryPoint
-class ProductFragment : Fragment() {
+class InterestedFragment : Fragment() {
 
-    private var _binding: FragmentProductBinding? = null
+    private var _binding: FragmentInterestedBinding? = null
     private val binding get() = _binding!!
 
-    private val productAdapter by lazy {
-        SellListProductAdapter {
+    private val interestedAdapter by lazy {
+        SellListInterestedAdapter {
             Toast.makeText(
                 requireContext(),
                 it.name,
                 Toast.LENGTH_SHORT
             ).show()
             requireParentFragment().parentFragmentManager.beginTransaction().apply {
-                add(R.id.main_nav_host, ProductDetailFragment())
+                replace(R.id.main_nav_host, BidderInfoFragment())
                 addToBackStack(null)
                 commit()
             }
+//            findNavController().navigate(R.id.bidderInfoFragment)
         }
     }
 
@@ -40,7 +41,7 @@ class ProductFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentProductBinding.inflate(inflater, container, false)
+        _binding = FragmentInterestedBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,9 +60,15 @@ class ProductFragment : Fragment() {
         binding.content.root.isVisible = false
         binding.empty.root.isVisible = true
 
-        binding.content.rvProduct.adapter = productAdapter
-        binding.content.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.content.rvInterested.adapter = interestedAdapter
+        binding.content.rvInterested.layoutManager = LinearLayoutManager(requireContext())
+        binding.content.rvInterested.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                LinearLayoutManager.VERTICAL
+            )
+        )
 
-//        productAdapter.submitList(setDummyProducts())
+//        interestedAdapter.submitList(setDummyProducts())
     }
 }

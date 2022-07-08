@@ -2,19 +2,24 @@ package id.binar.fp.secondhand.ui.main.profile
 
 import android.Manifest
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Base64.decode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -30,8 +35,8 @@ import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.BottomSheetChooseImageBinding
 import id.binar.fp.secondhand.databinding.FragmentProfileEditBinding
 import id.binar.fp.secondhand.util.Extensions.loadImage
-import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.createTempFile
+import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.uriToFile
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -345,16 +350,12 @@ class ProfileEditFragment : Fragment() {
             val fileName = formatter.format(now)
 //            val image = binding.ivProfile.setImageURI(cameraResult)
 
-            if (getFile != null) {
+            if (getFile != null){
                 val file = getFile as File
                 upload(name, phoneNumber, city, address, file)
 //                Toast.makeText(requireContext(), "Profile berhasil di update", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Silahkan Masukkan foto Profil terlebih dahulu.",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "Silahkan Masukkan foto Profil terlebih dahulu.", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -364,10 +365,9 @@ class ProfileEditFragment : Fragment() {
         phoneNumber: String,
         city: String,
         address: String,
-        image: File
-    ) {
-        viewModel.editProfile(fullName, phoneNumber, city, address, image)
-            .observe(viewLifecycleOwner) { result ->
+        image: File ){
+        viewModel.editProfile(fullName, phoneNumber, city, address, image )
+            .observe(viewLifecycleOwner){ result ->
                 when (result) {
                     is Result.Loading -> {
                         binding.progressBar.isVisible = true
@@ -375,11 +375,7 @@ class ProfileEditFragment : Fragment() {
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
-                        Toast.makeText(
-                            requireContext(),
-                            "Profile Berhasil di Update",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireContext(), "Profile Berhasil di Update", Toast.LENGTH_SHORT).show()
                         val fragmentManager = parentFragmentManager
                         fragmentManager.popBackStack()
                     }

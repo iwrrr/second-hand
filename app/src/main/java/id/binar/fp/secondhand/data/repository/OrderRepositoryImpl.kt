@@ -36,7 +36,11 @@ class OrderRepositoryImpl @Inject constructor(
                 val response = apiService.addBuyerOrder(productId, bidPrice)
                 emit(Result.Success(response))
             } catch (e: HttpException) {
-                emit(Result.Error(e.message()))
+                if (e.code() == 400) {
+                    emit(Result.Error("Produk ini memiliki pesanan maksimum"))
+                } else {
+                    emit(Result.Error(e.message()))
+                }
             } catch (e: NullPointerException) {
                 emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
             } catch (e: Exception) {

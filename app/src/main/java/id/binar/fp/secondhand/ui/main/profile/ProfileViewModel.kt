@@ -22,19 +22,20 @@ class ProfileViewModel @Inject constructor(
         phoneNumber: String,
         city: String,
         address: String,
-        image: File
+        image: File?
     ): LiveData<Result<UserDto>> {
-        val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
-
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("full_name", fullName)
             .addFormDataPart("phone_number", phoneNumber)
             .addFormDataPart("city", city)
             .addFormDataPart("address", address)
-            .addFormDataPart("image", image.name, requestImageFile)
-            .build()
 
-        return repository.updateUser(requestBody)
+        if (image != null) {
+            val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
+            requestBody.addFormDataPart("image", image.name, requestImageFile)
+        }
+
+        return repository.updateUser(requestBody.build())
     }
 }

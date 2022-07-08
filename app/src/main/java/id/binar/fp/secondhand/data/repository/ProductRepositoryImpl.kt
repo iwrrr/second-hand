@@ -49,7 +49,15 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override fun getSellerProduct(): LiveData<Result<List<ProductDto>>> = liveData {
-        TODO("Not yet implemented")
+        emit(Result.Loading)
+        try {
+            val response = apiService.getSellerProduct()
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
     override fun getSellerProductById(id: Int): LiveData<Result<ProductDto>> = liveData {

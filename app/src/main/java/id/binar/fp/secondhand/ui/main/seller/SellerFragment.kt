@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.sell
+package id.binar.fp.secondhand.ui.main.seller
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,16 +13,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.databinding.FragmentSellListBinding
+import id.binar.fp.secondhand.databinding.FragmentSellerBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListPagerAdapter
+import id.binar.fp.secondhand.ui.main.adapter.sell.SellerPagerAdapter
 import id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment
 
 @AndroidEntryPoint
-class SellListFragment : Fragment() {
+class SellerFragment : Fragment() {
 
-    private var _binding: FragmentSellListBinding? = null
+    private var _binding: FragmentSellerBinding? = null
     private val binding get() = _binding!!
 
     private val authViewModel: AuthViewModel by viewModels()
@@ -32,7 +32,7 @@ class SellListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSellListBinding.inflate(inflater, container, false)
+        _binding = FragmentSellerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -89,7 +89,7 @@ class SellListFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        val pagerAdapter = SellListPagerAdapter(childFragmentManager, lifecycle)
+        val pagerAdapter = SellerPagerAdapter(childFragmentManager, lifecycle)
         val viewpager = binding.content.viewPager
         viewpager.apply {
             adapter = pagerAdapter
