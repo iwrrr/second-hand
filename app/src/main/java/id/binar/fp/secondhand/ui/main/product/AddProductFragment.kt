@@ -2,20 +2,16 @@ package id.binar.fp.secondhand.ui.main.product
 
 import android.Manifest
 import android.app.Activity
-import android.content.ContentResolver
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.MultiAutoCompleteTextView
 import android.widget.Toast
@@ -23,6 +19,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,19 +27,23 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.CategoryDto
 import id.binar.fp.secondhand.databinding.BottomSheetChooseImageBinding
 import id.binar.fp.secondhand.databinding.FragmentAddProductBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
-import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Result
-import okhttp3.MultipartBody
+import id.binar.fp.secondhand.util.createTempFile
+import id.binar.fp.secondhand.util.uriToFile
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.text.SimpleDateFormat
-import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.List
+import kotlin.collections.MutableMap
+import kotlin.collections.arrayListOf
+import kotlin.collections.getValue
+import kotlin.collections.map
+import kotlin.collections.mutableMapOf
+import kotlin.collections.set
+import kotlin.collections.toList
 
 @AndroidEntryPoint
 class AddProductFragment : Fragment() {
@@ -54,34 +55,39 @@ class AddProductFragment : Fragment() {
     private val productViewModel: ProductViewModel by viewModels()
 
     private var getFile: File? = null
-    private var dataId: Int? = 0
-    private var dataLoc: String? = ""
-    private lateinit var dataCategory: List<Int>
+    private val idCategory: ArrayList<Int?> = arrayListOf()
+    private val mapCategory: MutableMap<String?, Int?> = mutableMapOf()
+    private lateinit var currentPhotoPath: String
 
-    private val galleryResult =
+
+    private val launcherCamera =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result != null) {
-//                binding.content.ivProductImage.loadImage(result)
-//            }
+            if (result.resultCode == AppCompatActivity.RESULT_OK) {
+                val file = File(currentPhotoPath)
+                val bitmap = BitmapFactory.decodeFile(file.path)
 
+                getFile = file
+
+                Glide.with(this)
+                    .load(bitmap)
+                    .into(binding.content.ivProductImage)
+
+            }
+        }
+
+    private val launcherGallery =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == AppCompatActivity.RESULT_OK) {
                 val selectedImage: Uri = result.data?.data as Uri
                 val file = uriToFile(selectedImage, requireContext())
+
 
                 getFile = file
 
                 Glide.with(this)
                     .load(file)
                     .into(binding.content.ivProductImage)
-            }
-        }
 
-
-    private val cameraResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                val bitmap = result.data?.extras?.get("data") as Bitmap
-                binding.content.ivProductImage.loadImage(bitmap)
             }
         }
 
@@ -98,8 +104,7 @@ class AddProductFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkAuth()
         categoryList()
-        addProduct()
-        observeUser()
+        productAdd()
 
         onLoginClicked()
         setupToolbar()
@@ -154,30 +159,25 @@ class AddProductFragment : Fragment() {
                 }
                 is Result.Success -> {
                     result.data.let { response ->
+                        val listCategory: ArrayList<String?> = arrayListOf()
+                        for (i in response.map { it.name }) {
+                            listCategory.add(i)
+                        }
+
+                        for (items in response) {
+                            mapCategory[items.name] = items.id
+                        }
                         val listAdapter = ArrayAdapter(
                             requireContext(),
                             R.layout.item_add_product_category,
-                            response.map { it.name })
-                        binding.content.etProductCategory.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+                            listCategory
+                        )
+
                         binding.content.etProductCategory.setAdapter(listAdapter)
-                        binding.content.etProductCategory.onItemSelectedListener = object :
-
-                            AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(
-                                p0: AdapterView<*>,
-                                p1: View?,
-                                p2: Int,
-                                p3: Long
-                            ) {
-                                val selectedName = p0.getItemAtPosition(p2).toString()
-                                Toast.makeText(requireContext(), selectedName, Toast.LENGTH_SHORT)
-                                    .show()
-                            }
-
-                            override fun onNothingSelected(p0: AdapterView<*>?) {
-                                TODO("Not yet implemented")
-                            }
-
+                        binding.content.etProductCategory.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+                        binding.content.etProductCategory.setOnItemClickListener { adapterView, view, i, l ->
+                            val selectedCategory = adapterView.getItemAtPosition(i).toString()
+                            idCategory.add(mapCategory.getValue(selectedCategory))
                         }
                     }
                 }
@@ -192,10 +192,9 @@ class AddProductFragment : Fragment() {
     private fun observeAddProduct(
         name: String,
         description: String,
-        basePrice: Int,
-        categoryIds: List<Int>,
+        basePrice: String,
+        categoryIds: List<Int?>,
         location: String,
-        userId: Int,
         image: File
     ) {
         productViewModel.addProduct(
@@ -204,14 +203,22 @@ class AddProductFragment : Fragment() {
             basePrice,
             categoryIds,
             location,
-            userId,
             image
         ).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-
+                    Toast.makeText(
+                        requireContext(),
+                        "Produk sedang di terbitkan",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
                 is Result.Success -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Produk Berhasil di terbitkan",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     requireActivity().finish()
                 }
                 is Result.Error -> {
@@ -221,147 +228,30 @@ class AddProductFragment : Fragment() {
         }
     }
 
-
-    private fun observeCategory() {
-        productViewModel.getCategory().observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Success -> {
-                    result.data.let { response ->
-                        response.map { it.name }
-                    }
-                }
-                is Result.Loading -> {
-
-                }
-                is Result.Error -> {
-
-                }
-            }
-        }
-    }
-
-
-    private fun observeUser() {
-
-        productViewModel.getUser().observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Success -> {
-                    result.data.let { response ->
-                        dataId = response.id
-                        dataLoc = response.city
-                    }
-                }
-                is Result.Loading -> {
-
-                }
-                is Result.Error -> {
-
-                }
-            }
-        }
-    }
-
-    private fun addProduct() {
-        productViewModel.getCategory().observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Success -> {
-                    result.data.let { response ->
-//                        binding.apply {
-//                            content.btnPublish.setOnClickListener {
-//                                val name = content.etProductName.text.toString()
-//                                val description = content.etProductDescription.text.toString()
-//                                val basePrice = content.etProductPrice.text.toString().toInt()
-//                                content.etProductCategory.onItemSelectedListener = object :
-//
-//                                    AdapterView.OnItemSelectedListener {
-//                                    override fun onItemSelected(
-//                                        p0: AdapterView<*>?,
-//                                        p1: View?,
-//                                        p2: Int,
-//                                        p3: Long
-//                                    ) {
-//                                        TODO("Not yet implemented")
-//                                    }
-//
-//                                    override fun onNothingSelected(p0: AdapterView<*>?) {
-//                                        TODO("Not yet implemented")
-//                                    }
-//                                }
-//                                val location = dataLoc
-//                                val userId = dataId
-//                                val image = getFile as File
-//
-//                                observeAddProduct(
-//                                    name,
-//                                    description,
-//                                    basePrice,
-//                                    categoryIds,
-//                                    location!!,
-//                                    userId!!,
-//                                    image
-//                                )
-//
-//                            }
-//
-//                        }
-                    }
-                }
-                is Result.Loading -> {
-
-                }
-                is Result.Error -> {
-
-                }
-
-            }
-        }
-    }
-
-
     private fun productAdd() {
         binding.apply {
             content.btnPublish.setOnClickListener {
                 val name = content.etProductName.text.toString()
                 val description = content.etProductDescription.text.toString()
-                val basePrice = content.etProductPrice.text.toString().toInt()
-                val categoryIds = content.etProductCategory
-                val location = dataLoc
-                val userId = dataId
-//                val image: MultipartBody.Part =
-
-
-//                observeAddProduct(name, description, basePrice, categoryIds, location, userId)
-
+                val basePrice = content.etProductPrice.text.toString()
+                val categoryIds: List<Int?> = idCategory.toList()
+                val location = content.etProductLocation.toString()
+//                Toast.makeText(requireContext(), categoryIds.toString(), Toast.LENGTH_SHORT).show()
+                if (getFile != null) {
+                    val image = getFile as File
+                    observeAddProduct(name, description, basePrice, categoryIds, location, image)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Silahkan masukkan foto produk terlebih dahulu.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
 
         }
     }
 
-    private fun validateData(
-        name: String,
-        description: String,
-        categoryIds: List<CategoryDto>,
-        image: MultipartBody.Part,
-    ): Boolean {
-        return when {
-            name.isEmpty() -> {
-                binding.content.etlProductName.error = "Nama produk tidak boleh kosong"
-                binding.content.etProductName.requestFocus()
-                false
-            }
-            description.isEmpty() -> {
-                binding.content.etlProductDescription.error = "Deskripsi tidak boleh kosong"
-                binding.content.etProductDescription.requestFocus()
-                false
-            }
-            categoryIds.isEmpty() -> {
-                binding.content.etlProductCategory.error = "Kategori tidak boleh kosong"
-                binding.content.etProductCategory.requestFocus()
-                false
-            }
-            else -> true
-        }
-    }
 
     private fun setupBottomSheet() {
         val bottomSheet = BottomSheetDialog(requireContext())
@@ -446,52 +336,23 @@ class AddProductFragment : Fragment() {
         intent.type = "image/*"
 
         val chooser = Intent.createChooser(intent, "Choose a Picture")
-        galleryResult.launch(chooser)
-//        galleryResult.launch("image/*")
+        launcherGallery.launch(chooser)
     }
-
-    private fun uriToFile(selectedImage: Uri, context: Context): File {
-        val contentResolver: ContentResolver = context.contentResolver
-        val file = createTempFile(context)
-
-        val inputStream = contentResolver.openInputStream(selectedImage) as InputStream
-        val outputStream = FileOutputStream(file)
-        val buf = ByteArray(1024)
-        var len: Int
-        while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, 0, len)
-        outputStream.close()
-        inputStream.close()
-
-        return file
-    }
-
-    private fun createTempFile(context: Context): File {
-        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(timeStamp, ".jpg", storageDir)
-    }
-
-    private val timeStamp: String = SimpleDateFormat(
-        FILENAME_FORMAT,
-        Locale.US
-    ).format(System.currentTimeMillis())
-
 
     private fun openCamera() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {
-            cameraResult.launch(it)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.resolveActivity(requireActivity().packageManager)
+
+        createTempFile(requireContext()).also {
+            val photoURI: Uri = FileProvider.getUriForFile(
+                requireContext(),
+                "id.binar.fp.secondhand",
+                it
+            )
+            currentPhotoPath = it.absolutePath
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            launcherCamera.launch(intent)
         }
-//        intent.resolveActivity(packageManager)
-//
-//        createTempFile(application).also {
-//            val photoURI: Uri = FileProvider.getUriForFile(
-//                this@AddProductFragment,
-//                "com.dicoding.bpaai.submission",
-//                it
-//            )
-//            currentPhotoPath = it.absolutePath
-//            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-//            launcherCamera.launch(intent)
-//        }
     }
 
     companion object {

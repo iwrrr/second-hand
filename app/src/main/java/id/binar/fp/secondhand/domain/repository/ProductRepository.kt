@@ -7,18 +7,12 @@ import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
-import java.io.File
+import okhttp3.RequestBody
 
 interface ProductRepository {
 
     fun addSellerProduct(
-        name: String,
-        description: String,
-        basePrice: Int,
-        categoryIds: List<Int>,
-        location: String,
-        userId: Int,
-        image: File
+        body: RequestBody
     ): LiveData<Result<ProductDto>>
 
     fun getUser(): LiveData<Result<UserDto>>

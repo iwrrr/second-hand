@@ -36,11 +36,13 @@
     <string name="text_add_product_name">Nama Produk</string>
     <string name="text_add_product_price">Harga Produk</string>
     <string name="text_add_product_category">Kategori</string>
+    <string name="text_add_product_location">Lokasi</string>
     <string name="text_add_product_description">Deskripsi</string>
     <string name="text_add_product_image">Foto Produk</string>
 
     <string name="text_add_product_hint_name">Nama Produk</string>
     <string name="text_add_product_hint_price">Rp 0,00</string>
+    <string name="text_add_product_hint_location">Lokasi Produk</string>
     <string name="text_add_product_hint_category">Pilih Kategori</string>
     <string name="text_add_product_hint_description">Contoh: Barang bagus mantap</string>
 

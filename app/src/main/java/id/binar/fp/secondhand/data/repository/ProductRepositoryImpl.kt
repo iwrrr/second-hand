@@ -11,8 +11,8 @@ import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.HttpException
-import java.io.File
 import javax.inject.Inject
 
 class ProductRepositoryImpl @Inject constructor(
@@ -20,17 +20,11 @@ class ProductRepositoryImpl @Inject constructor(
 ) : ProductRepository {
 
     override fun addSellerProduct(
-        name: String,
-        description: String,
-        basePrice: Int,
-        categoryIds: List<Int>,
-        location: String,
-        userId: Int,
-        image: File
+        body: RequestBody
     ): LiveData<Result<ProductDto>> = liveData {
         emit(Result.Loading)
         try {
-            apiService.addSellerProduct(name, description, basePrice, categoryIds, location, image)
+            apiService.addSellerProduct(body)
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: NullPointerException) {

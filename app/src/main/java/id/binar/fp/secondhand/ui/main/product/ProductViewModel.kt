@@ -1,10 +1,16 @@
 package id.binar.fp.secondhand.ui.main.product
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.domain.repository.CategoryRepository
 import id.binar.fp.secondhand.domain.repository.OrderRepository
 import id.binar.fp.secondhand.domain.repository.ProductRepository
+import id.binar.fp.secondhand.util.Result
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -20,23 +26,27 @@ class ProductViewModel @Inject constructor(
     fun addProduct(
         name: String,
         description: String,
-        basePrice: Int,
-        categoryIds: List<Int>,
+        basePrice: String,
+        categoryIds: List<Int?>,
         location: String,
-        userId: Int,
         image: File
-    ) = productRepository.addSellerProduct(
-        name,
-        description,
-        basePrice,
-        categoryIds,
-        location,
-        userId,
-        image
-    )
+    ): LiveData<Result<ProductDto>> {
+        val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
 
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("name", name)
+            .addFormDataPart("description", description)
+            .addFormDataPart("base_price", basePrice)
+            .addFormDataPart("category_ids", categoryIds.toString())
+            .addFormDataPart("location", location)
+            .addFormDataPart("image", image.name, requestImageFile)
+            .build()
 
-    fun getUser() = productRepository.getUser()
+        return productRepository.addSellerProduct(requestBody)
+
+    }
+
 
     fun getDetailProduct(id: Int) = productRepository.getBuyerProductById(id)
 
