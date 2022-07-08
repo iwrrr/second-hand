@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
@@ -12,11 +13,10 @@ import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ActivityMainBinding
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.main.home.HomeFragment
-import id.binar.fp.secondhand.ui.main.home.SearchFragment
 import id.binar.fp.secondhand.ui.main.notification.NotificationFragment
 import id.binar.fp.secondhand.ui.main.product.AddProductFragment
 import id.binar.fp.secondhand.ui.main.profile.ProfileFragment
-import id.binar.fp.secondhand.ui.main.sell.SellListFragment
+import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -30,10 +30,9 @@ class MainActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
 
     private val homeFragment = HomeFragment()
-    private val searchFragment = SearchFragment()
     private val notificationFragment = NotificationFragment()
     private val addProductFragment = AddProductFragment()
-    private val sellListFragment = SellListFragment()
+    private val sellerFragment = SellerFragment()
     private val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
+        ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars = true
 
         setupBottomNavigationBar()
     }
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             .add(R.id.main_nav_host, homeFragment)
             .add(R.id.main_nav_host, notificationFragment)
             .add(R.id.main_nav_host, addProductFragment)
-            .add(R.id.main_nav_host, sellListFragment)
+            .add(R.id.main_nav_host, sellerFragment)
             .add(R.id.main_nav_host, profileFragment)
             .commit()
 
@@ -87,11 +87,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        val tag = supportFragmentManager.findFragmentByTag(profileFragment::class.java.simpleName)
+        if (tag != null) {
+            profileFragment.observeUser()
+        }
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
             binding.bottomNavigationView.isVisible = false
         } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
+            ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars =
+                true
             binding.bottomNavigationView.isVisible = true
         } else {
             setTabStateFragment(TabState.HOME).commit()
@@ -109,35 +115,35 @@ class MainActivity : AppCompatActivity() {
                 transaction.show(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.hide(sellListFragment)
+                transaction.hide(sellerFragment)
                 transaction.hide(profileFragment)
             }
             TabState.NOTIFICATION -> {
                 transaction.hide(homeFragment)
                 transaction.show(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.hide(sellListFragment)
+                transaction.hide(sellerFragment)
                 transaction.hide(profileFragment)
             }
             TabState.ADDPRODUCT -> {
                 transaction.hide(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.show(addProductFragment)
-                transaction.hide(sellListFragment)
+                transaction.hide(sellerFragment)
                 transaction.hide(profileFragment)
             }
             TabState.SELLLIST -> {
                 transaction.hide(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.show(sellListFragment)
+                transaction.show(sellerFragment)
                 transaction.hide(profileFragment)
             }
             TabState.PROFILE -> {
                 transaction.hide(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.hide(sellListFragment)
+                transaction.hide(sellerFragment)
                 transaction.show(profileFragment)
             }
         }

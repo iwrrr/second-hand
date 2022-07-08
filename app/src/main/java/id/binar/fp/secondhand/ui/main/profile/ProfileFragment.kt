@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
+import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.databinding.FragmentProfileBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.main.MainActivity
+import id.binar.fp.secondhand.util.Extensions.loadImage
+import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {
@@ -21,7 +24,9 @@ class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
 
-    private val authViewModel: AuthViewModel by viewModels()
+    private val authViewModel: AuthViewModel by activityViewModels()
+
+    private lateinit var user: UserDto
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,6 +40,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeUser()
         onEditClicked()
         onLoginClicked()
         onLogoutClicked()
@@ -42,6 +48,16 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        checkAuth()
+        observeUser()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun checkAuth() {
         authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
                 binding.menu.logout.isVisible = true
@@ -50,9 +66,19 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    fun observeUser() {
+        authViewModel.getUser().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+//                    user = result.data
+                    binding.ivProfile.loadImage(result.data.imageUrl)
+                }
+                is Result.Error -> {
+//                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     private fun onEditClicked() {

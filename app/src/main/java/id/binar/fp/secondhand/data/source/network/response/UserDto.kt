@@ -1,7 +1,10 @@
 package id.binar.fp.secondhand.data.source.network.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class UserDto(
 
     @SerializedName("id")
@@ -17,7 +20,7 @@ data class UserDto(
     val password: String? = null,
 
     @SerializedName("phone_number")
-    val phoneNumber: Long? = null,
+    val phoneNumber: String? = null,
 
     @SerializedName("city")
     val city: String? = null,
@@ -42,4 +45,4 @@ data class UserDto(
 
     @field:SerializedName("message")
     val message: String? = null,
-)
+) : Parcelable

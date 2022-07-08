@@ -22,6 +22,7 @@ class BidBottomSheet : BottomSheetDialogFragment() {
 
     private val viewModel: ProductViewModel by viewModels()
 
+    var statusOrder: Int = 0
     var bottomSheetCallback: BottomSheetCallback? = null
 
     override fun onCreateView(
@@ -61,6 +62,7 @@ class BidBottomSheet : BottomSheetDialogFragment() {
                             Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                         }
                         is Result.Success -> {
+                            statusOrder = 1
                             dialog?.dismiss()
                             Toast.makeText(
                                 requireContext(),
@@ -69,6 +71,8 @@ class BidBottomSheet : BottomSheetDialogFragment() {
                             ).show()
                         }
                         is Result.Error -> {
+                            statusOrder = 0
+                            dialog?.dismiss()
                             Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT)
                                 .show()
                         }

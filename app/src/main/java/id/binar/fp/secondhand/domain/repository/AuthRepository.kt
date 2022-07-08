@@ -3,9 +3,7 @@ package id.binar.fp.secondhand.domain.repository
 import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.util.Result
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Body
 
 interface AuthRepository {
 

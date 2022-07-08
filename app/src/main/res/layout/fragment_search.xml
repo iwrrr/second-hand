@@ -8,24 +8,6 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.main.home.SearchFragment">
 
-    <!--    <com.google.android.material.textfield.TextInputLayout-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:layout_marginTop="16dp"-->
-    <!--        android:layout_marginEnd="16dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <AutoCompleteTextView-->
-    <!--            android:id="@+id/ed_place"-->
-    <!--            style="@style/Widget.MaterialComponents.AutoCompleteTextView.FilledBox"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:hint="Cari" />-->
-    <!--    </com.google.android.material.textfield.TextInputLayout>-->
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_search"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"

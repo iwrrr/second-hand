@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.sell.sold
+package id.binar.fp.secondhand.ui.main.seller.sold
 
 import android.os.Bundle
 import android.view.LayoutInflater

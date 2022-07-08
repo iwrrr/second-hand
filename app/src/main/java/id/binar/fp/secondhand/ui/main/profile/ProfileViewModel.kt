@@ -1,15 +1,11 @@
 package id.binar.fp.secondhand.ui.main.profile
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-
 import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.domain.repository.AuthRepository
 import id.binar.fp.secondhand.util.Result
-import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -26,19 +22,20 @@ class ProfileViewModel @Inject constructor(
         phoneNumber: String,
         city: String,
         address: String,
-        image: File
+        image: File?
     ): LiveData<Result<UserDto>> {
-        val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
-
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("full_name", fullName)
             .addFormDataPart("phone_number", phoneNumber)
             .addFormDataPart("city", city)
             .addFormDataPart("address", address)
-            .addFormDataPart("image", image.name, requestImageFile)
-            .build()
 
-        return repository.updateUser(requestBody)
+        if (image != null) {
+            val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
+            requestBody.addFormDataPart("image", image.name, requestImageFile)
+        }
+
+        return repository.updateUser(requestBody.build())
     }
 }
