@@ -34,15 +34,15 @@ interface ApiService {
         @Body body: RequestBody
     ): UserDto
 
-    @Multipart
     @POST(Endpoints.ADD_SELLER_PRODUCT)
     suspend fun addSellerProduct(
-        @Field("name") name: String,
-        @Field("description") description: String,
-        @Field("base_price") basePrice: String,
-        @Field("category_ids") categoryIds: List<Int>,
-        @Field("location") location: String,
-        @Part("image") image: MultipartBody.Part,
+        @Body body: RequestBody
+//        @Field("name") name: String,
+//        @Field("description") description: String,
+//        @Field("base_price") basePrice: Int,
+//        @Field("category_ids") categoryIds: List<Int>,
+//        @Field("location") location: String,
+//        @Part("image") image: File,
     ): ProductDto
 
     @GET(Endpoints.GET_SELLER_PRODUCT)
