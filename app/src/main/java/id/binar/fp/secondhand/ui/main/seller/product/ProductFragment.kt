@@ -27,12 +27,17 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
     override fun setup() {
         super.setup()
         setupRecyclerView()
+        setupRefresh()
     }
 
     private fun setupRecyclerView() {
         binding.content.rvProduct.adapter = productAdapter
         binding.content.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
         observeProduct()
+    }
+
+    private fun setupRefresh() {
+        swipeRefreshLayout.setOnRefreshListener { observeProduct() }
     }
 
     private fun observeProduct() {
@@ -43,6 +48,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                 }
                 is Result.Success -> {
                     binding.loading.root.isVisible = false
+                    swipeRefreshLayout.isRefreshing = false
                     val availableProduct = result.data.filter { it.status == "available" }
                     if (availableProduct.isNotEmpty()) {
                         productAdapter.submitList(availableProduct)
@@ -53,6 +59,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
+                    swipeRefreshLayout.isRefreshing = false
                     Helper.showToast(requireContext(), result.error)
                 }
             }

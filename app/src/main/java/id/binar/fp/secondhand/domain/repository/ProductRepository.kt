@@ -3,7 +3,7 @@ package id.binar.fp.secondhand.domain.repository
 import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
 import id.binar.fp.secondhand.data.source.network.response.ProductDto
-import id.binar.fp.secondhand.data.source.network.response.UserDto
+import id.binar.fp.secondhand.data.source.network.response.SellerOrderDto
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
@@ -14,8 +14,6 @@ interface ProductRepository {
     fun addSellerProduct(
         body: RequestBody
     ): LiveData<Result<ProductDto>>
-
-    fun getUser(): LiveData<Result<UserDto>>
 
     fun getSellerProduct(): LiveData<Result<List<ProductDto>>>
 
@@ -31,6 +29,10 @@ interface ProductRepository {
     ): LiveData<Result<ProductDto>>
 
     fun deleteSellerProductById(id: Int): LiveData<Result<MessageDto>>
+
+    fun getSellerOrder(): LiveData<Result<List<SellerOrderDto>>>
+
+    fun getSellerOrderById(id: Int): LiveData<Result<SellerOrderDto>>
 
     fun getBuyerProduct(
         categoryId: Int? = null,

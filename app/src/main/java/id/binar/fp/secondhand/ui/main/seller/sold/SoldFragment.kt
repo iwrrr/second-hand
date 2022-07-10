@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.FragmentSoldBinding
 import id.binar.fp.secondhand.ui.base.BaseFragment
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
+import id.binar.fp.secondhand.ui.main.adapter.sell.SellerAdapter
 import id.binar.fp.secondhand.util.dummy.Product
 
 @AndroidEntryPoint
 class SoldFragment : BaseFragment<FragmentSoldBinding>() {
 
-    private val interestedAdapter by lazy { SellListInterestedAdapter(::onProductClicked) }
+    private val interestedAdapter by lazy { SellerAdapter { } }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSoldBinding
         get() = FragmentSoldBinding::inflate

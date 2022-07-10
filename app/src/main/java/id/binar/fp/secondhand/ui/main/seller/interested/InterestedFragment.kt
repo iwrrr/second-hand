@@ -1,21 +1,28 @@
 package id.binar.fp.secondhand.ui.main.seller.interested
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
+import id.binar.fp.secondhand.data.source.network.response.SellerOrderDto
 import id.binar.fp.secondhand.databinding.FragmentInterestedBinding
 import id.binar.fp.secondhand.ui.base.BaseFragment
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
-import id.binar.fp.secondhand.util.dummy.DataDummy.setDummyProducts
-import id.binar.fp.secondhand.util.dummy.Product
+import id.binar.fp.secondhand.ui.main.adapter.sell.SellerAdapter
+import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
+import id.binar.fp.secondhand.util.Helper
+import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
 class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
 
-    private val interestedAdapter by lazy { SellListInterestedAdapter(::onProductClicked) }
+    private val sellerViewModel: SellerViewModel by viewModels()
+
+    private val productAdapter by lazy { SellerAdapter(::onProductClicked) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInterestedBinding
         get() = FragmentInterestedBinding::inflate
@@ -23,26 +30,57 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
     override fun setup() {
         super.setup()
         setupRecyclerView()
+        setupRefresh()
     }
 
     private fun setupRecyclerView() {
-//        binding.content.root.isVisible = false
-//        binding.empty.root.isVisible = true
+        val itemDecoration = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        binding.content.rvInterested.apply {
+            adapter = productAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            addItemDecoration(itemDecoration)
+        }
 
-        binding.content.rvInterested.adapter = interestedAdapter
-        binding.content.rvInterested.layoutManager = LinearLayoutManager(requireContext())
-        binding.content.rvInterested.addItemDecoration(
-            DividerItemDecoration(
-                requireContext(),
-                LinearLayoutManager.VERTICAL
-            )
-        )
-        interestedAdapter.submitList(setDummyProducts())
+        observeProduct()
     }
 
-    private fun onProductClicked(product: Product) {
+    private fun setupRefresh() {
+        swipeRefreshLayout.setOnRefreshListener { observeProduct() }
+    }
+
+    private fun observeProduct() {
+        sellerViewModel.getSellerOrder().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.loading.root.isVisible = true
+                }
+                is Result.Success -> {
+                    binding.loading.root.isVisible = false
+                    swipeRefreshLayout.isRefreshing = false
+                    if (result.data.isNotEmpty()) {
+                        productAdapter.submitList(result.data)
+                    } else {
+                        binding.content.root.isVisible = false
+                        binding.empty.root.isVisible = true
+                    }
+                }
+                is Result.Error -> {
+                    binding.loading.root.isVisible = false
+                    swipeRefreshLayout.isRefreshing = false
+                    Helper.showToast(requireContext(), result.error)
+                }
+            }
+        }
+    }
+
+    private fun onProductClicked(product: SellerOrderDto) {
         requireParentFragment().parentFragmentManager.beginTransaction().apply {
-            add(R.id.main_nav_host, BidderInfoFragment())
+            val bidderInfoFragment = BidderInfoFragment()
+            val bundle = Bundle().apply {
+                putParcelable("product", product)
+            }
+            bidderInfoFragment.arguments = bundle
+            add(R.id.main_nav_host, bidderInfoFragment)
             addToBackStack(null)
             commit()
         }

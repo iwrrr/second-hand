@@ -18,7 +18,6 @@ import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellerPagerAdapter
 import id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment
 import id.binar.fp.secondhand.util.Extensions.loadImage
-import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
@@ -36,6 +35,11 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
         editProfile()
         setupViewPager()
         setupSwipeLayout()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        observeUser()
     }
 
     override fun checkAuth() {
@@ -106,7 +110,7 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
                 }
                 is Result.Error -> {
                     binding.swipeRefresh.isRefreshing = false
-                    Helper.showToast(requireContext(), result.error)
+//                    Helper.showToast(requireContext(), result.error)
                 }
             }
         }

@@ -37,12 +37,6 @@ interface ApiService {
     @POST(Endpoints.ADD_SELLER_PRODUCT)
     suspend fun addSellerProduct(
         @Body body: RequestBody
-//        @Field("name") name: String,
-//        @Field("description") description: String,
-//        @Field("base_price") basePrice: Int,
-//        @Field("category_ids") categoryIds: List<Int>,
-//        @Field("location") location: String,
-//        @Part("image") image: File,
     ): ProductDto
 
     @GET(Endpoints.GET_SELLER_PRODUCT)
@@ -70,12 +64,12 @@ interface ApiService {
     ): MessageDto
 
     @GET(Endpoints.GET_SELLER_ORDER)
-    suspend fun getSellerOrder() // TODO: Response Body Not Yet Implemented
+    suspend fun getSellerOrder(): List<SellerOrderDto>
 
     @GET(Endpoints.GET_SELLER_ORDER_BY_ID)
     suspend fun getSellerOrderById(
         @Path("id") id: Int
-    ) // TODO: Response Body Not Yet Implemented
+    ): SellerOrderDto
 
     @PATCH(Endpoints.UPDATE_SELLER_ORDER_BY_ID)
     suspend fun updateSellerOrderById(

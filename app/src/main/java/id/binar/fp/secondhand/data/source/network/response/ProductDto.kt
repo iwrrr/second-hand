@@ -1,7 +1,10 @@
 package id.binar.fp.secondhand.data.source.network.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class ProductDto(
 
     @SerializedName("id")
@@ -39,4 +42,4 @@ data class ProductDto(
 
     @SerializedName("updated_at")
     val updatedAt: String? = null,
-)
+) : Parcelable

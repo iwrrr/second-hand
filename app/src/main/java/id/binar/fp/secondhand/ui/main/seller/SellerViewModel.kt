@@ -11,4 +11,6 @@ class SellerViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getSellerProduct() = repository.getSellerProduct()
+
+    fun getSellerOrder() = repository.getSellerOrder()
 }
