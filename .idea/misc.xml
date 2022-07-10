@@ -26,6 +26,7 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/activity_auth.xml" value="0.25" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/bottom_sheet_choose_image.xml" value="0.20364583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/bottom_sheet_status.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_add_product.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_bidder_info.xml" value="0.3558974358974359" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_contact_bottom_sheet.xml" value="0.3614583333333333" />
@@ -44,6 +45,7 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_profile_setting.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_register.xml" value="0.33" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_sell_list.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_seller.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_sign_in.xml" value="0.225" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_sold.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_status_bottom_sheet.xml" value="0.3614583333333333" />

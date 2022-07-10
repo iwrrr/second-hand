@@ -12,17 +12,6 @@ import java.util.*
 
 object Extensions {
 
-//    fun ShapeableImageView.loadImage(image: String?) {
-//        Glide.with(this.context)
-//            .load(BuildConfig.IMG_URL + image)
-//            .apply(
-//                RequestOptions
-//                    .placeholderOf(R.drawable.ic_loading)
-//                    .error(R.drawable.ic_error_image)
-//            )
-//            .into(this)
-//    }
-
     fun ShapeableImageView.loadImage(url: String?) {
         Glide.with(this.context)
             .load(url)
@@ -43,6 +32,12 @@ object Extensions {
     fun ShapeableImageView.loadImage(bitmap: Bitmap) {
         Glide.with(this.context)
             .load(bitmap)
+            .into(this)
+    }
+
+    fun ShapeableImageView.clear() {
+        Glide.with(this.context)
+            .load(R.drawable.ic_image)
             .into(this)
     }
 

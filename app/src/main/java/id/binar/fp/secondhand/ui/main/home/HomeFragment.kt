@@ -31,13 +31,8 @@ class HomeFragment : Fragment() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val categoryAdapter by lazy {
-        CategoryAdapter(::onCategoryClicked, requireContext())
-    }
-
-    private val productAdapter by lazy {
-        ProductAdapter(::onProductClicked)
-    }
+    private val categoryAdapter by lazy { CategoryAdapter(::onCategoryClicked, requireContext()) }
+    private val productAdapter by lazy { ProductAdapter(::onProductClicked) }
 
     private var products = emptyList<ProductDto>()
     private var categories = emptyList<CategoryDto>()
@@ -140,15 +135,5 @@ class HomeFragment : Fragment() {
             addToBackStack(null)
             commit()
         }
-    }
-
-    private fun filterProduct(products: List<ProductDto>, category: CategoryDto): List<ProductDto> {
-        val filteredList = arrayListOf<ProductDto>()
-        for (product in products) {
-            if (product.categories?.contains(category) == true) {
-                filteredList.add(product)
-            }
-        }
-        return filteredList
     }
 }

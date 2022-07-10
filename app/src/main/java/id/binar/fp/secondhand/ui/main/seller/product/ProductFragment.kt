@@ -1,67 +1,38 @@
 package id.binar.fp.secondhand.ui.main.seller.product
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentProductBinding
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellerProductAdapter
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
-class ProductFragment : Fragment() {
-
-    private var _binding: FragmentProductBinding? = null
-    private val binding get() = _binding!!
+class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val productAdapter by lazy {
-        SellerProductAdapter {
-//            Toast.makeText(
-//                requireContext(),
-//                it.name,
-//                Toast.LENGTH_SHORT
-//            ).show()
-//            requireParentFragment().parentFragmentManager.beginTransaction().apply {
-//                add(R.id.main_nav_host, ProductDetailFragment())
-//                addToBackStack(null)
-//                commit()
-//            }
-        }
-    }
+    private val productAdapter by lazy { SellerProductAdapter(::onProductClicked) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProductBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
+        get() = FragmentProductBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setup() {
+        super.setup()
         setupRecyclerView()
-        observeProduct()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setupRecyclerView() {
         binding.content.rvProduct.adapter = productAdapter
         binding.content.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+        observeProduct()
     }
 
     private fun observeProduct() {
@@ -82,9 +53,17 @@ class ProductFragment : Fragment() {
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Helper.showToast(requireContext(), result.error)
                 }
             }
         }
+    }
+
+    private fun onProductClicked(product: ProductDto) {
+//            requireParentFragment().parentFragmentManager.beginTransaction().apply {
+//                add(R.id.main_nav_host, ProductDetailFragment())
+//                addToBackStack(null)
+//                commit()
+//            }
     }
 }

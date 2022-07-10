@@ -1,57 +1,30 @@
 package id.binar.fp.secondhand.ui.main.notification
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.FragmentNotificationBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
+import id.binar.fp.secondhand.ui.base.BaseFragment
 
 @AndroidEntryPoint
-class NotificationFragment : Fragment() {
-
-    private var _binding: FragmentNotificationBinding? = null
-    private val binding get() = _binding!!
+class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
 
     private val authViewModel: AuthViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentNotificationBinding
+        get() = FragmentNotificationBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        checkAuth()
-
+    override fun setup() {
+        super.setup()
         onLoginClicked()
     }
 
-    override fun onResume() {
-        super.onResume()
-        authViewModel.getToken().observe(viewLifecycleOwner) { token ->
-            if (!token.isNullOrBlank()) {
-                binding.content.root.isVisible = true
-                binding.auth.root.isVisible = false
-            }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun checkAuth() {
+    override fun checkAuth() {
         authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true

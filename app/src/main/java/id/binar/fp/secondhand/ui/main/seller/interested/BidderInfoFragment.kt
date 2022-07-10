@@ -1,51 +1,29 @@
 package id.binar.fp.secondhand.ui.main.seller.interested
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.databinding.BottomSheetContactBinding
-import id.binar.fp.secondhand.databinding.BottomSheetStatusBinding
 import id.binar.fp.secondhand.databinding.FragmentBidderInfoBinding
+import id.binar.fp.secondhand.ui.base.BaseFragment
+import id.binar.fp.secondhand.ui.main.bottomsheet.ContactBottomSheet
+import id.binar.fp.secondhand.ui.main.bottomsheet.StatusBottomSheet
 
 @AndroidEntryPoint
-class BidderInfoFragment : Fragment() {
+class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
 
-    private var _binding: FragmentBidderInfoBinding? = null
-    private val binding get() = _binding!!
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentBidderInfoBinding
+        get() = FragmentBidderInfoBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentBidderInfoBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val isNavigationVisible: Boolean
+        get() = false
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
-            false
-
-        setupToolbar()
+    override fun setup() {
+        super.setup()
         setupBottomSheet()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setupToolbar() {
+    override fun setupToolbar() {
         binding.toolbar.toolbarTitle.text = "Info Penawar"
         binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
@@ -67,32 +45,19 @@ class BidderInfoFragment : Fragment() {
     }
 
     private fun showBottomSheetContact() {
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bottomSheetBinding = BottomSheetContactBinding.inflate(
-            LayoutInflater.from(requireContext()),
-            binding.root,
-            false
-        )
-
-        bottomSheet.setContentView(bottomSheetBinding.root)
-        bottomSheet.show()
+        val bottomSheet = ContactBottomSheet()
+        bottomSheet.show(childFragmentManager, ContactBottomSheet.TAG)
     }
 
     private fun showBottomSheetStatus() {
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bottomSheetBinding = BottomSheetStatusBinding.inflate(
-            LayoutInflater.from(requireContext()),
-            binding.root,
-            false
-        )
+        val bottomSheet = StatusBottomSheet()
+        bottomSheet.show(childFragmentManager, StatusBottomSheet.TAG)
 
-        bottomSheet.setContentView(bottomSheetBinding.root)
-        bottomSheet.show()
-
-        bottomSheetBinding.radioGroup.setOnCheckedChangeListener { _, _ ->
-            bottomSheetBinding.btnSetStatus.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-            bottomSheetBinding.btnSetStatus.isEnabled = true
+        bottomSheet.bottomSheetCallback = object : StatusBottomSheet.BottomSheetCallback {
+            override fun onStatusUpdate(status: String) {
+                // TODO: Update status
+                bottomSheet.dismiss()
+            }
         }
     }
 }

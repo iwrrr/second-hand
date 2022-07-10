@@ -1,66 +1,44 @@
 package id.binar.fp.secondhand.ui.main.seller
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentSellerBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellerPagerAdapter
 import id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment
+import id.binar.fp.secondhand.util.Extensions.loadImage
+import id.binar.fp.secondhand.util.Helper
+import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
-class SellerFragment : Fragment() {
-
-    private var _binding: FragmentSellerBinding? = null
-    private val binding get() = _binding!!
+class SellerFragment : BaseFragment<FragmentSellerBinding>() {
 
     private val authViewModel: AuthViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSellerBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSellerBinding
+        get() = FragmentSellerBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        checkAuth()
-
+    override fun setup() {
+        super.setup()
+        observeUser()
         onLoginClicked()
         editProfile()
         setupViewPager()
+        setupSwipeLayout()
     }
 
-    override fun onResume() {
-        super.onResume()
-        authViewModel.getToken().observe(viewLifecycleOwner) { token ->
-            if (!token.isNullOrBlank()) {
-                binding.content.root.isVisible = true
-                binding.auth.root.isVisible = false
-            }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun checkAuth() {
+    override fun checkAuth() {
         authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
@@ -70,6 +48,10 @@ class SellerFragment : Fragment() {
                 binding.auth.root.isVisible = true
             }
         }
+    }
+
+    private fun setupSwipeLayout() {
+        binding.swipeRefresh.setOnRefreshListener { observeUser() }
     }
 
     private fun onLoginClicked() {
@@ -96,10 +78,38 @@ class SellerFragment : Fragment() {
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
 
+        viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                toggleRefreshing(state == ViewPager2.SCROLL_STATE_IDLE)
+            }
+        })
+
         val tabs = binding.content.tabs
         TabLayoutMediator(tabs, viewpager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
+    }
+
+    private fun toggleRefreshing(enabled: Boolean) {
+        binding.swipeRefresh.isEnabled = enabled
+    }
+
+    private fun observeUser() {
+        authViewModel.getUser().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    binding.swipeRefresh.isRefreshing = false
+                    binding.content.ivProfile.loadImage(result.data.imageUrl)
+                    binding.content.tvName.text = result.data.fullName
+                    binding.content.tvCity.text = result.data.city
+                }
+                is Result.Error -> {
+                    binding.swipeRefresh.isRefreshing = false
+                    Helper.showToast(requireContext(), result.error)
+                }
+            }
+        }
     }
 
     companion object {

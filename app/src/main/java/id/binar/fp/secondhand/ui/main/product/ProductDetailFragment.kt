@@ -3,66 +3,53 @@ package id.binar.fp.secondhand.ui.main.product
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentProductDetailBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.bottomsheet.BidBottomSheet
-import id.binar.fp.secondhand.ui.main.bottomsheet.BottomSheetCallback
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class ProductDetailFragment : Fragment() {
+class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
 
-    private var _binding: FragmentProductDetailBinding? = null
-    private val binding get() = _binding!!
+    private val productViewModel: ProductViewModel by viewModels()
+    private val authViewModel: AuthViewModel by viewModels()
 
-    private val viewModel: ProductViewModel by viewModels()
-    private val authViewModel: AuthViewModel by activityViewModels()
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductDetailBinding
+        get() = FragmentProductDetailBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val isNavigationVisible: Boolean
+        get() = false
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        ViewCompat.getWindowInsetsController(requireActivity().window.decorView)?.isAppearanceLightStatusBars =
-            false
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
-            false
+    override val isLightStatusBar: Boolean
+        get() = false
 
-        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
-
+    override fun setup() {
+        super.setup()
+        onBackClicked()
         observeDetailProduct()
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun onBackClicked() {
+        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
     }
 
     private fun observeDetailProduct() {
         val id = arguments?.getInt("id")
         id?.let {
-            viewModel.getDetailProduct(it).observe(viewLifecycleOwner) { result ->
+            productViewModel.getDetailProduct(it).observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Result.Loading -> {
                         binding.loading.root.isVisible = true
@@ -83,7 +70,7 @@ class ProductDetailFragment : Fragment() {
                     }
                     is Result.Error -> {
                         binding.loading.root.isVisible = false
-                        Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                        Helper.showToast(requireContext(), result.error)
                     }
                 }
             }
@@ -91,7 +78,7 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun initBottomSheet(product: ProductDto) {
-        val bidBottomSheet = BidBottomSheet()
+        val bottomSheet = BidBottomSheet()
         val bundle = Bundle().apply {
             putInt("id", product.id)
             putString("image", product.imageUrl)
@@ -99,26 +86,22 @@ class ProductDetailFragment : Fragment() {
             putInt("price", product.basePrice)
         }
 
-        bidBottomSheet.arguments = bundle
+        bottomSheet.arguments = bundle
 
         binding.btnBid.setOnClickListener {
             authViewModel.getToken().observe(viewLifecycleOwner) { token ->
                 if (!token.isNullOrBlank()) {
-                    bidBottomSheet.show(parentFragmentManager, BidBottomSheet.TAG)
+                    bottomSheet.show(parentFragmentManager, BidBottomSheet.TAG)
                 } else {
-                    Toast.makeText(
-                        requireContext(),
-                        "Silakan login terlebih dahulu",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Helper.showToast(requireContext(), "Silakan login terlebih dahulu")
                     startActivity(Intent(requireContext(), AuthActivity::class.java))
                 }
             }
         }
 
-        bidBottomSheet.bottomSheetCallback = object : BottomSheetCallback {
+        bottomSheet.bottomSheetCallback = object : BidBottomSheet.BottomSheetCallback {
             override fun onDismiss() {
-                if (bidBottomSheet.statusOrder == 1) {
+                if (bottomSheet.statusOrder == 1) {
                     binding.btnBid.isEnabled = false
                     binding.btnBid.text = "Menunggu respon penjual"
                 }

@@ -1,51 +1,27 @@
 package id.binar.fp.secondhand.ui.main.seller.sold
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.FragmentSoldBinding
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
+import id.binar.fp.secondhand.util.dummy.Product
 
 @AndroidEntryPoint
-class SoldFragment : Fragment() {
+class SoldFragment : BaseFragment<FragmentSoldBinding>() {
 
-    private var _binding: FragmentSoldBinding? = null
-    private val binding get() = _binding!!
+    private val interestedAdapter by lazy { SellListInterestedAdapter(::onProductClicked) }
 
-    private val interestedAdapter by lazy {
-        SellListInterestedAdapter {
-            Toast.makeText(
-                requireContext(),
-                it.name,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSoldBinding
+        get() = FragmentSoldBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSoldBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setup() {
+        super.setup()
         setupRecyclerView()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setupRecyclerView() {
@@ -62,5 +38,13 @@ class SoldFragment : Fragment() {
         )
 
 //        interestedAdapter.submitList(setDummyProducts())
+    }
+
+    private fun onProductClicked(product: Product) {
+//        requireParentFragment().parentFragmentManager.beginTransaction().apply {
+//            replace(R.id.main_nav_host, BidderInfoFragment())
+//            addToBackStack(null)
+//            commit()
+//        }
     }
 }

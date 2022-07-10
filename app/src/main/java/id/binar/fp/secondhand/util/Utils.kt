@@ -1,7 +1,6 @@
 package id.binar.fp.secondhand.util
 
 
-import android.app.Application
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
@@ -11,7 +10,6 @@ import java.io.FileOutputStream
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 private const val FILENAME_FORMAT = "dd-MMM-yyyy"
 
@@ -23,16 +21,6 @@ val timeStamp: String = SimpleDateFormat(
 fun createTempFile(context: Context): File {
     val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     return File.createTempFile(timeStamp, ".jpg", storageDir)
-}
-
-fun createFile(application: Application): File {
-    val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
-        File(it, "Camera").apply { mkdirs() }
-    }
-
-    val outputDir = if (mediaDir != null && mediaDir.exists()) mediaDir else application.filesDir
-
-    return File(outputDir, "$timeStamp.jpg")
 }
 
 fun uriToFile(selectedImage: Uri, context: Context): File {

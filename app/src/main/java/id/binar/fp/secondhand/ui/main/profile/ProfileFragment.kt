@@ -1,68 +1,56 @@
 package id.binar.fp.secondhand.ui.main.profile
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.databinding.FragmentProfileBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.MainActivity
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Result
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
-    private var _binding: FragmentProfileBinding? = null
-    private val binding get() = _binding!!
-
-    private val authViewModel: AuthViewModel by activityViewModels()
+    private val authViewModel: AuthViewModel by viewModels()
 
     private lateinit var user: UserDto
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProfileBinding
+        get() = FragmentProfileBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        observeUser()
+    override fun setup() {
+        super.setup()
         onEditClicked()
         onLoginClicked()
         onLogoutClicked()
+        setupSwipeLayout()
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkAuth()
-        observeUser()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun checkAuth() {
+    override fun checkAuth() {
         authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
                 binding.menu.logout.isVisible = true
                 binding.btnLogin.isVisible = false
+                observeUser()
             }
+        }
+    }
+
+    private fun setupSwipeLayout() {
+        binding.swipeRefresh.setOnRefreshListener {
+            observeUser()
         }
     }
 
@@ -73,9 +61,10 @@ class ProfileFragment : Fragment() {
                 is Result.Success -> {
 //                    user = result.data
                     binding.ivProfile.loadImage(result.data.imageUrl)
+                    binding.swipeRefresh.isRefreshing = false
                 }
                 is Result.Error -> {
-//                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    binding.swipeRefresh.isRefreshing = false
                 }
             }
         }

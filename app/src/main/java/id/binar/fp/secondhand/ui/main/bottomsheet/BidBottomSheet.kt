@@ -92,6 +92,10 @@ class BidBottomSheet : BottomSheetDialogFragment() {
         bottomSheetCallback?.onDismiss()
     }
 
+    interface BottomSheetCallback {
+        fun onDismiss()
+    }
+
     companion object {
         const val TAG = "BidBottomSheet"
     }

@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -20,8 +21,8 @@ import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
-@ExperimentalCoroutinesApi
 @FlowPreview
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -40,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars = true
 
+        setLightStatusBar(window.decorView, true)
         setupBottomNavigationBar()
     }
 
@@ -60,25 +61,18 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.navigation_home -> {
                     setTabStateFragment(TabState.HOME).commit()
-                    binding.bottomNavigationView.isVisible = true
                 }
                 R.id.navigation_notification -> {
                     setTabStateFragment(TabState.NOTIFICATION).commit()
-                    binding.bottomNavigationView.isVisible = true
                 }
                 R.id.navigation_add_product -> {
-                    authViewModel.getToken().observe(this) { token ->
-                        binding.bottomNavigationView.isVisible = token.isNullOrBlank()
-                    }
                     setTabStateFragment(TabState.ADDPRODUCT).commit()
                 }
                 R.id.navigation_sell_list -> {
                     setTabStateFragment(TabState.SELLLIST).commit()
-                    binding.bottomNavigationView.isVisible = true
                 }
                 R.id.navigation_profile -> {
                     setTabStateFragment(TabState.PROFILE).commit()
-                    binding.bottomNavigationView.isVisible = true
                 }
             }
             true
@@ -87,21 +81,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        setLightStatusBar(window.decorView, true)
         val tag = supportFragmentManager.findFragmentByTag(profileFragment::class.java.simpleName)
         if (tag != null) {
             profileFragment.observeUser()
         }
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
-            binding.bottomNavigationView.isVisible = false
+            setVisibilityBottomNav(false)
         } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
-            ViewCompat.getWindowInsetsController(window.decorView)?.isAppearanceLightStatusBars =
-                true
-            binding.bottomNavigationView.isVisible = true
+            setVisibilityBottomNav(true)
         } else {
             setTabStateFragment(TabState.HOME).commit()
-            binding.bottomNavigationView.isVisible = true
+            setVisibilityBottomNav(true)
             binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
         }
     }
@@ -110,6 +103,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         val transaction = supportFragmentManager.beginTransaction()
 //        transaction.setCustomAnimations(R.anim.fragment_enter, R.anim.fragment_exit)
+        setVisibilityBottomNav(true)
         when (state) {
             TabState.HOME -> {
                 transaction.show(homeFragment)
@@ -131,6 +125,9 @@ class MainActivity : AppCompatActivity() {
                 transaction.show(addProductFragment)
                 transaction.hide(sellerFragment)
                 transaction.hide(profileFragment)
+                authViewModel.getToken().observe(this) { token ->
+                    setVisibilityBottomNav(token.isNullOrBlank())
+                }
             }
             TabState.SELLLIST -> {
                 transaction.hide(homeFragment)
@@ -148,6 +145,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return transaction
+    }
+
+    private fun setLightStatusBar(view: View, isLight: Boolean) {
+        ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = isLight
+    }
+
+    private fun setVisibilityBottomNav(isVisible: Boolean) {
+        binding.bottomNavigationView.isVisible = isVisible
     }
 
     private enum class TabState {
