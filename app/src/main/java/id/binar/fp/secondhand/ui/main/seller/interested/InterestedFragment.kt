@@ -9,10 +9,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.SellerOrderDto
+import id.binar.fp.secondhand.SellerType
 import id.binar.fp.secondhand.databinding.FragmentInterestedBinding
+import id.binar.fp.secondhand.domain.model.SellerOrder
 import id.binar.fp.secondhand.ui.base.BaseFragment
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellerAdapter
+import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
@@ -22,7 +23,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val productAdapter by lazy { SellerAdapter(::onProductClicked) }
+    private val productAdapter by lazy { SellerAdapter(SellerType.INTERESTED, ::onProductClicked) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInterestedBinding
         get() = FragmentInterestedBinding::inflate
@@ -73,7 +74,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
         }
     }
 
-    private fun onProductClicked(product: SellerOrderDto) {
+    private fun onProductClicked(product: SellerOrder) {
         requireParentFragment().parentFragmentManager.beginTransaction().apply {
             val bidderInfoFragment = BidderInfoFragment()
             val bundle = Bundle().apply {

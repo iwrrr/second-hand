@@ -1,11 +1,12 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.domain.model.History
 
 data class HistoryDto(
 
     @SerializedName("id")
-    val id: Int? = null,
+    val id: Int,
 
     @SerializedName("product_name")
     val productName: String? = null,
@@ -33,4 +34,20 @@ data class HistoryDto(
 
     @SerializedName("updatedAt")
     val updatedAt: String? = null
-)
+) {
+
+    fun toDomain(): History {
+        return History(
+            id,
+            productName,
+            price,
+            category,
+            transactionDate,
+            status,
+            userId,
+            imageUrl,
+            createdAt,
+            updatedAt
+        )
+    }
+}

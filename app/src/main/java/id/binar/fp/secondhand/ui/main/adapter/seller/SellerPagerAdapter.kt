@@ -1,4 +1,4 @@
-package id.binar.fp.secondhand.ui.main.adapter.sell
+package id.binar.fp.secondhand.ui.main.adapter.seller
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

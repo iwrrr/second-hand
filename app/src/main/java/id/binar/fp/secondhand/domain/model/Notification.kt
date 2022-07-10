@@ -1,49 +1,24 @@
-package id.binar.fp.secondhand.data.source.network.response
+package id.binar.fp.secondhand.domain.model
 
-import com.google.gson.annotations.SerializedName
-import id.binar.fp.secondhand.domain.model.Notification
+import id.binar.fp.secondhand.data.source.network.response.NotificationDto
 
-data class NotificationDto(
-
-    @SerializedName("id")
+data class Notification(
     val id: Int,
-
-    @SerializedName("product_id")
     val productId: Int? = null,
-
-    @SerializedName("bid_price")
     val bidPrice: Int? = null,
-
-    @SerializedName("transaction_date")
     val transactionDate: String? = null,
-
-    @SerializedName("status")
     val status: String? = null,
-
-    @SerializedName("seller_name")
     val sellerName: String? = null,
-
-    @SerializedName("buyer_name")
     val buyerName: String? = null,
-
-    @SerializedName("receiver_id")
     val receiverId: Int? = null,
-
-    @SerializedName("image_url")
     val imageUrl: String? = null,
-
-    @SerializedName("read")
     val read: Boolean = false,
-
-    @SerializedName("created_at")
     val createdAt: String? = null,
-
-    @SerializedName("updated_at")
     val updatedAt: String? = null,
 ) {
 
-    fun toDomain(): Notification {
-        return Notification(
+    fun toDto(): NotificationDto {
+        return NotificationDto(
             id,
             productId,
             bidPrice,

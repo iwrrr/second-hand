@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProductDetailBinding
+import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
@@ -55,10 +56,14 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                         binding.loading.root.isVisible = true
                     }
                     is Result.Success -> {
+                        val price = Helper.numberFormatter(result.data.basePrice)
                         binding.loading.root.isVisible = false
                         binding.tvProductName.text = result.data.name
                         binding.tvProductCategory.text = Helper.initCategory(result.data.categories)
-                        binding.tvProductPrice.text = result.data.basePrice.toString()
+                        binding.tvProductPrice.text = requireContext().getString(
+                            R.string.text_seller_order_base_price,
+                            price
+                        )
                         binding.tvName.text = result.data.user?.fullName
                         binding.tvCity.text = result.data.user?.city
                         binding.tvProductDescription.text = result.data.description
@@ -77,7 +82,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
         }
     }
 
-    private fun initBottomSheet(product: ProductDto) {
+    private fun initBottomSheet(product: Product) {
         val bottomSheet = BidBottomSheet()
         val bundle = Bundle().apply {
             putInt("id", product.id)

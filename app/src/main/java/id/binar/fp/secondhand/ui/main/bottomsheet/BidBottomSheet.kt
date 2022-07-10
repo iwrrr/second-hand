@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.BottomSheetBidBinding
 import id.binar.fp.secondhand.ui.main.product.ProductViewModel
 import id.binar.fp.secondhand.util.Extensions.loadImage
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
@@ -59,22 +60,19 @@ class BidBottomSheet : BottomSheetDialogFragment() {
                 viewModel.addBuyerOrder(id, bidPrice).observe(viewLifecycleOwner) { result ->
                     when (result) {
                         is Result.Loading -> {
-                            Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                            binding.progressBar.isVisible = true
                         }
                         is Result.Success -> {
+                            binding.progressBar.isVisible = false
                             statusOrder = 1
                             dialog?.dismiss()
-                            Toast.makeText(
-                                requireContext(),
-                                "Produk berhasil ditawar!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Helper.showToast(requireContext(), "Produk berhasil ditawar!")
                         }
                         is Result.Error -> {
+                            binding.progressBar.isVisible = false
                             statusOrder = 0
                             dialog?.dismiss()
-                            Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT)
-                                .show()
+                            Helper.showToast(requireContext(), result.error)
                         }
                     }
                 }

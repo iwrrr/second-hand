@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
-import id.binar.fp.secondhand.data.source.network.response.SellerOrderDto
+import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.repository.ProductRepository
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +20,7 @@ class ProductRepositoryImpl @Inject constructor(
 
     override fun addSellerProduct(
         body: RequestBody
-    ): LiveData<Result<ProductDto>> = liveData {
+    ): LiveData<Result<Product>> = liveData {
         emit(Result.Loading)
         try {
             apiService.addSellerProduct(body)
@@ -34,25 +33,11 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-//    override fun getUser(): LiveData<Result<UserDto>> = liveData {
-//        emit(Result.Loading)
-//        try {
-//            val user = apiService.getUser()
-//            emit(Result.Success(user))
-//        } catch (e: HttpException) {
-//            emit(Result.Error(e.message()))
-//        } catch (e: NullPointerException) {
-//            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
-//        } catch (e: Exception) {
-//            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
-//        }
-//    }
-
-    override fun getSellerProduct(): LiveData<Result<List<ProductDto>>> = liveData {
+    override fun getSellerProduct(): LiveData<Result<List<Product>>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getSellerProduct()
-            emit(Result.Success(response))
+            emit(Result.Success(response.map { it.toDomain() }))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: Exception) {
@@ -60,7 +45,7 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getSellerProductById(id: Int): LiveData<Result<ProductDto>> = liveData {
+    override fun getSellerProductById(id: Int): LiveData<Result<Product>> = liveData {
         TODO("Not yet implemented")
     }
 
@@ -71,7 +56,7 @@ class ProductRepositoryImpl @Inject constructor(
         categoryIds: List<Int>,
         location: String,
         image: MultipartBody.Part
-    ): LiveData<Result<ProductDto>> = liveData {
+    ): LiveData<Result<Product>> = liveData {
         TODO("Not yet implemented")
     }
 
@@ -79,38 +64,14 @@ class ProductRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun getSellerOrder(): LiveData<Result<List<SellerOrderDto>>> = liveData {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getSellerOrder()
-            emit(Result.Success(response))
-        } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
-        } catch (e: Exception) {
-            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
-        }
-    }
-
-    override fun getSellerOrderById(id: Int): LiveData<Result<SellerOrderDto>> = liveData {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getSellerOrderById(id)
-            emit(Result.Success(response))
-        } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
-        } catch (e: Exception) {
-            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
-        }
-    }
-
     override fun getBuyerProduct(
         categoryId: Int?,
         search: String?
-    ): LiveData<Result<List<ProductDto>>> = liveData {
+    ): LiveData<Result<List<Product>>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.getBuyerProduct()
-            emit(Result.Success(response))
+            emit(Result.Success(response.map { it.toDomain() }))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: NullPointerException) {
@@ -120,10 +81,11 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getBuyerProductById(id: Int): LiveData<Result<ProductDto>> = liveData {
+    override fun getBuyerProductById(id: Int): LiveData<Result<Product>> = liveData {
         emit(Result.Loading)
         try {
-            emit(Result.Success(apiService.getBuyerProductById(id)))
+            val data = apiService.getBuyerProductById(id)
+            emit(Result.Success(data.toDomain()))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: NullPointerException) {
@@ -133,11 +95,11 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun searchProduct(query: String): Flow<Result<List<ProductDto>>> = flow {
+    override fun searchProduct(query: String): Flow<Result<List<Product>>> = flow {
         emit(Result.Loading)
         try {
             val response = apiService.getBuyerProduct(search = query)
-            emit(Result.Success(response))
+            emit(Result.Success(response.map { it.toDomain() }))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: NullPointerException) {

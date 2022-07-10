@@ -2,47 +2,67 @@ package id.binar.fp.secondhand.data.source.network.response
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.domain.model.SellerOrder
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class SellerOrderDto(
 
-    @field:SerializedName("id")
+    @SerializedName("id")
     val id: Int,
 
-    @field:SerializedName("product_id")
+    @SerializedName("product_id")
     val productId: Int? = null,
 
-    @field:SerializedName("buyer_id")
+    @SerializedName("buyer_id")
     val buyerId: Int? = null,
 
-    @field:SerializedName("price")
+    @SerializedName("price")
     val price: Int? = null,
 
-    @field:SerializedName("transaction_date")
+    @SerializedName("transaction_date")
     val transactionDate: String? = null,
 
-    @field:SerializedName("product_name")
+    @SerializedName("product_name")
     val productName: String? = null,
 
-    @field:SerializedName("base_price")
-    val basePrice: String? = null,
+    @SerializedName("base_price")
+    val basePrice: Int? = null,
 
-    @field:SerializedName("image_product")
+    @SerializedName("image_product")
     val imageProduct: String? = null,
 
-    @field:SerializedName("status")
+    @SerializedName("status")
     val status: String? = null,
 
-    @field:SerializedName("createdAt")
+    @SerializedName("createdAt")
     val createdAt: String? = null,
 
-    @field:SerializedName("updatedAt")
+    @SerializedName("updatedAt")
     val updatedAt: String? = null,
 
-    @field:SerializedName("Product")
+    @SerializedName("Product")
     val product: ProductDto? = null,
 
-    @field:SerializedName("User")
+    @SerializedName("User")
     val user: UserDto? = null
-) : Parcelable
+) : Parcelable {
+
+    fun toDomain(): SellerOrder {
+        return SellerOrder(
+            id,
+            productId,
+            buyerId,
+            price,
+            transactionDate,
+            productName,
+            basePrice,
+            imageProduct,
+            status,
+            createdAt,
+            updatedAt,
+            product?.toDomain(),
+            user?.toDomain()
+        )
+    }
+}

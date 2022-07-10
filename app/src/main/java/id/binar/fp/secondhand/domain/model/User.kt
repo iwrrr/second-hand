@@ -1,55 +1,29 @@
-package id.binar.fp.secondhand.data.source.network.response
+package id.binar.fp.secondhand.domain.model
 
 import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import id.binar.fp.secondhand.domain.model.User
+import id.binar.fp.secondhand.BaseType
+import id.binar.fp.secondhand.data.source.network.response.UserDto
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class UserDto(
-
-    @SerializedName("id")
+data class User(
     val id: Int? = null,
-
-    @SerializedName("full_name")
     val fullName: String? = null,
-
-    @SerializedName("email")
     val email: String? = null,
-
-    @SerializedName("password")
     val password: String? = null,
-
-    @SerializedName("phone_number")
     val phoneNumber: String? = null,
-
-    @SerializedName("city")
     val city: String? = null,
-
-    @SerializedName("address")
     val address: String? = null,
-
-    @SerializedName("image_url")
     val imageUrl: String? = null,
-
-    @SerializedName("createdAt")
     val createdAt: String? = null,
-
-    @SerializedName("updatedAt")
     val updatedAt: String? = null,
-
-    @SerializedName("access_token")
     val accessToken: String? = null,
-
-    @field:SerializedName("error")
     val error: Boolean = false,
-
-    @field:SerializedName("message")
     val message: String? = null,
-) : Parcelable {
+) : Parcelable, BaseType {
 
-    fun toDomain(): User {
-        return User(
+    fun toDto(): UserDto {
+        return UserDto(
             id,
             fullName,
             email,

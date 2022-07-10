@@ -105,7 +105,7 @@
     <string name="text_choose_image_gallery">Galeri</string>
 
     <string name="text_seller_order_bid_price">%1$s Rp%2$s</string>
-    <string name="text_seller_order_base_price">Rp250.000</string>
+    <string name="text_seller_order_base_price">Rp%1$s</string>
     <string name="text_seller_order_product_name">Jam Tangan Casio</string>
     <string name="text_seller_order_transaction_date">20 Apr, 14:04</string>
     <string name="text_seller_order_bid_title">Penawaran produk</string>

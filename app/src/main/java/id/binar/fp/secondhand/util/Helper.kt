@@ -2,7 +2,7 @@ package id.binar.fp.secondhand.util
 
 import android.content.Context
 import android.widget.Toast
-import id.binar.fp.secondhand.data.source.network.response.CategoryDto
+import id.binar.fp.secondhand.domain.model.Category
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,12 +31,12 @@ object Helper {
         return formatter.format(number)
     }
 
-    fun initCategory(categories: List<CategoryDto>?): String {
+    fun initCategory(categories: List<Category>?): String {
         if (categories.isNullOrEmpty()) {
             return "-"
         }
 
-        val list = ArrayList<CategoryDto>()
+        val list = ArrayList<Category>()
         categories.forEach { category -> list.add(category) }
         return list.joinToString { it.name!! }
     }

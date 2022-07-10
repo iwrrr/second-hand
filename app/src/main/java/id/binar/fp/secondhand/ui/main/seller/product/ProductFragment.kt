@@ -6,10 +6,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
+import id.binar.fp.secondhand.SellerType
 import id.binar.fp.secondhand.databinding.FragmentProductBinding
+import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseFragment
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellerProductAdapter
+import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
@@ -19,7 +20,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val productAdapter by lazy { SellerProductAdapter(::onProductClicked) }
+    private val productAdapter by lazy { SellerAdapter(SellerType.PRODUCT, ::onProductClicked) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
         get() = FragmentProductBinding::inflate
@@ -66,7 +67,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         }
     }
 
-    private fun onProductClicked(product: ProductDto) {
+    private fun onProductClicked(product: Product) {
 //            requireParentFragment().parentFragmentManager.beginTransaction().apply {
 //                add(R.id.main_nav_host, ProductDetailFragment())
 //                addToBackStack(null)
