@@ -6,11 +6,13 @@
     <string name="title_notification">Notifikasi</string>
     <string name="title_add_product">Jual</string>
     <string name="title_sell_list">Daftar Jual</string>
+    <string name="title_transaction">Transaksi</string>
     <string name="title_account">Akun</string>
 
     <string name="text_title_page_notification">Notifikasi</string>
     <string name="text_title_page_profile">Akun Saya</string>
     <string name="text_title_page_sell_list">Daftar Jual Saya</string>
+    <string name="text_title_page_transaction">Transaksi</string>
 
     <string name="tab_sell_list_1">Produk</string>
     <string name="tab_sell_list_2">Diminati</string>
@@ -51,6 +53,7 @@
 
     <string name="text_profile_edit">Ubah Akun</string>
     <string name="text_profile_settings">Pengaturan</string>
+    <string name="text_profile_seller">Daftar Jual Saya</string>
     <string name="text_profile_logout">Keluar</string>
 
     <string name="text_edit_profile_name">Nama</string>

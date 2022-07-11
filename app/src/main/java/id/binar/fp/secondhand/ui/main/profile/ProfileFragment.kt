@@ -3,6 +3,8 @@ package id.binar.fp.secondhand.ui.main.profile
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,10 +15,12 @@ import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.MainActivity
+import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+
 
 @FlowPreview
 @ExperimentalCoroutinesApi
@@ -35,6 +39,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         setupSwipeLayout()
 
         onEditClicked()
+        onSellerClicked()
         onLoginClicked()
         onLogoutClicked()
     }
@@ -42,10 +47,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     override fun checkAuth() {
         authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
-                binding.menu.logout.isVisible = true
-                binding.btnLogin.isVisible = false
+                with(binding) {
+                    tvName.isVisible = true
+                    tvPhone.isVisible = true
+                    tvEmail.isVisible = true
+                    ivEdit.isVisible = true
+                    menu.seller.isVisible = true
+                    menu.logout.isVisible = true
+                    btnLogin.isVisible = false
+                }
                 observeUser()
             }
+            setConstraint(!token.isNullOrBlank())
         }
     }
 
@@ -61,8 +74,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 is Result.Loading -> {}
                 is Result.Success -> {
 //                    user = result.data
-                    binding.ivProfile.loadImage(result.data.imageUrl)
-                    binding.swipeRefresh.isRefreshing = false
+                    with(binding) {
+                        ivProfile.loadImage(result.data.imageUrl)
+                        tvName.text = result.data.fullName
+                        tvPhone.text = result.data.phoneNumber
+                        tvEmail.text = result.data.email
+                        swipeRefresh.isRefreshing = false
+                    }
                 }
                 is Result.Error -> {
                     binding.swipeRefresh.isRefreshing = false
@@ -72,17 +90,21 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
     }
 
     private fun onEditClicked() {
-        binding.menu.edit.setOnClickListener {
-            authViewModel.getToken().observe(viewLifecycleOwner) { token ->
-                if (!token.isNullOrBlank()) {
-                    parentFragmentManager.beginTransaction().apply {
-                        add(R.id.main_nav_host, ProfileEditFragment())
-                        addToBackStack(null)
-                        commit()
-                    }
-                } else {
-                    startActivity(Intent(requireContext(), AuthActivity::class.java))
-                }
+        binding.ivEdit.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, ProfileEditFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
+
+    private fun onSellerClicked() {
+        binding.menu.seller.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, SellerFragment())
+                addToBackStack(null)
+                commit()
             }
         }
     }
@@ -100,5 +122,28 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                 requireActivity().finish()
             }
         }
+    }
+
+    private fun setConstraint(isLogin: Boolean) {
+        val constraintLayout: ConstraintLayout = binding.constraintLayout
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(constraintLayout)
+
+        if (isLogin) {
+            constraintSet.clear(
+                binding.ivProfile.id,
+                ConstraintSet.END
+            )
+        } else {
+            constraintSet.connect(
+                binding.ivProfile.id,
+                ConstraintSet.END,
+                ConstraintSet.PARENT_ID,
+                ConstraintSet.END,
+                0
+            )
+        }
+
+        constraintSet.applyTo(constraintLayout)
     }
 }

@@ -151,6 +151,7 @@
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
             android:paddingHorizontal="8dp"
+            android:paddingBottom="?actionBarSize"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"

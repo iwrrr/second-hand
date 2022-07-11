@@ -16,9 +16,6 @@ import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.seller.SellerPagerAdapter
-import id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment
-import id.binar.fp.secondhand.util.Extensions.loadImage
-import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
 class SellerFragment : BaseFragment<FragmentSellerBinding>() {
@@ -28,14 +25,17 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSellerBinding
         get() = FragmentSellerBinding::inflate
 
+    override val isNavigationVisible: Boolean
+        get() = false
+
     override fun setup() {
         super.setup()
         setupViewPager()
-        setupSwipeLayout()
+//        setupSwipeLayout()
 
-//        observeUser()
+        onBackClicked()
         onLoginClicked()
-        editProfile()
+//        onEditClicked()
     }
 
     override fun checkAuth() {
@@ -43,7 +43,7 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
                 binding.auth.root.isVisible = false
-                observeUser()
+//                observeUser()
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
@@ -51,10 +51,14 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
         }
     }
 
-    private fun setupSwipeLayout() {
-        binding.swipeRefresh.setOnRefreshListener {
-            observeUser()
-        }
+//    private fun setupSwipeLayout() {
+//        binding.swipeRefresh.setOnRefreshListener {
+//            observeUser()
+//        }
+//    }
+
+    private fun onBackClicked() {
+        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
     }
 
     private fun onLoginClicked() {
@@ -63,15 +67,15 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
         }
     }
 
-    private fun editProfile() {
-        binding.content.btnEditProfile.setOnClickListener {
-            parentFragmentManager.beginTransaction().apply {
-                add(R.id.main_nav_host, ProfileEditFragment())
-                addToBackStack(null)
-                commit()
-            }
-        }
-    }
+//    private fun onEditClicked() {
+//        binding.content.btnEditProfile.setOnClickListener {
+//            parentFragmentManager.beginTransaction().apply {
+//                add(R.id.main_nav_host, ProfileEditFragment())
+//                addToBackStack(null)
+//                commit()
+//            }
+//        }
+//    }
 
     private fun setupViewPager() {
         val pagerAdapter = SellerPagerAdapter(childFragmentManager, lifecycle)
@@ -97,23 +101,23 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
         binding.swipeRefresh.isEnabled = enabled
     }
 
-    private fun observeUser() {
-        authViewModel.getUser().observe(viewLifecycleOwner) { result ->
-            when (result) {
-                is Result.Loading -> {}
-                is Result.Success -> {
-                    binding.swipeRefresh.isRefreshing = false
-                    binding.content.ivProfile.loadImage(result.data.imageUrl)
-                    binding.content.tvName.text = result.data.fullName
-                    binding.content.tvCity.text = result.data.city
-                }
-                is Result.Error -> {
-                    binding.swipeRefresh.isRefreshing = false
-//                    Helper.showToast(requireContext(), result.error)
-                }
-            }
-        }
-    }
+//    private fun observeUser() {
+//        authViewModel.getUser().observe(viewLifecycleOwner) { result ->
+//            when (result) {
+//                is Result.Loading -> {}
+//                is Result.Success -> {
+//                    binding.swipeRefresh.isRefreshing = false
+//                    binding.content.ivProfile.loadImage(result.data.imageUrl)
+//                    binding.content.tvName.text = result.data.fullName
+//                    binding.content.tvCity.text = result.data.city
+//                }
+//                is Result.Error -> {
+//                    binding.swipeRefresh.isRefreshing = false
+////                    Helper.showToast(requireContext(), result.error)
+//                }
+//            }
+//        }
+//    }
 
     companion object {
         @StringRes

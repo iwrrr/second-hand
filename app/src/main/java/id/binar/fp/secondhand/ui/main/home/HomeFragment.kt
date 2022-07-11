@@ -17,6 +17,7 @@ import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -46,7 +47,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.etSearch.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 add(R.id.main_nav_host, SearchFragment())
-                addToBackStack(SearchFragment::class.java.simpleName)
+                addToBackStack(null)
                 commit()
             }
         }
@@ -89,7 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 }
                 is Result.Success -> {
-                    val availableProduct = result.data.filter { it.status == "available" }
+                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
                     productAdapter.submitList(availableProduct)
                     products = availableProduct
                 }

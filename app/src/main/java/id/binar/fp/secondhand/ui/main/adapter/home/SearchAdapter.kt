@@ -26,6 +26,7 @@ class SearchAdapter(
 
     inner class SearchViewHolder(private val binding: ItemSearchProductBinding) :
         BaseViewHolder<Product>(binding.root) {
+
         override fun onBind(data: Product) {
             with(binding) {
                 val price = Helper.numberFormatter(data.basePrice)
@@ -37,7 +38,6 @@ class SearchAdapter(
                 ivProductImage.loadImage(data.imageUrl)
                 itemView.setOnClickListener { onClick(data) }
             }
-
         }
     }
 }

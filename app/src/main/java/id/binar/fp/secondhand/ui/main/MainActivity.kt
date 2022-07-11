@@ -13,11 +13,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ActivityMainBinding
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
+import id.binar.fp.secondhand.ui.main.history.HistoryFragment
 import id.binar.fp.secondhand.ui.main.home.HomeFragment
 import id.binar.fp.secondhand.ui.main.notification.NotificationFragment
 import id.binar.fp.secondhand.ui.main.product.AddProductFragment
 import id.binar.fp.secondhand.ui.main.profile.ProfileFragment
-import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val homeFragment = HomeFragment()
     private val notificationFragment = NotificationFragment()
     private val addProductFragment = AddProductFragment()
-    private val sellerFragment = SellerFragment()
+    private val historyFragment = HistoryFragment()
     private val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,17 +46,34 @@ class MainActivity : AppCompatActivity() {
         setupBottomNavigationBar()
     }
 
+    override fun onBackPressed() {
+        setLightStatusBar(window.decorView, true)
+        if (supportFragmentManager.backStackEntryCount > 1) {
+            supportFragmentManager.popBackStack()
+            setVisibilityBottomNav(false)
+        } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
+            super.onBackPressed()
+            setVisibilityBottomNav(true)
+        } else {
+            setTabStateFragment(TabState.HOME).commit()
+            setVisibilityBottomNav(true)
+            binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
+        }
+    }
+
     private fun setupBottomNavigationBar() {
         supportFragmentManager.beginTransaction()
             .add(R.id.main_nav_host, homeFragment)
             .add(R.id.main_nav_host, notificationFragment)
             .add(R.id.main_nav_host, addProductFragment)
-            .add(R.id.main_nav_host, sellerFragment)
+            .add(R.id.main_nav_host, historyFragment)
             .add(R.id.main_nav_host, profileFragment)
             .commit()
 
         setTabStateFragment(TabState.HOME).commit()
 
+        binding.bottomNavigationView.background = null
+        binding.bottomNavigationView.menu.getItem(2).isEnabled = false
         binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.navigation_home -> {
@@ -65,11 +82,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_notification -> {
                     setTabStateFragment(TabState.NOTIFICATION).commit()
                 }
-                R.id.navigation_add_product -> {
-                    setTabStateFragment(TabState.ADDPRODUCT).commit()
-                }
-                R.id.navigation_sell_list -> {
-                    setTabStateFragment(TabState.SELLLIST).commit()
+                R.id.navigation_history -> {
+                    setTabStateFragment(TabState.HISTORY).commit()
                 }
                 R.id.navigation_profile -> {
                     setTabStateFragment(TabState.PROFILE).commit()
@@ -78,20 +92,9 @@ class MainActivity : AppCompatActivity() {
             true
         }
         binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
-    }
 
-    override fun onBackPressed() {
-        setLightStatusBar(window.decorView, true)
-        if (supportFragmentManager.backStackEntryCount > 1) {
-            supportFragmentManager.popBackStack()
-            setVisibilityBottomNav(true)
-        } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
-            super.onBackPressed()
-            setVisibilityBottomNav(true)
-        } else {
-            setTabStateFragment(TabState.HOME).commit()
-            setVisibilityBottomNav(true)
-            binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
+        binding.fab.setOnClickListener {
+            setTabStateFragment(TabState.ADDPRODUCT).commit()
         }
     }
 
@@ -105,38 +108,36 @@ class MainActivity : AppCompatActivity() {
                 transaction.show(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.hide(sellerFragment)
+                transaction.hide(historyFragment)
                 transaction.hide(profileFragment)
             }
             TabState.NOTIFICATION -> {
                 transaction.hide(homeFragment)
                 transaction.show(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.hide(sellerFragment)
+                transaction.hide(historyFragment)
                 transaction.hide(profileFragment)
             }
             TabState.ADDPRODUCT -> {
                 transaction.hide(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.show(addProductFragment)
-                transaction.hide(sellerFragment)
+                transaction.hide(historyFragment)
                 transaction.hide(profileFragment)
-                authViewModel.getToken().observe(this) { token ->
-                    setVisibilityBottomNav(token.isNullOrBlank())
-                }
+                setVisibilityBottomNav(false)
             }
-            TabState.SELLLIST -> {
+            TabState.HISTORY -> {
                 transaction.hide(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.show(sellerFragment)
+                transaction.show(historyFragment)
                 transaction.hide(profileFragment)
             }
             TabState.PROFILE -> {
                 transaction.hide(homeFragment)
                 transaction.hide(notificationFragment)
                 transaction.hide(addProductFragment)
-                transaction.hide(sellerFragment)
+                transaction.hide(historyFragment)
                 transaction.show(profileFragment)
             }
         }
@@ -148,14 +149,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setVisibilityBottomNav(isVisible: Boolean) {
-        binding.bottomNavigationView.isVisible = isVisible
+        binding.bottomAppBar.isVisible = isVisible
+        if (isVisible) binding.fab.show() else binding.fab.hide()
     }
 
     private enum class TabState {
         HOME,
         NOTIFICATION,
         ADDPRODUCT,
-        SELLLIST,
+        HISTORY,
         PROFILE,
     }
 }
