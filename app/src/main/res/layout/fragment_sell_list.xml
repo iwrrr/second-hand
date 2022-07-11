@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
-    tools:context=".ui.main.sell.SellListFragment">
+    tools:context=".ui.main.seller.SellerFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_title_page"
@@ -43,7 +43,7 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:scaleType="centerCrop"
-                android:theme="@style/ShapeAppearanceOverlay.App.CornerSize12"
+                android:theme="@style/ShapeAppearanceOverlay.App.CornerSize.12"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
