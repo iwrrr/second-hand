@@ -11,6 +11,8 @@
     <color name="colorPrimary">#7126B5</color>
     <color name="colorSecondary">#E2D4F0</color>
     <color name="colorAccent">#8A8A8A</color>
+    <color name="colorPlaceholder">#CCCCCC</color>
+    <color name="colorSearch">#FAFAFA</color>
 
     <color name="iconTintPrimary">#151515</color>
 

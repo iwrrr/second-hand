@@ -6,11 +6,13 @@
     <string name="title_notification">Notifikasi</string>
     <string name="title_add_product">Jual</string>
     <string name="title_sell_list">Daftar Jual</string>
+    <string name="title_transaction">Transaksi</string>
     <string name="title_account">Akun</string>
 
     <string name="text_title_page_notification">Notifikasi</string>
     <string name="text_title_page_profile">Akun Saya</string>
     <string name="text_title_page_sell_list">Daftar Jual Saya</string>
+    <string name="text_title_page_transaction">Transaksi</string>
 
     <string name="tab_sell_list_1">Produk</string>
     <string name="tab_sell_list_2">Diminati</string>
@@ -36,11 +38,13 @@
     <string name="text_add_product_name">Nama Produk</string>
     <string name="text_add_product_price">Harga Produk</string>
     <string name="text_add_product_category">Kategori</string>
+    <string name="text_add_product_location">Lokasi</string>
     <string name="text_add_product_description">Deskripsi</string>
     <string name="text_add_product_image">Foto Produk</string>
 
     <string name="text_add_product_hint_name">Nama Produk</string>
     <string name="text_add_product_hint_price">Rp 0,00</string>
+    <string name="text_add_product_hint_location">Lokasi Produk</string>
     <string name="text_add_product_hint_category">Pilih Kategori</string>
     <string name="text_add_product_hint_description">Contoh: Barang bagus mantap</string>
 
@@ -49,6 +53,7 @@
 
     <string name="text_profile_edit">Ubah Akun</string>
     <string name="text_profile_settings">Pengaturan</string>
+    <string name="text_profile_seller">Daftar Jual Saya</string>
     <string name="text_profile_logout">Keluar</string>
 
     <string name="text_edit_profile_name">Nama</string>
@@ -97,4 +102,14 @@
     <string name="text_btn_buy">Saya Tertarik dan Ingin Nego</string>
     <string name="text_btn_reject">Tolak</string>
     <string name="text_btn_accept">Terima</string>
+
+    <string name="text_choose_image_title">Pilih gambar</string>
+    <string name="text_choose_image_camera">Kamera</string>
+    <string name="text_choose_image_gallery">Galeri</string>
+
+    <string name="text_seller_order_bid_price">%1$s Rp%2$s</string>
+    <string name="text_seller_order_base_price">Rp%1$s</string>
+    <string name="text_seller_order_product_name">Jam Tangan Casio</string>
+    <string name="text_seller_order_transaction_date">20 Apr, 14:04</string>
+    <string name="text_seller_order_bid_title">Penawaran produk</string>
 </resources>

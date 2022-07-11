@@ -2,45 +2,73 @@ package id.binar.fp.secondhand.ui.main.adapter.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ItemProductCategoryBinding
-import id.binar.fp.secondhand.util.dummy.Category
+import id.binar.fp.secondhand.domain.model.BaseType
+import id.binar.fp.secondhand.domain.model.Category
+import id.binar.fp.secondhand.ui.base.BaseAdapter
 
+@Suppress("UNCHECKED_CAST")
 class CategoryAdapter(
-    private val onClick: (Category) -> Unit
-) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+    private val onClick: (Category) -> Unit,
+) : BaseAdapter<BaseType>() {
 
-    private var oldCategoryList = emptyList<Category>()
+    private var selectedItem = 0
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseType> {
         val binding = ItemProductCategoryBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return CategoryViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(oldCategoryList[position])
-    }
-
-    override fun getItemCount(): Int = oldCategoryList.size
-
-    fun submitList(newCategoryList: List<Category>) {
-        val diffUtil = CategoryDiffUtil(oldCategoryList, newCategoryList)
-        val diffResult = DiffUtil.calculateDiff(diffUtil)
-        oldCategoryList = newCategoryList
-        diffResult.dispatchUpdatesTo(this)
+        return CategoryViewHolder(binding) as BaseViewHolder<BaseType>
     }
 
     inner class CategoryViewHolder(private val binding: ItemProductCategoryBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        BaseViewHolder<Category>(binding.root) {
 
-        fun bind(category: Category) {
-            binding.tvCategory.text = category.name
-            itemView.setOnClickListener { onClick(category) }
+        override fun onBind(data: Category, position: Int) {
+            with(binding) {
+                tvCategory.text = data.name
+
+                if (selectedItem == position) {
+                    tvCategory.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.white
+                        )
+                    )
+                    cvCategory.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.colorPrimary
+                        )
+                    )
+                } else {
+                    tvCategory.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.colorAccent
+                        )
+                    )
+                    cvCategory.setCardBackgroundColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.white
+                        )
+                    )
+                }
+
+                itemView.setOnClickListener {
+                    onClick(data)
+                    val previousItem = selectedItem
+                    selectedItem = position
+
+                    notifyItemChanged(previousItem)
+                    notifyItemChanged(position)
+                }
+            }
         }
     }
 }
