@@ -1,7 +1,6 @@
 package id.binar.fp.secondhand.domain.model
 
 import android.os.Parcelable
-import id.binar.fp.secondhand.BaseType
 import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import kotlinx.parcelize.Parcelize
 

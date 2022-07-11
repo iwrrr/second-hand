@@ -6,9 +6,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import id.binar.fp.secondhand.SellerType
 import id.binar.fp.secondhand.databinding.FragmentSoldBinding
 import id.binar.fp.secondhand.domain.model.Product
+import id.binar.fp.secondhand.domain.model.SellerType
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel

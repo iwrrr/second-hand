@@ -2,9 +2,9 @@ package id.binar.fp.secondhand.ui.main.adapter.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import id.binar.fp.secondhand.BaseType
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ItemProductBinding
+import id.binar.fp.secondhand.domain.model.BaseType
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseAdapter
 import id.binar.fp.secondhand.util.Extensions.loadImage

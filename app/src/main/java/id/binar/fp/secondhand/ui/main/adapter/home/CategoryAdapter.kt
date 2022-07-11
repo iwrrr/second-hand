@@ -3,9 +3,9 @@ package id.binar.fp.secondhand.ui.main.adapter.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import id.binar.fp.secondhand.BaseType
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ItemProductCategoryBinding
+import id.binar.fp.secondhand.domain.model.BaseType
 import id.binar.fp.secondhand.domain.model.Category
 import id.binar.fp.secondhand.ui.base.BaseAdapter
 

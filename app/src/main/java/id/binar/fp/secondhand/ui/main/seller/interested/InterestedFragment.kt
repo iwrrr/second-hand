@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.SellerType
 import id.binar.fp.secondhand.databinding.FragmentInterestedBinding
 import id.binar.fp.secondhand.domain.model.SellerOrder
+import id.binar.fp.secondhand.domain.model.SellerType
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel

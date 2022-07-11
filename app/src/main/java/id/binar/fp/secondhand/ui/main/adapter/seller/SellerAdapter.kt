@@ -2,13 +2,13 @@ package id.binar.fp.secondhand.ui.main.adapter.seller
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import id.binar.fp.secondhand.BaseType
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.SellerType
 import id.binar.fp.secondhand.databinding.ItemSellerInterestedBinding
 import id.binar.fp.secondhand.databinding.ItemSellerProductBinding
+import id.binar.fp.secondhand.domain.model.BaseType
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.model.SellerOrder
+import id.binar.fp.secondhand.domain.model.SellerType
 import id.binar.fp.secondhand.ui.base.BaseAdapter
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
