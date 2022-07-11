@@ -27,7 +27,8 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProfileEditBinding
         get() = FragmentProfileEditBinding::inflate
 
-    override val isNavigationVisible: Boolean = false
+    override val isNavigationVisible: Boolean
+        get() = false
 
     override fun setup() {
         super.setup()

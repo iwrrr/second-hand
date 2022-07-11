@@ -17,7 +17,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import id.binar.fp.secondhand.R
 
 abstract class BaseFragment<VB : ViewBinding> : Fragment() {
@@ -74,7 +75,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     private fun setupBottomNavigation() {
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
+        requireActivity().findViewById<BottomAppBar>(R.id.bottom_app_bar).isVisible =
+            isNavigationVisible
+        requireActivity().findViewById<FloatingActionButton>(R.id.fab).isVisible =
             isNavigationVisible
     }
 

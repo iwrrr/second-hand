@@ -65,18 +65,16 @@ class SellerAdapter<T>(
         BaseViewHolder<Product>(binding.root) {
 
         override fun onBind(data: Product) {
-            if (data.status == Status.AVAILABLE) {
-                with(binding) {
-                    val price = Helper.numberFormatter(data.basePrice)
-                    tvProductName.text = data.name
-                    tvProductCategory.text = Helper.initCategory(data.categories)
-                    tvProductPrice.text = itemView.context.getString(
-                        R.string.text_seller_order_base_price,
-                        price
-                    )
-                    ivProductImage.loadImage(data.imageUrl)
-                    itemView.setOnClickListener { onClick(data as T) }
-                }
+            with(binding) {
+                val price = Helper.numberFormatter(data.basePrice)
+                tvProductName.text = data.name
+                tvProductCategory.text = Helper.initCategory(data.categories)
+                tvProductPrice.text = itemView.context.getString(
+                    R.string.text_seller_order_base_price,
+                    price
+                )
+                ivProductImage.loadImage(data.imageUrl)
+                itemView.setOnClickListener { onClick(data as T) }
             }
         }
     }
@@ -119,18 +117,16 @@ class SellerAdapter<T>(
         BaseViewHolder<Product>(binding.root) {
 
         override fun onBind(data: Product) {
-            if (data.status == Status.SOLD) {
-                with(binding) {
-                    val price = Helper.numberFormatter(data.basePrice)
-                    tvProductName.text = data.name
-                    tvProductCategory.text = Helper.initCategory(data.categories)
-                    tvProductPrice.text = itemView.context.getString(
-                        R.string.text_seller_order_base_price,
-                        price
-                    )
-                    ivProductImage.loadImage(data.imageUrl)
-                    itemView.setOnClickListener { onClick(data as T) }
-                }
+            with(binding) {
+                val price = Helper.numberFormatter(data.basePrice)
+                tvProductName.text = data.name
+                tvProductCategory.text = Helper.initCategory(data.categories)
+                tvProductPrice.text = itemView.context.getString(
+                    R.string.text_seller_order_base_price,
+                    price
+                )
+                ivProductImage.loadImage(data.imageUrl)
+                itemView.setOnClickListener { onClick(data as T) }
             }
         }
     }

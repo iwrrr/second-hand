@@ -9,7 +9,6 @@ import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseAdapter
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
-import id.binar.fp.secondhand.util.Status
 
 @Suppress("UNCHECKED_CAST")
 class ProductAdapter(
@@ -29,18 +28,16 @@ class ProductAdapter(
         BaseViewHolder<Product>(binding.root) {
 
         override fun onBind(data: Product) {
-            if (data.status == Status.AVAILABLE) {
-                with(binding) {
-                    val price = Helper.numberFormatter(data.basePrice)
-                    tvProductName.text = data.name
-                    tvProductCategory.text = Helper.initCategory(data.categories)
-                    tvProductPrice.text = itemView.context.getString(
-                        R.string.text_seller_order_base_price,
-                        price
-                    )
-                    ivProductImage.loadImage(data.imageUrl)
-                    itemView.setOnClickListener { onClick(data) }
-                }
+            with(binding) {
+                val price = Helper.numberFormatter(data.basePrice)
+                tvProductName.text = data.name
+                tvProductCategory.text = Helper.initCategory(data.categories)
+                tvProductPrice.text = itemView.context.getString(
+                    R.string.text_seller_order_base_price,
+                    price
+                )
+                ivProductImage.loadImage(data.imageUrl)
+                itemView.setOnClickListener { onClick(data) }
             }
         }
     }

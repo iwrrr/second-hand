@@ -14,16 +14,20 @@ import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 
 @AndroidEntryPoint
 class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val productAdapter by lazy { SellerAdapter(SellerType.PRODUCT, ::onProductClicked) }
+    private val sellerAdapter by lazy { SellerAdapter(SellerType.PRODUCT, ::onProductClicked) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
         get() = FragmentProductBinding::inflate
+
+    override val isNavigationVisible: Boolean
+        get() = false
 
     override fun setup() {
         super.setup()
@@ -32,7 +36,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
     }
 
     private fun setupRecyclerView() {
-        binding.content.rvProduct.adapter = productAdapter
+        binding.content.rvProduct.adapter = sellerAdapter
         binding.content.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
         observeProduct()
     }
@@ -50,9 +54,9 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                 is Result.Success -> {
                     binding.loading.root.isVisible = false
                     swipeRefreshLayout.isRefreshing = false
-                    val availableProduct = result.data.filter { it.status == "available" }
+                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
                     if (availableProduct.isNotEmpty()) {
-                        productAdapter.submitList(availableProduct)
+                        sellerAdapter.submitList(availableProduct)
                     } else {
                         binding.content.root.isVisible = false
                         binding.empty.root.isVisible = true

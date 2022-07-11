@@ -23,10 +23,13 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val productAdapter by lazy { SellerAdapter(SellerType.INTERESTED, ::onProductClicked) }
+    private val sellerAdapter by lazy { SellerAdapter(SellerType.INTERESTED, ::onProductClicked) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInterestedBinding
         get() = FragmentInterestedBinding::inflate
+
+    override val isNavigationVisible: Boolean
+        get() = false
 
     override fun setup() {
         super.setup()
@@ -37,7 +40,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
     private fun setupRecyclerView() {
         val itemDecoration = DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
         binding.content.rvInterested.apply {
-            adapter = productAdapter
+            adapter = sellerAdapter
             layoutManager = LinearLayoutManager(requireContext())
             addItemDecoration(itemDecoration)
         }
@@ -59,7 +62,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
                     binding.loading.root.isVisible = false
                     swipeRefreshLayout.isRefreshing = false
                     if (result.data.isNotEmpty()) {
-                        productAdapter.submitList(result.data)
+                        sellerAdapter.submitList(result.data)
                     } else {
                         binding.content.root.isVisible = false
                         binding.empty.root.isVisible = true

@@ -3,24 +3,23 @@ package id.binar.fp.secondhand.ui.main.home
 import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentSearchBinding
 import id.binar.fp.secondhand.domain.model.Product
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.SearchAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
@@ -28,35 +27,21 @@ import kotlinx.coroutines.launch
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
-
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
+class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private val viewModel: HomeViewModel by viewModels()
 
     private val searchAdapter: SearchAdapter by lazy { SearchAdapter(::onProductClicked) }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSearchBinding
+        get() = FragmentSearchBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation_view).isVisible =
-            false
+    override val isNavigationVisible: Boolean
+        get() = false
 
+    override fun setup() {
+        super.setup()
         setupSearch()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setupSearch() {
@@ -86,14 +71,14 @@ class SearchFragment : Fragment() {
                     binding.loading.root.isVisible = false
                     binding.rvSearch.isVisible = true
                     binding.placeholder.root.isVisible = false
-//                    val productAvailable = result.data.filter { it.status == "available" }
-                    searchAdapter.submitList(result.data)
+                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
+                    searchAdapter.submitList(availableProduct)
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
                     binding.rvSearch.isVisible = false
                     binding.placeholder.root.isVisible = false
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Helper.showToast(requireContext(), result.error)
                 }
             }
         }
