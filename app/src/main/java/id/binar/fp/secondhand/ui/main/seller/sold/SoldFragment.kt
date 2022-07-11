@@ -6,15 +6,16 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.SellerType
 import id.binar.fp.secondhand.databinding.FragmentSoldBinding
+import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseFragment
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellListInterestedAdapter
-import id.binar.fp.secondhand.util.dummy.Product
+import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
 
 @AndroidEntryPoint
 class SoldFragment : BaseFragment<FragmentSoldBinding>() {
 
-    private val interestedAdapter by lazy { SellListInterestedAdapter(::onProductClicked) }
+    private val interestedAdapter by lazy { SellerAdapter(SellerType.SOLD, ::onProductClicked) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSoldBinding
         get() = FragmentSoldBinding::inflate

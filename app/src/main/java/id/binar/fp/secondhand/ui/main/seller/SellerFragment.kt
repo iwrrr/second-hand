@@ -15,10 +15,9 @@ import id.binar.fp.secondhand.databinding.FragmentSellerBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
-import id.binar.fp.secondhand.ui.main.adapter.sell.SellerPagerAdapter
+import id.binar.fp.secondhand.ui.main.adapter.seller.SellerPagerAdapter
 import id.binar.fp.secondhand.ui.main.profile.ProfileEditFragment
 import id.binar.fp.secondhand.util.Extensions.loadImage
-import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
@@ -31,11 +30,12 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
 
     override fun setup() {
         super.setup()
-        observeUser()
-        onLoginClicked()
-        editProfile()
         setupViewPager()
         setupSwipeLayout()
+
+//        observeUser()
+        onLoginClicked()
+        editProfile()
     }
 
     override fun checkAuth() {
@@ -43,6 +43,7 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
                 binding.auth.root.isVisible = false
+                observeUser()
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
@@ -51,7 +52,9 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
     }
 
     private fun setupSwipeLayout() {
-        binding.swipeRefresh.setOnRefreshListener { observeUser() }
+        binding.swipeRefresh.setOnRefreshListener {
+            observeUser()
+        }
     }
 
     private fun onLoginClicked() {
@@ -106,7 +109,7 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
                 }
                 is Result.Error -> {
                     binding.swipeRefresh.isRefreshing = false
-                    Helper.showToast(requireContext(), result.error)
+//                    Helper.showToast(requireContext(), result.error)
                 }
             }
         }

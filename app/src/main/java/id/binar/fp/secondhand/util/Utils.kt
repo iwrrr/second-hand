@@ -37,3 +37,7 @@ fun uriToFile(selectedImage: Uri, context: Context): File {
 
     return file
 }
+
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T : Any, K : Any> T.sameAndEqual(n: K): Boolean =
+    ((this.javaClass == n.javaClass) && (this == n))

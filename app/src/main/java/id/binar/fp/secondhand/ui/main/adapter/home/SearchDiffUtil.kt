@@ -1,11 +1,11 @@
 package id.binar.fp.secondhand.ui.main.adapter.home
 
 import androidx.recyclerview.widget.DiffUtil
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
+import id.binar.fp.secondhand.domain.model.Product
 
 class SearchDiffUtil(
-    private val oldList: List<ProductDto>,
-    private val newList: List<ProductDto>,
+    private val oldList: List<Product>,
+    private val newList: List<Product>,
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int = oldList.size

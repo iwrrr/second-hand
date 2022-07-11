@@ -38,7 +38,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
 
     override fun setupToolbar() {
         binding.toolbar.toolbarTitle.text = "Lengkapi Info Akun"
-        binding.toolbar.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun observeUser() {
@@ -105,7 +105,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
                         Helper.showToast(requireContext(), "Profile berhasil diperbarui")
-                        parentFragmentManager.popBackStack()
+                        requireActivity().onBackPressed()
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false

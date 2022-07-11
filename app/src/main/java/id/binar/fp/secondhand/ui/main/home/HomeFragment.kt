@@ -2,18 +2,17 @@ package id.binar.fp.secondhand.ui.main.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.CategoryDto
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentHomeBinding
+import id.binar.fp.secondhand.domain.model.Category
+import id.binar.fp.secondhand.domain.model.Product
+import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
@@ -24,45 +23,33 @@ import kotlinx.coroutines.FlowPreview
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val categoryAdapter by lazy { CategoryAdapter(::onCategoryClicked, requireContext()) }
+    private val categoryAdapter by lazy { CategoryAdapter(::onCategoryClicked) }
     private val productAdapter by lazy { ProductAdapter(::onProductClicked) }
 
-    private var products = emptyList<ProductDto>()
-    private var categories = emptyList<CategoryDto>()
+    private var products = emptyList<Product>()
+    private var categories = emptyList<Category>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
+        get() = FragmentHomeBinding::inflate
 
+    override fun setup() {
+        super.setup()
+        setupSearch()
+        setupRecyclerView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-
+    private fun setupSearch() {
         binding.etSearch.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 add(R.id.main_nav_host, SearchFragment())
-                addToBackStack(null)
+                addToBackStack(SearchFragment::class.java.simpleName)
                 commit()
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setupRecyclerView() {
@@ -84,8 +71,8 @@ class HomeFragment : Fragment() {
                 }
                 is Result.Success -> {
                     val allCategory = result.data.toMutableList()
-                    allCategory.add(0, CategoryDto(id = 0, name = "Semua"))
-                    categoryAdapter.submitList(allCategory)
+                    allCategory.add(0, Category(id = 0, name = "Semua"))
+                    categoryAdapter.submitList(allCategory as List<Category>)
                     categories = allCategory
                 }
                 is Result.Error -> {
@@ -113,7 +100,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onCategoryClicked(category: CategoryDto) {
+    private fun onCategoryClicked(category: Category) {
         if (category.id != 0) {
             val filteredProducts = products.filter { data ->
                 data.categories?.map { it.id }?.contains(category.id) == true
@@ -124,7 +111,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun onProductClicked(product: ProductDto) {
+    private fun onProductClicked(product: Product) {
         val detailFragment = ProductDetailFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)

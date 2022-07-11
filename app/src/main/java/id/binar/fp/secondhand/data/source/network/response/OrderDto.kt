@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.domain.model.Order
 
 data class OrderDto(
 
@@ -24,4 +25,17 @@ data class OrderDto(
 
     @SerializedName("User")
     val user: UserDto? = null,
-)
+) {
+
+    fun toDomain(): Order {
+        return Order(
+            id,
+            productId,
+            buyerId,
+            price,
+            status,
+            product?.toDomain(),
+            user?.toDomain()
+        )
+    }
+}

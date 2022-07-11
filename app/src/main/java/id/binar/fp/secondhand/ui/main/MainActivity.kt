@@ -82,13 +82,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         setLightStatusBar(window.decorView, true)
-        val tag = supportFragmentManager.findFragmentByTag(profileFragment::class.java.simpleName)
-        if (tag != null) {
-            profileFragment.observeUser()
-        }
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
-            setVisibilityBottomNav(false)
+            setVisibilityBottomNav(true)
         } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
             setVisibilityBottomNav(true)

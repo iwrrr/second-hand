@@ -97,7 +97,7 @@
 
     <include
         android:id="@+id/content_product"
-        layout="@layout/item_sell_list_interested"
+        layout="@layout/item_seller_interested"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"

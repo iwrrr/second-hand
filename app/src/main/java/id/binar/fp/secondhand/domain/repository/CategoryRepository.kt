@@ -1,12 +1,12 @@
 package id.binar.fp.secondhand.domain.repository
 
 import androidx.lifecycle.LiveData
-import id.binar.fp.secondhand.data.source.network.response.CategoryDto
+import id.binar.fp.secondhand.domain.model.Category
 import id.binar.fp.secondhand.util.Result
 
 interface CategoryRepository {
 
-    fun getCategory(): LiveData<Result<List<CategoryDto>>>
+    fun getCategory(): LiveData<Result<List<Category>>>
 
-    suspend fun getCategoryById(id: Int): LiveData<Result<CategoryDto>>
+    suspend fun getCategoryById(id: Int): LiveData<Result<Category>>
 }

@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import id.binar.fp.secondhand.R
@@ -33,6 +34,9 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     open val isLightStatusBar: Boolean
         get() = true
+
+    open val swipeRefreshLayout: SwipeRefreshLayout
+        get() = requireParentFragment().view?.findViewById(R.id.swipe_refresh) as SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,

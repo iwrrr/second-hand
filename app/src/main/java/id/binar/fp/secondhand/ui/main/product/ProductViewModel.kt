@@ -3,7 +3,7 @@ package id.binar.fp.secondhand.ui.main.product
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
+import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.repository.CategoryRepository
 import id.binar.fp.secondhand.domain.repository.OrderRepository
 import id.binar.fp.secondhand.domain.repository.ProductRepository
@@ -30,7 +30,7 @@ class ProductViewModel @Inject constructor(
         categoryIds: List<Int?>,
         location: String,
         image: File
-    ): LiveData<Result<ProductDto>> {
+    ): LiveData<Result<Product>> {
         val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
 
         val requestBody = MultipartBody.Builder()
@@ -46,7 +46,6 @@ class ProductViewModel @Inject constructor(
         return productRepository.addSellerProduct(requestBody)
 
     }
-
 
     fun getDetailProduct(id: Int) = productRepository.getBuyerProductById(id)
 

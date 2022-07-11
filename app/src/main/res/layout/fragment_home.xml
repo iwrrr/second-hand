@@ -157,7 +157,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rv_category"
             tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_sell_list_product"
+            tools:listitem="@layout/item_seller_product"
             tools:spanCount="2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

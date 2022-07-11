@@ -32,10 +32,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun setup() {
         super.setup()
+        setupSwipeLayout()
+
         onEditClicked()
         onLoginClicked()
         onLogoutClicked()
-        setupSwipeLayout()
     }
 
     override fun checkAuth() {
@@ -54,7 +55,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
     }
 
-    fun observeUser() {
+    private fun observeUser() {
         authViewModel.getUser().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {}

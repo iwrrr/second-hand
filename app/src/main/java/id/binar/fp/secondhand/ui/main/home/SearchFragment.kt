@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.ProductDto
 import id.binar.fp.secondhand.databinding.FragmentSearchBinding
+import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.main.adapter.home.SearchAdapter
 import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
 import id.binar.fp.secondhand.util.Result
@@ -99,7 +99,7 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun onProductClicked(product: ProductDto) {
+    private fun onProductClicked(product: Product) {
         val fragment = ProductDetailFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)
