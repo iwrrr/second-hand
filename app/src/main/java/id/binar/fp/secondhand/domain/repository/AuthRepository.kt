@@ -23,7 +23,7 @@ interface AuthRepository {
 
     fun getUser(): LiveData<Result<User>>
 
-    fun updateUser(
+    fun updateProfile(
         body: RequestBody,
     ): LiveData<Result<User>>
 

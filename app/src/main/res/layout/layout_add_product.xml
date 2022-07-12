@@ -145,7 +145,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_category">
 
-            <MultiAutoCompleteTextView
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_product_category"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -154,12 +154,23 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/etl_product_category"
+            app:layout_constraintStart_toStartOf="@+id/etl_product_category"
+            app:layout_constraintTop_toBottomOf="@+id/etl_product_category">
+
+        </com.google.android.material.chip.ChipGroup>
+
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_location"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="1"
@@ -168,7 +179,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etl_product_category" />
+            app:layout_constraintTop_toBottomOf="@id/chip_group" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etl_product_location"

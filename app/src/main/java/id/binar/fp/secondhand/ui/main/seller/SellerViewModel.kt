@@ -15,4 +15,6 @@ class SellerViewModel @Inject constructor(
     fun getSellerProduct() = productRepository.getSellerProduct()
 
     fun getSellerOrder() = orderRepository.getSellerOrder()
+
+    fun deleteSelerProductById(id: Int) = productRepository.deleteSellerProductById(id)
 }

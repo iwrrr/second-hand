@@ -20,6 +20,8 @@ class SellerAdapter<T>(
     private val onClick: (T) -> Unit
 ) : BaseAdapter<BaseType>() {
 
+    fun getSwipedData(swipedPosition: Int): Product = getItem(swipedPosition) as Product
+
     override fun getItemId(position: Int): Long {
         return when (getItem(position)) {
             is Product -> (getItem(position) as Product).id.toLong()

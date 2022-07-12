@@ -18,7 +18,7 @@
         android:layout_gravity="bottom"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
-        app:fabCradleMargin="16dp"
+        app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="20dp"
         app:fabCradleVerticalOffset="0dp"
         app:paddingBottomSystemWindowInsets="false">

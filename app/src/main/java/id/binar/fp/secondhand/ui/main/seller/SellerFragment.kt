@@ -31,11 +31,9 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
     override fun setup() {
         super.setup()
         setupViewPager()
-//        setupSwipeLayout()
 
         onBackClicked()
         onLoginClicked()
-//        onEditClicked()
     }
 
     override fun checkAuth() {
@@ -51,14 +49,8 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
         }
     }
 
-//    private fun setupSwipeLayout() {
-//        binding.swipeRefresh.setOnRefreshListener {
-//            observeUser()
-//        }
-//    }
-
     private fun onBackClicked() {
-        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun onLoginClicked() {
@@ -66,16 +58,6 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
             startActivity(Intent(requireContext(), AuthActivity::class.java))
         }
     }
-
-//    private fun onEditClicked() {
-//        binding.content.btnEditProfile.setOnClickListener {
-//            parentFragmentManager.beginTransaction().apply {
-//                add(R.id.main_nav_host, ProfileEditFragment())
-//                addToBackStack(null)
-//                commit()
-//            }
-//        }
-//    }
 
     private fun setupViewPager() {
         val pagerAdapter = SellerPagerAdapter(childFragmentManager, lifecycle)
@@ -100,24 +82,6 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
     private fun toggleRefreshing(enabled: Boolean) {
         binding.swipeRefresh.isEnabled = enabled
     }
-
-//    private fun observeUser() {
-//        authViewModel.getUser().observe(viewLifecycleOwner) { result ->
-//            when (result) {
-//                is Result.Loading -> {}
-//                is Result.Success -> {
-//                    binding.swipeRefresh.isRefreshing = false
-//                    binding.content.ivProfile.loadImage(result.data.imageUrl)
-//                    binding.content.tvName.text = result.data.fullName
-//                    binding.content.tvCity.text = result.data.city
-//                }
-//                is Result.Error -> {
-//                    binding.swipeRefresh.isRefreshing = false
-////                    Helper.showToast(requireContext(), result.error)
-//                }
-//            }
-//        }
-//    }
 
     companion object {
         @StringRes

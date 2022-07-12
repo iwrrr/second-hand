@@ -17,25 +17,37 @@ class ProfileViewModel @Inject constructor(
     private val repository: AuthRepository,
 ) : ViewModel() {
 
-    fun editProfile(
-        fullName: String,
-        phoneNumber: String,
-        city: String,
-        address: String,
-        image: File?
+    fun updateProfile(
+        fullName: String? = null,
+        phoneNumber: String? = null,
+        city: String? = null,
+        address: String? = null,
+        image: File? = null
     ): LiveData<Result<User>> {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("full_name", fullName)
-            .addFormDataPart("phone_number", phoneNumber)
-            .addFormDataPart("city", city)
-            .addFormDataPart("address", address)
+
+        if (fullName != null) {
+            requestBody.addFormDataPart("full_name", fullName)
+        }
+
+        if (phoneNumber != null) {
+            requestBody.addFormDataPart("phone_number", phoneNumber)
+        }
+
+        if (city != null) {
+            requestBody.addFormDataPart("city", city)
+        }
+
+        if (address != null) {
+            requestBody.addFormDataPart("address", address)
+        }
 
         if (image != null) {
             val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
             requestBody.addFormDataPart("image", image.name, requestImageFile)
         }
 
-        return repository.updateUser(requestBody.build())
+        return repository.updateProfile(requestBody.build())
     }
 }

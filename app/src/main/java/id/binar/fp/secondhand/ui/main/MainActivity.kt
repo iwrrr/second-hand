@@ -2,7 +2,6 @@ package id.binar.fp.secondhand.ui.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
@@ -12,7 +11,6 @@ import androidx.fragment.app.FragmentTransaction
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ActivityMainBinding
-import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.main.history.HistoryFragment
 import id.binar.fp.secondhand.ui.main.home.HomeFragment
 import id.binar.fp.secondhand.ui.main.notification.NotificationFragment
@@ -27,8 +25,6 @@ import kotlinx.coroutines.FlowPreview
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    private val authViewModel: AuthViewModel by viewModels()
 
     private val homeFragment = HomeFragment()
     private val notificationFragment = NotificationFragment()
@@ -51,9 +47,14 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
             setVisibilityBottomNav(false)
-        } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
+        } else if (supportFragmentManager.backStackEntryCount > 0 && !homeFragment.isHidden) {
             super.onBackPressed()
             setVisibilityBottomNav(true)
+        } else if (supportFragmentManager.backStackEntryCount > 0) {
+            supportFragmentManager.popBackStack()
+            setTabStateFragment(TabState.PROFILE).commit()
+            setVisibilityBottomNav(true)
+            binding.bottomNavigationView.menu.findItem(R.id.navigation_profile).isChecked = true
         } else {
             setTabStateFragment(TabState.HOME).commit()
             setVisibilityBottomNav(true)

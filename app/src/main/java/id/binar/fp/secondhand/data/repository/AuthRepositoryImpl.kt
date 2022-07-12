@@ -72,7 +72,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
 
-    override fun updateUser(
+    override fun updateProfile(
         body: RequestBody
     ): LiveData<Result<User>> = liveData {
         emit(Result.Loading)

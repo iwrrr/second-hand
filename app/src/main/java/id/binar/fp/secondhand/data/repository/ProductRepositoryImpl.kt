@@ -23,7 +23,8 @@ class ProductRepositoryImpl @Inject constructor(
     ): LiveData<Result<Product>> = liveData {
         emit(Result.Loading)
         try {
-            apiService.addSellerProduct(body)
+            val response = apiService.addSellerProduct(body)
+            emit(Result.Success(response.toDomain()))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: NullPointerException) {
@@ -61,7 +62,16 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override fun deleteSellerProductById(id: Int): LiveData<Result<MessageDto>> = liveData {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.deleteSellerProductById(id)
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
     override fun getBuyerProduct(

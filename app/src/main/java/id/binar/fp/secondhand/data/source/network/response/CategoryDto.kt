@@ -12,7 +12,7 @@ data class CategoryDto(
     val id: Int,
 
     @SerializedName("name")
-    val name: String? = null,
+    val name: String,
 
     @SerializedName("createdAt")
     val createdAt: String? = null,

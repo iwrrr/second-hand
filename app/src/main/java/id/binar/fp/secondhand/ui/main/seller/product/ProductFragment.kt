@@ -2,10 +2,15 @@ package id.binar.fp.secondhand.ui.main.seller.product
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProductBinding
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.model.SellerType
@@ -33,6 +38,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         super.setup()
         setupRecyclerView()
         setupRefresh()
+        setupSwipeToDelete()
     }
 
     private fun setupRecyclerView() {
@@ -77,5 +83,37 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
 //                addToBackStack(null)
 //                commit()
 //            }
+    }
+
+    private fun setupSwipeToDelete() {
+        val viewPager = requireParentFragment().view?.findViewById<ViewPager2>(R.id.view_pager)
+        viewPager?.children?.find { it is RecyclerView }?.let {
+            ItemTouchHelper(object :
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder,
+                ): Boolean = false
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val swipedPosition = viewHolder.absoluteAdapterPosition
+                    val product = sellerAdapter.getSwipedData(swipedPosition)
+                    sellerViewModel.deleteSelerProductById(product.id)
+                        .observe(viewLifecycleOwner) { result ->
+                            when (result) {
+                                is Result.Loading -> {}
+                                is Result.Success -> {
+                                    Helper.showToast(requireContext(), "Produk berhasil dihapus")
+                                    observeProduct()
+                                }
+                                is Result.Error -> {
+                                    Helper.showToast(requireContext(), result.error)
+                                }
+                            }
+                        }
+                }
+            }).attachToRecyclerView(binding.content.rvProduct)
+        }
     }
 }

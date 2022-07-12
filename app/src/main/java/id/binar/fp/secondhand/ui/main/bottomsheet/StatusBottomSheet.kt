@@ -1,34 +1,21 @@
 package id.binar.fp.secondhand.ui.main.bottomsheet
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.BottomSheetStatusBinding
+import id.binar.fp.secondhand.ui.base.BaseBottomSheet
 
-class StatusBottomSheet : BottomSheetDialogFragment() {
-
-    private var _binding: BottomSheetStatusBinding? = null
-    private val binding get() = _binding!!
+class StatusBottomSheet : BaseBottomSheet<BottomSheetStatusBinding>() {
 
     var bottomSheetCallback: BottomSheetCallback? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetStatusBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> BottomSheetStatusBinding
+        get() = BottomSheetStatusBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setup() {
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             binding.btnSetStatus.backgroundTintList =
                 ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
@@ -48,11 +35,6 @@ class StatusBottomSheet : BottomSheetDialogFragment() {
                 bottomSheetCallback?.onStatusUpdate(status)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     interface BottomSheetCallback {

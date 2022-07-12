@@ -59,7 +59,7 @@
     <string name="text_edit_profile_name">Nama</string>
     <string name="text_edit_profile_city">Kota</string>
     <string name="text_edit_profile_address">Alamat</string>
-    <string name="text_edit_profile_phone">No Handphone</string>
+    <string name="text_edit_profile_phone">Nomor HP</string>
 
     <string name="text_edit_profile_hint_name">Nama</string>
     <string name="text_edit_profile_hint_city">Kota</string>

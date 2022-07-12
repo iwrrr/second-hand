@@ -5,53 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:id="@+id/edit"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:clickable="true"-->
-    <!--        android:focusable="true"-->
-    <!--        android:foreground="?android:attr/selectableItemBackgroundBorderless"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent">-->
-
-    <!--        <com.google.android.material.imageview.ShapeableImageView-->
-    <!--            android:id="@+id/iv_edit"-->
-    <!--            android:layout_width="24dp"-->
-    <!--            android:layout_height="24dp"-->
-    <!--            android:layout_marginStart="16dp"-->
-    <!--            android:src="@drawable/ic_edit"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--        <com.google.android.material.textview.MaterialTextView-->
-    <!--            android:id="@+id/tv_edit"-->
-    <!--            style="@style/Widget.MaterialComponents.TextView"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="20dp"-->
-    <!--            android:text="@string/text_profile_edit"-->
-    <!--            android:textColor="@color/black"-->
-    <!--            android:textSize="16sp"-->
-    <!--            app:layout_constraintBottom_toBottomOf="@id/iv_edit"-->
-    <!--            app:layout_constraintStart_toEndOf="@id/iv_edit"-->
-    <!--            app:layout_constraintTop_toTopOf="@id/iv_edit" />-->
-
-    <!--        <com.google.android.material.divider.MaterialDivider-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="1dp"-->
-    <!--            android:layout_marginStart="16dp"-->
-    <!--            android:layout_marginTop="12dp"-->
-    <!--            android:layout_marginEnd="16dp"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toBottomOf="@id/iv_edit" />-->
-
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/seller"
         android:layout_width="match_parent"
@@ -60,14 +13,15 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackgroundBorderless"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_seller"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:layout_marginStart="16dp"
             android:src="@drawable/ic_list"
             app:layout_constraintBottom_toBottomOf="parent"
