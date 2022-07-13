@@ -1,11 +1,8 @@
 package id.binar.fp.secondhand.data.source.network.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import id.binar.fp.secondhand.domain.model.SellerOrder
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class SellerOrderDto(
 
     @SerializedName("id")
@@ -46,7 +43,7 @@ data class SellerOrderDto(
 
     @SerializedName("User")
     val user: UserDto? = null
-) : Parcelable {
+) {
 
     fun toDomain(): SellerOrder {
         return SellerOrder(

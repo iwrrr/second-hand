@@ -2,6 +2,7 @@ package id.binar.fp.secondhand.domain.repository
 
 import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
+import id.binar.fp.secondhand.domain.model.Banner
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
@@ -9,6 +10,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface ProductRepository {
+
+    fun getBanner(): LiveData<Result<List<Banner>>>
 
     fun addSellerProduct(
         body: RequestBody

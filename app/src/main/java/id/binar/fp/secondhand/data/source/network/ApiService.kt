@@ -106,7 +106,7 @@ interface ApiService {
     )
 
     @GET(Endpoints.GET_BANNER)
-    suspend fun getBanner()
+    suspend fun getBanner(): List<BannerDto>
 
     @GET(Endpoints.GET_BANNER_BY_ID)
     suspend fun getBannerById(

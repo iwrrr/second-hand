@@ -1,47 +1,54 @@
-package id.binar.fp.secondhand.data.source.network.response
+package id.binar.fp.secondhand.data.source.local.entity
 
-import com.google.gson.annotations.SerializedName
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.Expose
 import id.binar.fp.secondhand.domain.model.Product
 
-data class ProductDto(
+@Entity(tableName = "products")
+data class ProductEntity(
 
-    @SerializedName("id")
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val id: Int = 0,
 
-    @SerializedName("name")
+    @ColumnInfo(name = "name")
     val name: String? = null,
 
-    @SerializedName("base_price")
+    @ColumnInfo(name = "base_price")
     val basePrice: Int = 0,
 
-    @SerializedName("description")
+    @ColumnInfo(name = "description")
     val description: String? = null,
 
-    @SerializedName("image_url")
+    @ColumnInfo(name = "image_url")
     val imageUrl: String? = null,
 
-    @SerializedName("image_name")
+    @ColumnInfo(name = "image_name")
     val imageName: String? = null,
 
-    @SerializedName("location")
+    @ColumnInfo(name = "location")
     val location: String? = null,
 
-    @SerializedName("user_id")
+    @ColumnInfo(name = "user_id")
     val userId: Int = 0,
 
-    @SerializedName("User")
-    val user: UserDto? = null,
+    @Expose
+    @ColumnInfo(name = "user")
+    val user: UserEntity? = null,
 
-    @SerializedName("status")
+    @ColumnInfo(name = "status")
     val status: String? = null,
 
-    @SerializedName("Categories")
-    val categories: List<CategoryDto>? = null,
+    @Expose
+    @ColumnInfo(name = "categories")
+    val categories: List<CategoryEntity>? = null,
 
-    @SerializedName("created_at")
+    @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
 
-    @SerializedName("updated_at")
+    @ColumnInfo(name = "updated_at")
     val updatedAt: String? = null,
 ) {
 

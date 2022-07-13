@@ -40,7 +40,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun setup() {
         super.setup()
         setupSearch()
+        setupBanner()
         setupRecyclerView()
+
+        binding.swipeRefresh.setOnRefreshListener { observeListProduct() }
     }
 
     private fun setupSearch() {
@@ -53,6 +56,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    private fun setupBanner() {
+        observeBanner()
+    }
+
     private fun setupRecyclerView() {
         binding.rvCategory.adapter = categoryAdapter
         binding.rvCategory.layoutManager =
@@ -62,6 +69,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
         observeListProduct()
+    }
+
+    private fun observeBanner() {
+        viewModel.getBanner().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    binding.ivBanner.setImageList(result.data.map { it.imageUrl })
+                }
+                is Result.Error -> {}
+            }
+        }
     }
 
     private fun observeCategory() {
@@ -90,6 +109,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 }
                 is Result.Success -> {
+                    binding.swipeRefresh.isRefreshing = false
                     val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
                     productAdapter.submitList(availableProduct)
                     products = availableProduct

@@ -56,9 +56,16 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_profile.xml" value="0.3558974358974359" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_toolbar.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/menu/nav_menu.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/gradient.xml" value="0.1" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_arrow_right.xml" value="0.16" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_image.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_image_broken.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_image_placeholder.xml" value="0.1" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_list.xml" value="0.2195" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_settings.xml" value="0.2195" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/indicator_active.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/indicator_inactive.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/indicator_selector.xml" value="0.1" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/activity_auth.xml" value="0.2759259259259259" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/activity_main.xml" value="0.184375" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_bid.xml" value="0.184375" />
@@ -80,9 +87,12 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_register.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_search.xml" value="0.2759259259259259" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_sell_list.xml" value="0.1859375" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_seller.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_sold.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/image_slider.xml" value="0.25" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_add_product_category.xml" value="0.225" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_edit_profile.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_image_slider.xml" value="0.1" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_notification_list.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_product.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_product_category.xml" value="0.3614583333333333" />

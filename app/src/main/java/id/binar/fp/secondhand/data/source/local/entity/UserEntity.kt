@@ -1,41 +1,46 @@
-package id.binar.fp.secondhand.data.source.network.response
+package id.binar.fp.secondhand.data.source.local.entity
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import id.binar.fp.secondhand.domain.model.User
 
-data class UserDto(
+@Entity(tableName = "users")
+data class UserEntity(
 
-    @SerializedName("id")
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     val id: Int? = null,
 
-    @SerializedName("full_name")
+    @ColumnInfo(name = "full_name")
     val fullName: String? = null,
 
-    @SerializedName("email")
+    @ColumnInfo(name = "email")
     val email: String? = null,
 
-    @SerializedName("password")
+    @ColumnInfo(name = "password")
     val password: String? = null,
 
-    @SerializedName("phone_number")
+    @ColumnInfo(name = "phone_number")
     val phoneNumber: String? = null,
 
-    @SerializedName("city")
+    @ColumnInfo(name = "city")
     val city: String? = null,
 
-    @SerializedName("address")
+    @ColumnInfo(name = "address")
     val address: String? = null,
 
-    @SerializedName("image_url")
+    @ColumnInfo(name = "image_url")
     val imageUrl: String? = null,
 
-    @SerializedName("createdAt")
+    @ColumnInfo(name = "createdAt")
     val createdAt: String? = null,
 
-    @SerializedName("updatedAt")
+    @ColumnInfo(name = "updatedAt")
     val updatedAt: String? = null,
 
-    @SerializedName("access_token")
+    @ColumnInfo(name = "access_token")
     val accessToken: String? = null,
 
     @field:SerializedName("error")

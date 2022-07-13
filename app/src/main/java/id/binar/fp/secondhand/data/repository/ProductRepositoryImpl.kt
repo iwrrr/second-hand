@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
+import id.binar.fp.secondhand.domain.model.Banner
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.repository.ProductRepository
 import id.binar.fp.secondhand.util.Result
@@ -17,6 +18,20 @@ import javax.inject.Inject
 class ProductRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : ProductRepository {
+
+    override fun getBanner(): LiveData<Result<List<Banner>>> = liveData {
+        emit(Result.Loading)
+        try {
+            val response = apiService.getBanner().map { it.toDomain() }
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
+    }
 
     override fun addSellerProduct(
         body: RequestBody
