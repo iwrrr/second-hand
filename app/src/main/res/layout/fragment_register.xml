@@ -7,6 +7,8 @@
     android:background="?android:windowBackground"
     android:fillViewport="true"
     android:overScrollMode="never"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".ui.auth.RegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -11,7 +11,7 @@ interface OrderRepository {
 
     fun getSellerOrderById(id: Int): LiveData<Result<SellerOrder>>
 
-    fun updateSellerOrderById(id: Int) // TODO: Response Body Not Yet Implemented
+    fun updateSellerOrderById(id: Int, status: String): LiveData<Result<SellerOrder>>
 
     fun getSellerOrderByProductId(id: Int) // TODO: Response Body Not Yet Implemented
 

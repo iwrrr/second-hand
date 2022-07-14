@@ -42,7 +42,7 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
     }
 
     private fun setupRefresh() {
-        swipeRefreshLayout.setOnRefreshListener { observeProduct() }
+        binding.swipeRefresh.setOnRefreshListener { observeProduct() }
     }
 
     private fun observeProduct() {
@@ -53,8 +53,8 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
                 }
                 is Result.Success -> {
                     binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
-                    val availableProduct = result.data.filter { it.status == Status.SOLD }
+                    binding.swipeRefresh.isRefreshing = false
+                    val availableProduct = result.data.filter { it.status == Status.PRODUCT_SOLD }
                     if (availableProduct.isNotEmpty()) {
                         sellerAdapter.submitList(availableProduct)
                     } else {
@@ -64,7 +64,7 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.error)
                 }
             }

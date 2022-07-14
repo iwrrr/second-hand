@@ -17,8 +17,8 @@ class OrderRepositoryImpl @Inject constructor(
     override fun getSellerOrder(): LiveData<Result<List<SellerOrder>>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getSellerOrder()
-            emit(Result.Success(response.map { it.toDomain() }))
+            val response = apiService.getSellerOrder().map { it.toDomain() }
+            emit(Result.Success(response))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: Exception) {
@@ -29,8 +29,8 @@ class OrderRepositoryImpl @Inject constructor(
     override fun getSellerOrderById(id: Int): LiveData<Result<SellerOrder>> = liveData {
         emit(Result.Loading)
         try {
-            val response = apiService.getSellerOrderById(id)
-            emit(Result.Success(response.toDomain()))
+            val response = apiService.getSellerOrderById(id).toDomain()
+            emit(Result.Success(response))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: Exception) {
@@ -38,9 +38,18 @@ class OrderRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun updateSellerOrderById(id: Int) {
-        TODO("Not yet implemented")
-    }
+    override fun updateSellerOrderById(id: Int, status: String): LiveData<Result<SellerOrder>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val response = apiService.updateSellerOrderById(id, status).toDomain()
+                emit(Result.Success(response))
+            } catch (e: HttpException) {
+                emit(Result.Error(e.message()))
+            } catch (e: Exception) {
+                emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+            }
+        }
 
     override fun getSellerOrderByProductId(id: Int) {
         TODO("Not yet implemented")
@@ -50,8 +59,8 @@ class OrderRepositoryImpl @Inject constructor(
         liveData {
             emit(Result.Loading)
             try {
-                val response = apiService.addBuyerOrder(productId, bidPrice)
-                emit(Result.Success(response.toDomain()))
+                val response = apiService.addBuyerOrder(productId, bidPrice).toDomain()
+                emit(Result.Success(response))
             } catch (e: HttpException) {
                 when (e.code()) {
                     400 -> emit(Result.Error("Produk ini memiliki pesanan maksimum"))

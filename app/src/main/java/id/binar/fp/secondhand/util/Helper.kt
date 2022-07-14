@@ -38,7 +38,7 @@ object Helper {
 
         val list = ArrayList<Category>()
         categories.forEach { category -> list.add(category) }
-        return list.joinToString { it.name!! }
+        return list.joinToString { it.name }
     }
 
     fun showToast(context: Context, message: String) {

@@ -49,7 +49,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
     }
 
     private fun setupRefresh() {
-        swipeRefreshLayout.setOnRefreshListener { observeProduct() }
+        binding.swipeRefresh.setOnRefreshListener { observeProduct() }
     }
 
     private fun observeProduct() {
@@ -60,7 +60,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
                 }
                 is Result.Success -> {
                     binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefresh.isRefreshing = false
                     if (result.data.isNotEmpty()) {
                         sellerAdapter.submitList(result.data)
                     } else {
@@ -70,18 +70,18 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.error)
                 }
             }
         }
     }
 
-    private fun onProductClicked(product: SellerOrder) {
+    private fun onProductClicked(order: SellerOrder) {
         requireParentFragment().parentFragmentManager.beginTransaction().apply {
             val bidderInfoFragment = BidderInfoFragment()
             val bundle = Bundle().apply {
-                putParcelable("product", product)
+                putParcelable("order", order)
             }
             bidderInfoFragment.arguments = bundle
             add(R.id.main_nav_host, bidderInfoFragment)
