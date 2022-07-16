@@ -10,7 +10,6 @@ import id.binar.fp.secondhand.domain.repository.ProductRepository
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.HttpException
 import javax.inject.Inject
@@ -33,9 +32,7 @@ class ProductRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun addSellerProduct(
-        body: RequestBody
-    ): LiveData<Result<Product>> = liveData {
+    override fun addSellerProduct(body: RequestBody): LiveData<Result<Product>> = liveData {
         emit(Result.Loading)
         try {
             val response = apiService.addSellerProduct(body)
@@ -62,19 +59,31 @@ class ProductRepositoryImpl @Inject constructor(
     }
 
     override fun getSellerProductById(id: Int): LiveData<Result<Product>> = liveData {
-        TODO("Not yet implemented")
+        emit(Result.Loading)
+        try {
+            val response = apiService.getSellerProductById(id).toDomain()
+            emit(Result.Success(response))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
-    override fun updateSellerProductById(
-        name: String,
-        description: String,
-        basePrice: String,
-        categoryIds: List<Int>,
-        location: String,
-        image: MultipartBody.Part
-    ): LiveData<Result<Product>> = liveData {
-        TODO("Not yet implemented")
-    }
+    override fun updateSellerProductById(id: Int, body: RequestBody): LiveData<Result<Product>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val response = apiService.updateSellerProductById(id, body)
+                emit(Result.Success(response.toDomain()))
+            } catch (e: HttpException) {
+                emit(Result.Error(e.message()))
+            } catch (e: NullPointerException) {
+                emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+            } catch (e: Exception) {
+                emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+            }
+        }
 
     override fun updateSellerProductById(id: Int, status: String): LiveData<Result<Product>> =
         liveData {

@@ -6,10 +6,9 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
-import android.provider.MediaStore
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,11 +25,15 @@ fun createTempFile(context: Context): File {
     return File.createTempFile(timeStamp, ".jpg", storageDir)
 }
 
-fun bitmapToUri(context: Context, bitmap: Bitmap): Uri {
-    val bytes = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-    val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "Title", null)
-    return Uri.parse(path.toString())
+@Throws(IOException::class)
+fun bitmapToFile(bitmap: Bitmap, context: Context): File {
+    val file = createTempFile(context)
+    val outputStream = FileOutputStream(file)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+    outputStream.flush()
+    outputStream.close()
+
+    return file
 }
 
 fun uriToFile(selectedImage: Uri, context: Context): File {

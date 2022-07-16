@@ -29,7 +29,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tl_search"
                 app:slider_auto_cycle="true"
                 app:slider_delay="0"
-                app:slider_image_scaleType="centerCrop"
                 app:slider_period="2000" />
 
             <com.google.android.material.textfield.TextInputLayout

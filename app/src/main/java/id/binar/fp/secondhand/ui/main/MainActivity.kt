@@ -48,16 +48,23 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
             setVisibilityBottomNav(false)
         } else if (supportFragmentManager.backStackEntryCount > 0 && !homeFragment.isHidden) {
+            supportFragmentManager.popBackStack()
+            setVisibilityBottomNav(true)
+        } else if (supportFragmentManager.backStackEntryCount > 0 && (addProductFragment.isHidden && profileFragment.isHidden)) {
+            supportFragmentManager.popBackStack()
+        } else if (supportFragmentManager.backStackEntryCount > 0 && homeFragment.isHidden) {
+            supportFragmentManager.popBackStack()
+            addProductFragment.clearView()
+            setVisibilityBottomNav(true)
+            setTabStateFragment(TabState.PROFILE).commit()
+            binding.bottomNavigationView.menu.findItem(R.id.navigation_profile).isChecked = true
+        } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
             setVisibilityBottomNav(true)
-        } else if (supportFragmentManager.backStackEntryCount > 0) {
-            supportFragmentManager.popBackStack()
-            setTabStateFragment(TabState.PROFILE).commit()
-            setVisibilityBottomNav(true)
-            binding.bottomNavigationView.menu.findItem(R.id.navigation_profile).isChecked = true
         } else {
-            setTabStateFragment(TabState.HOME).commit()
+            addProductFragment.clearView()
             setVisibilityBottomNav(true)
+            setTabStateFragment(TabState.HOME).commit()
             binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
         }
     }

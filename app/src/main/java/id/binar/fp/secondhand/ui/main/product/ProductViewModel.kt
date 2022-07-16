@@ -44,8 +44,36 @@ class ProductViewModel @Inject constructor(
             .build()
 
         return productRepository.addSellerProduct(requestBody)
-
     }
+
+    fun updateProduct(
+        id: Int,
+        name: String,
+        description: String,
+        basePrice: String,
+        categoryIds: List<Int?>,
+        location: String,
+        image: File? = null
+    ): LiveData<Result<Product>> {
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("name", name)
+            .addFormDataPart("description", description)
+            .addFormDataPart("base_price", basePrice)
+            .addFormDataPart("category_ids", categoryIds.toString())
+            .addFormDataPart("location", location)
+
+        if (image != null) {
+            val requestImageFile = image.asRequestBody("image/jpeg".toMediaType())
+            requestBody.addFormDataPart("image", image.name, requestImageFile)
+        }
+
+        return productRepository.updateSellerProductById(id, requestBody.build())
+    }
+
+    fun getSellerProductById(id: Int) = productRepository.getSellerProductById(id)
+
+    fun deleteSellerProductById(id: Int) = productRepository.deleteSellerProductById(id)
 
     fun getDetailProduct(id: Int) = productRepository.getBuyerProductById(id)
 

@@ -5,12 +5,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import id.binar.fp.secondhand.R
@@ -65,7 +62,7 @@ class ImageSlider @JvmOverloads constructor(
     init {
         LayoutInflater.from(getContext()).inflate(R.layout.image_slider, this, true)
         viewPager = findViewById(R.id.view_pager)
-        pagerDots = findViewById(R.id.pager_dots)
+//        pagerDots = findViewById(R.id.pager_dots)
 
         val typedArray = context.theme.obtainStyledAttributes(
             attrs,
@@ -140,8 +137,8 @@ class ImageSlider @JvmOverloads constructor(
 
         viewPager?.adapter = mAdapter
         if (imageList.isNotEmpty()) {
-            setupDots(imageList.size)
-            setCurrentIndicator(currentPage)
+//            setupDots(imageList.size)
+//            setCurrentIndicator(currentPage)
             if (autoCycle) {
                 stopSliding()
                 startSliding()
@@ -153,8 +150,8 @@ class ImageSlider @JvmOverloads constructor(
         imageCount = size
         viewPager?.adapter = adapter
         if (size != 0) {
-            setupDots(size)
-            setCurrentIndicator(currentPage)
+//            setupDots(size)
+//            setCurrentIndicator(currentPage)
             if (autoCycle) {
                 stopSliding()
                 startSliding()
@@ -162,45 +159,45 @@ class ImageSlider @JvmOverloads constructor(
         }
     }
 
-    private fun setupDots(size: Int) {
-        println(indicatorGravity)
-        pagerDots?.gravity = indicatorGravity
-        pagerDots?.removeAllViews()
-        dots = arrayOfNulls(size)
-        val params: LinearLayout.LayoutParams =
-            LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        params.setMargins(8, 0, 8, 0)
+//    private fun setupDots(size: Int) {
+//        println(indicatorGravity)
+//        pagerDots?.gravity = indicatorGravity
+//        pagerDots?.removeAllViews()
+//        dots = arrayOfNulls(size)
+//        val params: LinearLayout.LayoutParams =
+//            LinearLayout.LayoutParams(
+//                ViewGroup.LayoutParams.WRAP_CONTENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT
+//            )
+//        params.setMargins(8, 0, 8, 0)
+//
+//        for (i in 0 until size) {
+//            dots!![i] = ImageView(context)
+//            pagerDots?.addView(dots!![i], params)
+//        }
+//        viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                currentPage = position
+//                setCurrentIndicator(currentPage)
+//            }
+//        })
+//    }
 
-        for (i in 0 until size) {
-            dots!![i] = ImageView(context)
-            pagerDots?.addView(dots!![i], params)
-        }
-        viewPager?.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                currentPage = position
-                setCurrentIndicator(currentPage)
-            }
-        })
-    }
-
-    private fun setCurrentIndicator(index: Int) {
-        val childCount = pagerDots!!.childCount
-
-        for (i in 0 until childCount) {
-            val imageView = pagerDots!![i] as ImageView
-            imageView.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.indicator_selector
-                )
-            )
-            imageView.isSelected = i == index
-        }
-    }
+//    private fun setCurrentIndicator(index: Int) {
+//        val childCount = pagerDots!!.childCount
+//
+//        for (i in 0 until childCount) {
+//            val imageView = pagerDots!![i] as ImageView
+//            imageView.setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    context,
+//                    R.drawable.indicator_selector
+//                )
+//            )
+//            imageView.isSelected = i == index
+//        }
+//    }
 
     /**
      * Start image sliding.

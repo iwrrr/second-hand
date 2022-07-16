@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.databinding.FragmentProductDetailBinding
+import id.binar.fp.secondhand.databinding.FragmentDetailProductBinding
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
@@ -23,13 +23,13 @@ import kotlinx.coroutines.FlowPreview
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
+class DetailProductFragment : BaseFragment<FragmentDetailProductBinding>() {
 
     private val productViewModel: ProductViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductDetailBinding
-        get() = FragmentProductDetailBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentDetailProductBinding
+        get() = FragmentDetailProductBinding::inflate
 
     override val isNavigationVisible: Boolean
         get() = false
@@ -44,7 +44,7 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
     }
 
     private fun onBackClicked() {
-        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun observeDetailProduct() {
@@ -58,17 +58,19 @@ class ProductDetailFragment : BaseFragment<FragmentProductDetailBinding>() {
                     is Result.Success -> {
                         val price = Helper.numberFormatter(result.data.basePrice)
                         binding.loading.root.isVisible = false
+
+                        binding.ivProfile.loadImage(result.data.user?.imageUrl)
+                        binding.tvName.text = result.data.user?.fullName
+                        binding.tvCity.text = result.data.user?.city
+
                         binding.tvProductName.text = result.data.name
                         binding.tvProductCategory.text = Helper.initCategory(result.data.categories)
                         binding.tvProductPrice.text = requireContext().getString(
                             R.string.text_seller_order_base_price,
                             price
                         )
-                        binding.tvName.text = result.data.user?.fullName
-                        binding.tvCity.text = result.data.user?.city
                         binding.tvProductDescription.text = result.data.description
                         binding.ivProductImage.loadImage(result.data.imageUrl)
-                        binding.ivProfile.loadImage(result.data.user?.imageUrl)
                         binding.btnBid.isEnabled = result.data.status == "available"
 
                         initBottomSheet(result.data)

@@ -145,7 +145,7 @@
             android:id="@+id/et_product_bid_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_add_product_hint_price"
+            android:hint="@string/text_add_edit_product_hint_price"
             android:inputType="number"
             android:maxLength="12"
             android:maxLines="1" />

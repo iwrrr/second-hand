@@ -3,22 +3,21 @@ package id.binar.fp.secondhand.ui.main.product
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.databinding.FragmentAddProductBinding
+import id.binar.fp.secondhand.databinding.FragmentEditProductBinding
 import id.binar.fp.secondhand.domain.model.Category
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.bottomsheet.ImageBottomSheet
-import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import id.binar.fp.secondhand.util.Extensions.clear
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
@@ -27,36 +26,42 @@ import java.io.File
 import kotlin.collections.set
 
 @AndroidEntryPoint
-class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
+class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
 
     private val authViewModel: AuthViewModel by viewModels()
     private val productViewModel: ProductViewModel by viewModels()
 
     private val categoryIds = arrayListOf<Int>()
-    private val categoryNames = arrayListOf<String>()
+    private val categoryNames = arrayListOf<String?>()
+    private val newCategories = arrayListOf<Category>()
 
     private var getFile: File? = null
+    private var productId: Int = 0
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentAddProductBinding
-        get() = FragmentAddProductBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditProductBinding
+        get() = FragmentEditProductBinding::inflate
 
     override val isNavigationVisible: Boolean
         get() = false
 
-    override val isLightStatusBar: Boolean
-        get() = true
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        clearView()
+    }
 
     override fun setup() {
         super.setup()
+        initProduct()
         observeCategories()
         onChooseImage()
-        onAddProduct()
-        onPreviewClicked()
+        onEditProduct()
+        onDeleteClicked()
+        onLoginClicked()
     }
 
     override fun setupToolbar() {
-        binding.toolbar.toolbarTitle.text = "Tambah Produk"
-        binding.toolbar.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.toolbarTitle.text = "Ubah Produk"
+        binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun setupCategories(categories: List<Category>) {
@@ -64,11 +69,15 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         val list: ArrayList<String?> = arrayListOf()
 
         for (i in categories.map { it.name }) {
-            list.add(i)
+            if (i !in categoryNames) {
+                list.add(i)
+            }
         }
 
         for (items in categories) {
-            mapCategory[items.name] = items.id
+            if (items !in newCategories) {
+                mapCategory[items.name] = items.id
+            }
         }
 
         val categoryAdapter = ArrayAdapter(
@@ -107,6 +116,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 binding.content.chipGroup.removeView(chip)
                 categoryIds.remove(categoryId)
                 categoryNames.remove(categoryName)
+                observeCategories()
             }
         }
     }
@@ -137,14 +147,42 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
-                onLoginClicked()
             }
         }
     }
 
-    private fun onLoginClicked() {
-        binding.auth.btnLogin.setOnClickListener {
-            startActivity(Intent(requireContext(), AuthActivity::class.java))
+    private fun initProduct() {
+        val productId = arguments?.getInt("product_id") as Int
+        this.productId = productId
+        productViewModel.getSellerProductById(productId).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    val categories = mutableMapOf<Int, String>()
+
+                    result.data.categories?.let { list ->
+                        for (category in list) {
+                            categories[category.id] = category.name
+                        }
+                    }
+
+                    for (category in categories) {
+                        setupChips(category.key, category.value)
+                        categoryIds.add(category.key)
+                        categoryNames.add(category.value)
+                        newCategories.add(Category(category.key, category.value))
+                    }
+
+                    binding.content.apply {
+                        etProductName.setText(result.data.name)
+                        etProductPrice.setText(result.data.basePrice.toString())
+                        etProductLocation.setText(result.data.location)
+                        etProductDescription.setText(result.data.description)
+                        ivProductImage.loadImage(result.data.imageUrl)
+                    }
+                }
+                is Result.Error -> {}
+            }
         }
     }
 
@@ -158,15 +196,17 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         }
     }
 
-    private fun observeAddProduct(
+    private fun observeEditProduct(
+        id: Int,
         name: String,
         description: String,
         basePrice: String,
         categoryIds: List<Int?>,
         location: String,
-        image: File
+        image: File? = null
     ) {
-        productViewModel.addProduct(
+        productViewModel.updateProduct(
+            id,
             name,
             description,
             basePrice,
@@ -180,12 +220,8 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 }
                 is Result.Success -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), "Produk berhasil diterbitkan")
-                    parentFragmentManager.beginTransaction().apply {
-                        add(R.id.main_nav_host, SellerFragment())
-                        addToBackStack(null)
-                        commit()
-                    }
+                    Helper.showToast(requireContext(), "Produk berhasil diperbarui")
+                    parentFragmentManager.popBackStack()
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
@@ -199,8 +235,42 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         binding.content.ivProductImage.setOnClickListener { checkPermissions(::setupBottomSheet) }
     }
 
-    private fun onAddProduct() {
+    private fun onEditProduct() {
         binding.content.apply {
+
+            etProductName.doOnTextChanged { text, _, _, count ->
+                if (text.isNullOrBlank()) {
+                    etlProductName.error = "Nama produk tidak boleh kosong"
+                }
+                if (count > 0) {
+                    etlProductName.isErrorEnabled = false
+                }
+            }
+            etProductDescription.doOnTextChanged { text, _, _, count ->
+                if (text.isNullOrBlank()) {
+                    etlProductDescription.error = "Deskripsi produk tidak boleh kosong"
+                }
+                if (count > 0) {
+                    etlProductDescription.isErrorEnabled = false
+                }
+            }
+            etProductPrice.doOnTextChanged { text, _, _, count ->
+                if (text.isNullOrBlank()) {
+                    etlProductPrice.error = "Harga tidak boleh kosong"
+                }
+                if (count > 0) {
+                    etlProductPrice.isErrorEnabled = false
+                }
+            }
+            etProductLocation.doOnTextChanged { text, _, _, count ->
+                if (text.isNullOrBlank()) {
+                    etlProductLocation.error = "Lokasi tidak boleh kosong"
+                }
+                if (count > 0) {
+                    etlProductLocation.isErrorEnabled = false
+                }
+            }
+
             binding.btnPublish.setOnClickListener {
                 val name = etProductName.text.toString()
                 val description = etProductDescription.text.toString()
@@ -212,56 +282,56 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                     return@setOnClickListener
                 }
 
-                if (getFile != null && validateData(name, description, basePrice, location)) {
-                    val image = getFile as File
-                    observeAddProduct(name, description, basePrice, categoryIds, location, image)
-                } else {
-                    Helper.showToast(
-                        requireContext(),
-                        "Silahkan masukkan foto produk terlebih dahulu."
-                    )
+                if (validateData(name, description, basePrice, location)) {
+                    if (getFile != null) {
+                        val image = getFile as File
+                        observeEditProduct(
+                            productId,
+                            name,
+                            description,
+                            basePrice,
+                            categoryIds,
+                            location,
+                            image
+                        )
+                    } else {
+                        observeEditProduct(
+                            productId,
+                            name,
+                            description,
+                            basePrice,
+                            categoryIds,
+                            location
+                        )
+                    }
                 }
             }
         }
     }
 
-    private fun onPreviewClicked() {
-        binding.btnPreview.setOnClickListener {
-            val name = binding.content.etProductName.text.toString()
-            val description = binding.content.etProductDescription.text.toString()
-            val basePrice = binding.content.etProductPrice.text.toString()
-            val location = binding.content.etProductLocation.text.toString()
+    private fun onDeleteClicked() {
+        binding.btnDelete.setOnClickListener {
+            productViewModel.deleteSellerProductById(productId)
+                .observe(viewLifecycleOwner) { result ->
+                    when (result) {
+                        is Result.Loading -> {
 
-            if (categoryIds.isEmpty()) {
-                Helper.showToast(requireContext(), "Pilih minimal 1 kategori")
-                return@setOnClickListener
-            }
-
-            val map: Map<Int, String> = categoryIds.zip(categoryNames).toMap()
-            val categories = arrayListOf<Category>()
-
-            for (item in map) {
-                categories.add(Category(item.key, item.value))
-            }
-
-            if (getFile != null && validateData(name, description, basePrice, location)) {
-                val image = getFile as File
-                val previewProductFragment = PreviewProductFragment()
-                val bundle = Bundle().apply {
-                    putString("name", name)
-                    putString("description", description)
-                    putString("base_price", basePrice)
-                    putString("image_path", image.absolutePath)
-                    putParcelableArrayList("categories", categories)
+                        }
+                        is Result.Success -> {
+                            parentFragmentManager.popBackStack()
+                            Helper.showToast(requireContext(), "Produk berhasil dihapus")
+                        }
+                        is Result.Error -> {
+                            Helper.showToast(requireContext(), result.error)
+                        }
+                    }
                 }
-                previewProductFragment.arguments = bundle
-                parentFragmentManager.beginTransaction().apply {
-                    add(R.id.main_nav_host, previewProductFragment)
-                    hide(this@AddProductFragment)
-                    addToBackStack(null)
-                    commit()
-                }
-            }
+        }
+    }
+
+    private fun onLoginClicked() {
+        binding.auth.btnLogin.setOnClickListener {
+            startActivity(Intent(requireContext(), AuthActivity::class.java))
         }
     }
 
@@ -296,7 +366,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         }
     }
 
-    fun clearView() {
+    private fun clearView() {
         binding.content.apply {
             chipGroup.removeAllViews()
             ivProductImage.clear()

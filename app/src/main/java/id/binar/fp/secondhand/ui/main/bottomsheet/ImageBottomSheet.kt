@@ -10,24 +10,27 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import id.binar.fp.secondhand.databinding.BottomSheetImageBinding
 import id.binar.fp.secondhand.ui.base.BaseBottomSheet
-import id.binar.fp.secondhand.util.bitmapToUri
+import id.binar.fp.secondhand.util.Helper
+import id.binar.fp.secondhand.util.bitmapToFile
 import id.binar.fp.secondhand.util.uriToFile
 import java.io.File
 
-class ImageBottomSheet : BaseBottomSheet<BottomSheetImageBinding>() {
 
-    private lateinit var currentPhotoPath: String
+class ImageBottomSheet : BaseBottomSheet<BottomSheetImageBinding>() {
 
     var bottomSheetCallback: BottomSheetCallback? = null
 
     private val launcherCamera =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                val bitmap = result.data?.extras?.get("data") as Bitmap
-                val uri = bitmapToUri(requireContext(), bitmap)
-                val file = uriToFile(uri, requireContext())
+                try {
+                    val bitmap = result.data!!.extras?.get("data") as Bitmap
+                    val file = bitmapToFile(bitmap, requireContext())
 
-                bottomSheetCallback?.onSelectImage(bitmap, file)
+                    bottomSheetCallback?.onSelectImage(bitmap, file)
+                } catch (e: Exception) {
+                    Helper.showToast(requireContext(), e.message.toString())
+                }
             }
         }
 

@@ -9,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.databinding.FragmentProfileBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
@@ -28,8 +27,6 @@ import kotlinx.coroutines.FlowPreview
 class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val authViewModel: AuthViewModel by viewModels()
-
-    private lateinit var user: UserDto
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProfileBinding
         get() = FragmentProfileBinding::inflate
