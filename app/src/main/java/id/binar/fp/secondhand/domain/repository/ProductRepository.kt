@@ -21,13 +21,18 @@ interface ProductRepository {
 
     fun getSellerProductById(id: Int): LiveData<Result<Product>>
 
-    fun updateSellerProduct(
+    fun updateSellerProductById(
         name: String,
         description: String,
         basePrice: String,
         categoryIds: List<Int>,
         location: String,
         image: MultipartBody.Part,
+    ): LiveData<Result<Product>>
+
+    fun updateSellerProductById(
+        id: Int,
+        status: String
     ): LiveData<Result<Product>>
 
     fun deleteSellerProductById(id: Int): LiveData<Result<MessageDto>>

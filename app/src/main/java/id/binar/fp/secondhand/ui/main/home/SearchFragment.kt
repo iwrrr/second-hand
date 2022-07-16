@@ -71,7 +71,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     binding.loading.root.isVisible = false
                     binding.rvSearch.isVisible = true
                     binding.placeholder.root.isVisible = false
-                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
+                    val availableProduct =
+                        result.data.filter { it.status == Status.PRODUCT_AVAILABLE }
                     searchAdapter.submitList(availableProduct)
                 }
                 is Result.Error -> {

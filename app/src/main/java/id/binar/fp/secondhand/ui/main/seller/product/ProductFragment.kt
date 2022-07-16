@@ -48,7 +48,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
     }
 
     private fun setupRefresh() {
-        swipeRefreshLayout.setOnRefreshListener { observeProduct() }
+        binding.swipeRefresh.setOnRefreshListener { observeProduct() }
     }
 
     private fun observeProduct() {
@@ -59,8 +59,9 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                 }
                 is Result.Success -> {
                     binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
-                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
+                    binding.swipeRefresh.isRefreshing = false
+                    val availableProduct =
+                        result.data.filter { it.status == Status.PRODUCT_AVAILABLE }
                     if (availableProduct.isNotEmpty()) {
                         sellerAdapter.submitList(availableProduct)
                     } else {
@@ -70,7 +71,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.error)
                 }
             }
@@ -99,7 +100,7 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val swipedPosition = viewHolder.absoluteAdapterPosition
                     val product = sellerAdapter.getSwipedData(swipedPosition)
-                    sellerViewModel.deleteSelerProductById(product.id)
+                    sellerViewModel.deleteSellerProductById(product.id)
                         .observe(viewLifecycleOwner) { result ->
                             when (result) {
                                 is Result.Loading -> {}

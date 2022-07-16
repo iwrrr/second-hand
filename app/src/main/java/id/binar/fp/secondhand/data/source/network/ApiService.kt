@@ -58,6 +58,13 @@ interface ApiService {
         @Part("image") image: MultipartBody.Part,
     ): ProductDto
 
+    @FormUrlEncoded
+    @PATCH(Endpoints.UPDATE_SELLER_PRODUCT_BY_ID)
+    suspend fun updateSellerProductById(
+        @Path("id") id: Int,
+        @Field("status") status: String
+    ): ProductDto
+
     @DELETE(Endpoints.DELETE_SELLER_PRODUCT_BY_ID)
     suspend fun deleteSellerProductById(
         @Path("id") id: Int
@@ -71,10 +78,12 @@ interface ApiService {
         @Path("id") id: Int
     ): SellerOrderDto
 
+    @FormUrlEncoded
     @PATCH(Endpoints.UPDATE_SELLER_ORDER_BY_ID)
     suspend fun updateSellerOrderById(
-        @Path("id") id: Int
-    ) // TODO: Response Body Not Yet Implemented
+        @Path("id") id: Int,
+        @Field("status") status: String
+    ): SellerOrderDto
 
     @GET(Endpoints.GET_SELLER_ORDER_BY_PRODUCT_ID)
     suspend fun getSellerOrderByProductId(

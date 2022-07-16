@@ -7,7 +7,6 @@ import androidx.annotation.StringRes
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
@@ -41,7 +40,6 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
                 binding.auth.root.isVisible = false
-//                observeUser()
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
@@ -67,20 +65,10 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
 
-        viewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageScrollStateChanged(state: Int) {
-                toggleRefreshing(state == ViewPager2.SCROLL_STATE_IDLE)
-            }
-        })
-
         val tabs = binding.content.tabs
         TabLayoutMediator(tabs, viewpager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
-    }
-
-    private fun toggleRefreshing(enabled: Boolean) {
-        binding.swipeRefresh.isEnabled = enabled
     }
 
     companion object {

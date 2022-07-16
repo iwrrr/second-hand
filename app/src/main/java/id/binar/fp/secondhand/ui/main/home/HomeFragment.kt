@@ -110,7 +110,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
                 is Result.Success -> {
                     binding.swipeRefresh.isRefreshing = false
-                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
+                    val availableProduct =
+                        result.data.filter { it.status == Status.PRODUCT_AVAILABLE }
                     productAdapter.submitList(availableProduct)
                     products = availableProduct
                 }

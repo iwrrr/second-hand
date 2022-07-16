@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.BottomSheetStatusBinding
 import id.binar.fp.secondhand.ui.base.BaseBottomSheet
+import id.binar.fp.secondhand.util.Status
 
 class StatusBottomSheet : BaseBottomSheet<BottomSheetStatusBinding>() {
 
@@ -16,6 +17,7 @@ class StatusBottomSheet : BaseBottomSheet<BottomSheetStatusBinding>() {
         get() = BottomSheetStatusBinding::inflate
 
     override fun setup() {
+        val productId = arguments?.getInt("product_id") as Int
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             binding.btnSetStatus.backgroundTintList =
                 ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
@@ -26,19 +28,19 @@ class StatusBottomSheet : BaseBottomSheet<BottomSheetStatusBinding>() {
                 var status = ""
                 when (radio.id) {
                     R.id.radio_success -> {
-                        status = "success"
+                        status = Status.SUCCESS
                     }
                     R.id.radio_cancel -> {
-                        status = "cancel"
+                        status = Status.CANCEL
                     }
                 }
-                bottomSheetCallback?.onStatusUpdate(status)
+                bottomSheetCallback?.onStatusUpdate(productId, status)
             }
         }
     }
 
     interface BottomSheetCallback {
-        fun onStatusUpdate(status: String)
+        fun onStatusUpdate(productId: Int, status: String)
     }
 
     companion object {

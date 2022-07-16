@@ -1,5 +1,6 @@
 package id.binar.fp.secondhand.ui.main.adapter.seller
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import id.binar.fp.secondhand.R
@@ -86,18 +87,39 @@ class SellerAdapter<T>(
 
         override fun onBind(data: SellerOrder) {
             with(binding) {
-                var status = ""
                 val date = Helper.dateFormatter(data.transactionDate)
                 val basePrice = Helper.numberFormatter(data.basePrice)
                 val bidPrice = Helper.numberFormatter(data.price)
 
+                var productStatus = ""
+                var bidStatus = ""
+
                 when (data.status) {
-                    Status.PENDING -> status = "Ditawar"
-                    Status.ACCEPTED -> status = "Berhasil Ditawar"
-                    Status.DECLINED -> status = "Ditolak"
+                    Status.ORDER_PENDING -> {
+                        productStatus = "Penawaran produk"
+                        bidStatus = "Ditawar"
+                        tvProductBid.paintFlags =
+                            tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    }
+                    Status.ORDER_ACCEPTED -> {
+                        productStatus = if (data.product?.status == Status.PRODUCT_SOLD) {
+                            "Berhasil terjual"
+                        } else {
+                            "Penawaran produk"
+                        }
+                        bidStatus = "Berhasil Ditawar"
+                        tvProductBid.paintFlags =
+                            tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    }
+                    Status.ORDER_DECLINED -> {
+                        productStatus = "Penawaran ditolak"
+                        bidStatus = "Ditolak"
+                        tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    }
                 }
 
                 tvProductTime.text = date
+                tvProductStatus.text = productStatus
                 tvProductName.text = data.productName
                 tvProductPrice.text = itemView.context.getString(
                     R.string.text_seller_order_base_price,
@@ -105,7 +127,7 @@ class SellerAdapter<T>(
                 )
                 tvProductBid.text = itemView.context.getString(
                     R.string.text_seller_order_bid_price,
-                    status,
+                    bidStatus,
                     bidPrice
                 )
                 ivProductImage.loadImage(data.product?.imageUrl)

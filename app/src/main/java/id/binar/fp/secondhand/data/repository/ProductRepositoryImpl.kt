@@ -65,7 +65,7 @@ class ProductRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun updateSellerProduct(
+    override fun updateSellerProductById(
         name: String,
         description: String,
         basePrice: String,
@@ -75,6 +75,19 @@ class ProductRepositoryImpl @Inject constructor(
     ): LiveData<Result<Product>> = liveData {
         TODO("Not yet implemented")
     }
+
+    override fun updateSellerProductById(id: Int, status: String): LiveData<Result<Product>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val response = apiService.updateSellerProductById(id, status).toDomain()
+                emit(Result.Success(response))
+            } catch (e: HttpException) {
+                emit(Result.Error(e.message()))
+            } catch (e: Exception) {
+                emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+            }
+        }
 
     override fun deleteSellerProductById(id: Int): LiveData<Result<MessageDto>> = liveData {
         try {
