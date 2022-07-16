@@ -20,4 +20,10 @@
     <color name="colorTabSelected">#575CE4</color>
     <color name="colorTabText">#A0A0B0</color>
     <color name="colorTabTextSelected">#FFFFFF</color>
+
+    <color name="colorBgAccept">#D7FFE0</color>
+    <color name="colorBgDeclined">#FFEAEF</color>
+
+    <color name="colorTextAccept">#38C842</color>
+    <color name="colorTextDeclined">#D9335C</color>
 </resources>

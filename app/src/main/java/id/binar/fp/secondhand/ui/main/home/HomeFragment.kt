@@ -15,7 +15,7 @@ import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
-import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
+import id.binar.fp.secondhand.ui.main.product.DetailProductFragment
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -42,8 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         setupSearch()
         setupBanner()
         setupRecyclerView()
-
-        binding.swipeRefresh.setOnRefreshListener { observeListProduct() }
+        onRefreshProduct()
     }
 
     private fun setupSearch() {
@@ -76,6 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
+                    binding.swipeRefresh.isRefreshing = false
                     binding.ivBanner.setImageList(result.data.map { it.imageUrl })
                 }
                 is Result.Error -> {}
@@ -90,6 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 }
                 is Result.Success -> {
+                    binding.swipeRefresh.isRefreshing = false
                     val allCategory = result.data.toMutableList()
                     allCategory.add(0, Category(id = 0, name = "Semua"))
                     categoryAdapter.submitList(allCategory as List<Category>)
@@ -134,7 +135,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun onProductClicked(product: Product) {
-        val detailFragment = ProductDetailFragment()
+        val detailFragment = DetailProductFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)
         detailFragment.arguments = bundle
@@ -144,5 +145,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             addToBackStack(null)
             commit()
         }
+    }
+
+    private fun onRefreshProduct() {
+        binding.swipeRefresh.setOnRefreshListener { observeListProduct() }
     }
 }

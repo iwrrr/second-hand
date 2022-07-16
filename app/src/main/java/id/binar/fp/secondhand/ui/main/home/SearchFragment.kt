@@ -16,7 +16,7 @@ import id.binar.fp.secondhand.databinding.FragmentSearchBinding
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.SearchAdapter
-import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
+import id.binar.fp.secondhand.ui.main.product.DetailProductFragment
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.Status
@@ -86,7 +86,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun onProductClicked(product: Product) {
-        val fragment = ProductDetailFragment()
+        val fragment = DetailProductFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)
         fragment.arguments = bundle

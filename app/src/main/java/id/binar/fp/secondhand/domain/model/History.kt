@@ -13,7 +13,7 @@ data class History(
     val imageUrl: String? = null,
     val createdAt: String? = null,
     val updatedAt: String? = null
-) {
+) : BaseType {
 
     fun toDto(): HistoryDto {
         return HistoryDto(

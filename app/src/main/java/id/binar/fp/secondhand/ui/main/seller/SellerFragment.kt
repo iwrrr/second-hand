@@ -65,6 +65,8 @@ class SellerFragment : BaseFragment<FragmentSellerBinding>() {
             (getChildAt(0) as RecyclerView).overScrollMode = RecyclerView.OVER_SCROLL_NEVER
         }
 
+//        viewpager.isUserInputEnabled = false
+
         val tabs = binding.content.tabs
         TabLayoutMediator(tabs, viewpager) { tab, position ->
             tab.text = resources.getString(TAB_TITLES[position])

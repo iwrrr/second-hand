@@ -50,12 +50,7 @@ interface ApiService {
     @PUT(Endpoints.UPDATE_SELLER_PRODUCT_BY_ID)
     suspend fun updateSellerProductById(
         @Path("id") id: Int,
-        @Field("name") name: String,
-        @Field("description") description: String,
-        @Field("base_price") basePrice: String,
-        @Field("category_ids") categoryIds: List<Int>,
-        @Field("location") location: String,
-        @Part("image") image: MultipartBody.Part,
+        @Body body: RequestBody
     ): ProductDto
 
     @FormUrlEncoded
