@@ -15,8 +15,17 @@ data class NotificationEntity(
     @ColumnInfo(name = "product_id")
     val productId: Int? = null,
 
+    @ColumnInfo(name = "product_name")
+    val productName: String? = null,
+
+    @ColumnInfo(name = "base_price")
+    val basePrice: String? = null,
+
     @ColumnInfo(name = "bid_price")
     val bidPrice: Int? = null,
+
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String? = null,
 
     @ColumnInfo(name = "transaction_date")
     val transactionDate: String? = null,
@@ -33,33 +42,48 @@ data class NotificationEntity(
     @ColumnInfo(name = "receiver_id")
     val receiverId: Int? = null,
 
-    @ColumnInfo(name = "image_url")
-    val imageUrl: String? = null,
-
     @ColumnInfo(name = "read")
     val read: Boolean = false,
+
+    @ColumnInfo(name = "notification_type")
+    val notificationType: String? = null,
+
+    @ColumnInfo(name = "order_id")
+    val orderId: Int? = null,
 
     @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
 
     @ColumnInfo(name = "updated_at")
     val updatedAt: String? = null,
+
+    @ColumnInfo(name = "product")
+    val product: ProductEntity? = null,
+
+    @ColumnInfo(name = "user")
+    val user: UserEntity? = null,
 ) {
 
     fun toDomain(): Notification {
         return Notification(
             id,
             productId,
+            productName,
+            basePrice,
             bidPrice,
+            imageUrl,
             transactionDate,
             status,
             sellerName,
             buyerName,
             receiverId,
-            imageUrl,
             read,
+            notificationType,
+            orderId,
             createdAt,
-            updatedAt
+            updatedAt,
+            product?.toDomain(),
+            user?.toDomain(),
         )
     }
 }

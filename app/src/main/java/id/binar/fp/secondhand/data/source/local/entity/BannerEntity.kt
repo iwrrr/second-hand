@@ -2,24 +2,26 @@ package id.binar.fp.secondhand.data.source.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import id.binar.fp.secondhand.domain.model.Banner
 
 @Entity(tableName = "banner")
 data class BannerEntity(
 
-	@ColumnInfo(name = "id")
-	val id: Int = 0,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id: Int = 0,
 
-	@ColumnInfo(name = "name")
+    @ColumnInfo(name = "name")
 	val name: String? = null,
 
-	@ColumnInfo(name = "image_url")
+    @ColumnInfo(name = "image_url")
 	val imageUrl: String,
 
-	@ColumnInfo(name = "createdAt")
+    @ColumnInfo(name = "createdAt")
 	val createdAt: String? = null,
 
-	@ColumnInfo(name = "updatedAt")
+    @ColumnInfo(name = "updatedAt")
 	val updatedAt: String? = null
 ) {
 

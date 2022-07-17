@@ -51,6 +51,7 @@
     <string name="text_add_edit_product_btn_preview">Preview</string>
     <string name="text_add_edit_product_btn_delete">Hapus</string>
     <string name="text_add_edit_product_btn_publish">Terbitkan</string>
+    <string name="text_add_edit_product_btn_update">Perbarui Produk</string>
 
     <string name="text_profile_edit">Ubah Akun</string>
     <string name="text_profile_settings">Pengaturan</string>

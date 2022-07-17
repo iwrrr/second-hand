@@ -18,10 +18,10 @@ import id.binar.fp.secondhand.util.Status
 @Suppress("UNCHECKED_CAST")
 class SellerAdapter<T>(
     private val type: SellerType,
-    private val onClick: (T) -> Unit
+//    private val onClick: (T) -> Unit
 ) : BaseAdapter<BaseType>() {
 
-    fun getSwipedData(swipedPosition: Int): Product = getItem(swipedPosition) as Product
+    var itemClickCallback: ItemClickCallback<T>? = null
 
     override fun getItemId(position: Int): Long {
         return when (getItem(position)) {
@@ -53,7 +53,10 @@ class SellerAdapter<T>(
     override fun onBindViewHolder(holder: BaseViewHolder<BaseType>, position: Int) {
         when (type) {
             SellerType.PRODUCT -> {
-                (holder as SellerAdapter<Product>.ProductViewHolder).onBind(getItem(position) as Product)
+                (holder as SellerAdapter<Product>.ProductViewHolder).onBind(
+                    getItem(position) as Product,
+                    position
+                )
             }
             SellerType.INTERESTED -> {
                 (holder as SellerAdapter<SellerOrder>.InterestedViewHolder).onBind(getItem(position) as SellerOrder)
@@ -67,7 +70,7 @@ class SellerAdapter<T>(
     inner class ProductViewHolder(private val binding: ItemSellerProductBinding) :
         BaseViewHolder<Product>(binding.root) {
 
-        override fun onBind(data: Product) {
+        override fun onBind(data: Product, position: Int) {
             with(binding) {
                 val price = Helper.numberFormatter(data.basePrice)
                 tvProductName.text = data.name
@@ -77,7 +80,11 @@ class SellerAdapter<T>(
                     price
                 )
                 ivProductImage.loadImage(data.imageUrl)
-                itemView.setOnClickListener { onClick(data as T) }
+                btnDelete.setOnClickListener { itemClickCallback?.onDelete(data.id) }
+                itemView.setOnClickListener {
+                    itemClickCallback?.onClick(data as T)
+//                    onClick(data as T)
+                }
             }
         }
     }
@@ -95,14 +102,14 @@ class SellerAdapter<T>(
                 var bidStatus = ""
 
                 when (data.status) {
-                    Status.ORDER_PENDING -> {
+                    Status.PENDING -> {
                         productStatus = "Penawaran produk"
                         bidStatus = "Ditawar"
                         tvProductBid.paintFlags =
                             tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                     }
-                    Status.ORDER_ACCEPTED -> {
-                        productStatus = if (data.product?.status == Status.PRODUCT_SOLD) {
+                    Status.ACCEPTED -> {
+                        productStatus = if (data.product?.status == Status.SOLD) {
                             "Berhasil terjual"
                         } else {
                             "Penawaran produk"
@@ -111,7 +118,7 @@ class SellerAdapter<T>(
                         tvProductBid.paintFlags =
                             tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                     }
-                    Status.ORDER_DECLINED -> {
+                    Status.DECLINED -> {
                         productStatus = "Penawaran ditolak"
                         bidStatus = "Ditolak"
                         tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
@@ -133,7 +140,10 @@ class SellerAdapter<T>(
                 ivProductImage.loadImage(data.product?.imageUrl)
             }
 
-            itemView.setOnClickListener { onClick(data as T) }
+            itemView.setOnClickListener {
+                itemClickCallback?.onClick(data as T)
+//                onClick(data as T)
+            }
         }
     }
 
@@ -150,8 +160,16 @@ class SellerAdapter<T>(
                     price
                 )
                 ivProductImage.loadImage(data.imageUrl)
-                itemView.setOnClickListener { onClick(data as T) }
+                itemView.setOnClickListener {
+                    itemClickCallback?.onClick(data as T)
+//                    onClick(data as T)
+                }
             }
         }
+    }
+
+    interface ItemClickCallback<T> {
+        fun onClick(data: T)
+        fun onDelete(id: Int)
     }
 }

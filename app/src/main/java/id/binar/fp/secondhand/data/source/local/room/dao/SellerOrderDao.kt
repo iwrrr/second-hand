@@ -16,7 +16,7 @@ interface SellerOrderDao {
     suspend fun getSellerOrder(): List<SellerOrderEntity>
 
     @Query("SELECT * FROM seller_orders WHERE id = :id")
-    suspend fun getSellerOrderById(id: Int): SellerOrderEntity
+    suspend fun getSellerOrderById(id: Int): SellerOrderEntity?
 
     @Query("DELETE FROM seller_orders")
     suspend fun deleteSellerOrders()

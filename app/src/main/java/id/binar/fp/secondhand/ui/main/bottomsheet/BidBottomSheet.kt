@@ -59,7 +59,7 @@ class BidBottomSheet : BaseBottomSheet<BottomSheetBidBinding>() {
                             binding.progressBar.isVisible = false
                             statusOrder = 0
                             dialog?.dismiss()
-                            Helper.showToast(requireContext(), result.error)
+                            Helper.showToast(requireContext(), result.message.toString())
                         }
                     }
                 }

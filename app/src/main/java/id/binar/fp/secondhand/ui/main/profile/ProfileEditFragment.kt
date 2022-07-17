@@ -119,15 +119,17 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    binding.ivProfile.loadImage(result.data.imageUrl)
-                    binding.tvProfileName.data.text = result.data.fullName
-                    binding.tvProfilePhone.data.text = result.data.phoneNumber.toString()
-                    binding.tvProfileCity.data.text = result.data.city
-                    binding.tvProfileAddress.text = result.data.address
-                    onDataClicked(result.data)
+                    if (result.data != null) {
+                        binding.ivProfile.loadImage(result.data.imageUrl)
+                        binding.tvProfileName.data.text = result.data.fullName
+                        binding.tvProfilePhone.data.text = result.data.phoneNumber.toString()
+                        binding.tvProfileCity.data.text = result.data.city
+                        binding.tvProfileAddress.text = result.data.address
+                        onDataClicked(result.data)
+                    }
                 }
                 is Result.Error -> {
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
@@ -149,12 +151,11 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
                         Helper.showToast(requireContext(), "Profile berhasil diperbarui")
-//                        requireActivity().onBackPressed()
                         observeUser()
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), result.error)
+                        Helper.showToast(requireContext(), result.message.toString())
                     }
                 }
             }

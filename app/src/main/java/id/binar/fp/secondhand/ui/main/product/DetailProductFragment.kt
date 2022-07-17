@@ -56,28 +56,31 @@ class DetailProductFragment : BaseFragment<FragmentDetailProductBinding>() {
                         binding.loading.root.isVisible = true
                     }
                     is Result.Success -> {
-                        val price = Helper.numberFormatter(result.data.basePrice)
-                        binding.loading.root.isVisible = false
+                        if (result.data != null) {
+                            val price = Helper.numberFormatter(result.data.basePrice)
+                            binding.loading.root.isVisible = false
 
-                        binding.ivProfile.loadImage(result.data.user?.imageUrl)
-                        binding.tvName.text = result.data.user?.fullName
-                        binding.tvCity.text = result.data.user?.city
+                            binding.ivProfile.loadImage(result.data.user?.imageUrl)
+                            binding.tvName.text = result.data.user?.fullName
+                            binding.tvCity.text = result.data.user?.city
 
-                        binding.tvProductName.text = result.data.name
-                        binding.tvProductCategory.text = Helper.initCategory(result.data.categories)
-                        binding.tvProductPrice.text = requireContext().getString(
-                            R.string.text_seller_order_base_price,
-                            price
-                        )
-                        binding.tvProductDescription.text = result.data.description
-                        binding.ivProductImage.loadImage(result.data.imageUrl)
-                        binding.btnBid.isEnabled = result.data.status == "available"
+                            binding.tvProductName.text = result.data.name
+                            binding.tvProductCategory.text =
+                                Helper.initCategory(result.data.categories)
+                            binding.tvProductPrice.text = requireContext().getString(
+                                R.string.text_seller_order_base_price,
+                                price
+                            )
+                            binding.tvProductDescription.text = result.data.description
+                            binding.ivProductImage.loadImage(result.data.imageUrl)
+                            binding.btnBid.isEnabled = result.data.status == "available"
 
-                        initBottomSheet(result.data)
+                            initBottomSheet(result.data)
+                        }
                     }
                     is Result.Error -> {
                         binding.loading.root.isVisible = false
-                        Helper.showToast(requireContext(), result.error)
+                        Helper.showToast(requireContext(), result.message.toString())
                     }
                 }
             }

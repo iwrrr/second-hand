@@ -24,7 +24,7 @@ class AuthRepositoryImpl @Inject constructor(
         city: String,
         address: String
     ): LiveData<Result<User>> = liveData {
-        emit(Result.Loading)
+        emit(Result.Loading())
         try {
             apiService.register(fullName, email, password, phoneNumber, city, address)
 
@@ -42,7 +42,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun login(email: String, password: String): LiveData<Result<User>> = liveData {
-        emit(Result.Loading)
+        emit(Result.Loading())
         try {
             val user = apiService.login(email, password)
             user.accessToken?.let { prefs.login(it) }
@@ -58,7 +58,7 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override fun getUser(): LiveData<Result<User>> = liveData {
-        emit(Result.Loading)
+        emit(Result.Loading())
         try {
             val user = apiService.getUser()
             emit(Result.Success(user.toDomain()))
@@ -75,7 +75,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun updateProfile(
         body: RequestBody
     ): LiveData<Result<User>> = liveData {
-        emit(Result.Loading)
+        emit(Result.Loading())
         try {
             val user =
                 apiService.updateUser(body)

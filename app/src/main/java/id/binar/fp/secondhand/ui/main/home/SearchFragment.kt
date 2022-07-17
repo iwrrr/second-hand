@@ -68,18 +68,20 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     binding.placeholder.root.isVisible = false
                 }
                 is Result.Success -> {
-                    binding.loading.root.isVisible = false
-                    binding.rvSearch.isVisible = true
-                    binding.placeholder.root.isVisible = false
-                    val availableProduct =
-                        result.data.filter { it.status == Status.PRODUCT_AVAILABLE }
-                    searchAdapter.submitList(availableProduct)
+                    if (result.data != null) {
+                        binding.loading.root.isVisible = false
+                        binding.rvSearch.isVisible = true
+                        binding.placeholder.root.isVisible = false
+                        val availableProduct =
+                            result.data.filter { it.status == Status.AVAILABLE }
+                        searchAdapter.submitList(availableProduct)
+                    }
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
                     binding.rvSearch.isVisible = false
                     binding.placeholder.root.isVisible = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }

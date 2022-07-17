@@ -49,12 +49,12 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
 
     private fun setupButtonStatus() {
         binding.contentBtnNotAcceptedYet.btnReject.setOnClickListener {
-            status = Status.ORDER_DECLINED
+            status = Status.DECLINED
             observeOrder(status, ::declined)
         }
 
         binding.contentBtnNotAcceptedYet.btnAccept.setOnClickListener {
-            status = Status.ORDER_ACCEPTED
+            status = Status.ACCEPTED
             observeOrder(status, ::accepted)
         }
 
@@ -89,11 +89,11 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
             override fun onStatusUpdate(productId: Int, status: String) {
                 when (status) {
                     Status.CANCEL -> {
-                        observeProductStatus(productId, Status.PRODUCT_AVAILABLE, ::available)
-                        observeOrder(Status.ORDER_DECLINED, ::declined)
+                        observeProductStatus(productId, Status.AVAILABLE, ::available)
+                        observeOrder(Status.DECLINED, ::declined)
                     }
                     Status.SUCCESS -> {
-                        observeProductStatus(productId, Status.PRODUCT_SOLD, ::sold)
+                        observeProductStatus(productId, Status.SOLD, ::sold)
                     }
                 }
                 bottomSheet.dismiss()
@@ -115,70 +115,73 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                     binding.progressBar.isVisible = true
                 }
                 is Result.Success -> {
-                    this.order = result.data
-                    this.productId = result.data.productId as Int
-                    binding.apply {
-                        progressBar.isVisible = false
-                        ivProfile.loadImage(result.data.user?.imageUrl)
-                        tvName.text = result.data.user?.fullName
-                        tvCity.text = result.data.user?.city
+                    if (result.data != null) {
 
-                        contentBtnNotAcceptedYet.root.isVisible = true
-                        contentBtnAccepted.root.isVisible = false
-                        contentProduct.apply {
-                            val date = Helper.dateFormatter(result.data.transactionDate)
-                            val basePrice = Helper.numberFormatter(result.data.basePrice)
-                            val bidPrice = Helper.numberFormatter(result.data.price)
+                        this.order = result.data
+                        this.productId = result.data.productId as Int
+                        binding.apply {
+                            progressBar.isVisible = false
+                            ivProfile.loadImage(result.data.user?.imageUrl)
+                            tvName.text = result.data.user?.fullName
+                            tvCity.text = result.data.user?.city
 
-                            var productStatus = ""
-                            var bidStatus = ""
+                            contentBtnNotAcceptedYet.root.isVisible = true
+                            contentBtnAccepted.root.isVisible = false
+                            contentProduct.apply {
+                                val date = Helper.dateFormatter(result.data.transactionDate)
+                                val basePrice = Helper.numberFormatter(result.data.basePrice)
+                                val bidPrice = Helper.numberFormatter(result.data.price)
 
-                            when (result.data.status) {
-                                Status.ORDER_PENDING -> {
-                                    productStatus = "Penawaran produk"
-                                    bidStatus = "Ditawar"
-                                    tvProductBid.paintFlags =
-                                        tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-                                }
-                                Status.ORDER_ACCEPTED -> {
-                                    if (result.data.product?.status == Status.PRODUCT_SOLD) {
-                                        productStatus = "Berhasil terjual"
-                                        contentBtnAccepted.root.isVisible = false
-                                    } else {
+                                var productStatus = ""
+                                var bidStatus = ""
+
+                                when (result.data.status) {
+                                    Status.PENDING -> {
                                         productStatus = "Penawaran produk"
-                                        contentBtnAccepted.root.isVisible = true
+                                        bidStatus = "Ditawar"
+                                        tvProductBid.paintFlags =
+                                            tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
                                     }
-                                    bidStatus = "Berhasil Ditawar"
-                                    contentBtnNotAcceptedYet.root.isVisible = false
+                                    Status.ACCEPTED -> {
+                                        if (result.data.product?.status == Status.SOLD) {
+                                            productStatus = "Berhasil terjual"
+                                            contentBtnAccepted.root.isVisible = false
+                                        } else {
+                                            productStatus = "Penawaran produk"
+                                            contentBtnAccepted.root.isVisible = true
+                                        }
+                                        bidStatus = "Berhasil Ditawar"
+                                        contentBtnNotAcceptedYet.root.isVisible = false
+                                    }
+                                    Status.DECLINED -> {
+                                        productStatus = "Penawaran ditolak"
+                                        bidStatus = "Ditolak"
+                                        tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                                        contentBtnNotAcceptedYet.root.isVisible = false
+                                        contentBtnAccepted.root.isVisible = false
+                                    }
                                 }
-                                Status.ORDER_DECLINED -> {
-                                    productStatus = "Penawaran ditolak"
-                                    bidStatus = "Ditolak"
-                                    tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                                    contentBtnNotAcceptedYet.root.isVisible = false
-                                    contentBtnAccepted.root.isVisible = false
-                                }
-                            }
 
-                            ivProductImage.loadImage(result.data.product?.imageUrl)
-                            tvProductTime.text = date
-                            tvProductName.text = result.data.productName
-                            tvProductStatus.text = productStatus
-                            tvProductPrice.text = requireContext().getString(
-                                R.string.text_seller_order_base_price,
-                                basePrice
-                            )
-                            tvProductBid.text = requireContext().getString(
-                                R.string.text_seller_order_bid_price,
-                                bidStatus,
-                                bidPrice
-                            )
+                                ivProductImage.loadImage(result.data.product?.imageUrl)
+                                tvProductTime.text = date
+                                tvProductName.text = result.data.productName
+                                tvProductStatus.text = productStatus
+                                tvProductPrice.text = requireContext().getString(
+                                    R.string.text_seller_order_base_price,
+                                    basePrice
+                                )
+                                tvProductBid.text = requireContext().getString(
+                                    R.string.text_seller_order_bid_price,
+                                    bidStatus,
+                                    bidPrice
+                                )
+                            }
                         }
                     }
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
@@ -213,7 +216,7 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.error)
+                Helper.showToast(requireContext(), result.message.toString())
             }
         }
     }
@@ -234,7 +237,7 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.error)
+                Helper.showToast(requireContext(), result.message.toString())
             }
         }
     }
@@ -245,45 +248,47 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                 binding.progressBar.isVisible = true
             }
             is Result.Success -> {
-                binding.apply {
-                    progressBar.isVisible = false
-                    contentBtnNotAcceptedYet.root.isVisible = false
-                    contentBtnAccepted.root.isVisible = true
-                    contentProduct.apply {
-                        val date = Helper.dateFormatter(result.data.transactionDate)
-                        val bidPrice = Helper.numberFormatter(result.data.price)
+                if (result.data != null) {
+                    binding.apply {
+                        progressBar.isVisible = false
+                        contentBtnNotAcceptedYet.root.isVisible = false
+                        contentBtnAccepted.root.isVisible = true
+                        contentProduct.apply {
+                            val date = Helper.dateFormatter(result.data.transactionDate)
+                            val bidPrice = Helper.numberFormatter(result.data.price)
 
-                        var productStatus = ""
-                        var bidStatus = ""
+                            var productStatus = ""
+                            var bidStatus = ""
 
-                        when (result.data.status) {
-                            Status.ORDER_ACCEPTED -> {
-                                if (result.data.product?.status == Status.PRODUCT_SOLD) {
-                                    productStatus = "Berhasil terjual"
-                                    observeProductStatus(
-                                        result.data.productId as Int,
-                                        Status.PRODUCT_SOLD,
-                                        ::sold
-                                    )
-                                } else {
-                                    productStatus = "Penawaran produk"
-                                    observeProductStatus(
-                                        result.data.productId as Int,
-                                        Status.PRODUCT_AVAILABLE,
-                                        ::available
-                                    )
+                            when (result.data.status) {
+                                Status.ACCEPTED -> {
+                                    if (result.data.product?.status == Status.SOLD) {
+                                        productStatus = "Berhasil terjual"
+                                        observeProductStatus(
+                                            result.data.productId as Int,
+                                            Status.SOLD,
+                                            ::sold
+                                        )
+                                    } else {
+                                        productStatus = "Penawaran produk"
+                                        observeProductStatus(
+                                            result.data.productId as Int,
+                                            Status.AVAILABLE,
+                                            ::available
+                                        )
+                                    }
+                                    bidStatus = "Berhasil Ditawar"
                                 }
-                                bidStatus = "Berhasil Ditawar"
                             }
-                        }
 
-                        tvProductTime.text = date
-                        tvProductStatus.text = productStatus
-                        tvProductBid.text = requireContext().getString(
-                            R.string.text_seller_order_bid_price,
-                            bidStatus,
-                            bidPrice
-                        )
+                            tvProductTime.text = date
+                            tvProductStatus.text = productStatus
+                            tvProductBid.text = requireContext().getString(
+                                R.string.text_seller_order_bid_price,
+                                bidStatus,
+                                bidPrice
+                            )
+                        }
                     }
                 }
                 Helper.showToast(requireContext(), "Status order berhasil diperbarui")
@@ -291,7 +296,7 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.error)
+                Helper.showToast(requireContext(), result.message.toString())
             }
         }
     }
@@ -302,39 +307,41 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                 binding.progressBar.isVisible = true
             }
             is Result.Success -> {
-                binding.apply {
-                    progressBar.isVisible = false
-                    contentBtnNotAcceptedYet.root.isVisible = false
-                    contentBtnAccepted.root.isVisible = false
-                    contentProduct.apply {
-                        val date = Helper.dateFormatter(result.data.transactionDate)
-                        val bidPrice = Helper.numberFormatter(result.data.price)
+                if (result.data != null) {
+                    binding.apply {
+                        progressBar.isVisible = false
+                        contentBtnNotAcceptedYet.root.isVisible = false
+                        contentBtnAccepted.root.isVisible = false
+                        contentProduct.apply {
+                            val date = Helper.dateFormatter(result.data.transactionDate)
+                            val bidPrice = Helper.numberFormatter(result.data.price)
 
-                        var productStatus = ""
-                        var bidStatus = ""
+                            var productStatus = ""
+                            var bidStatus = ""
 
-                        when (result.data.status) {
-                            Status.ORDER_DECLINED -> {
-                                productStatus = "Penawaran ditolak"
-                                bidStatus = "Ditolak"
-                                tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                            when (result.data.status) {
+                                Status.DECLINED -> {
+                                    productStatus = "Penawaran ditolak"
+                                    bidStatus = "Ditolak"
+                                    tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                                }
                             }
-                        }
 
-                        tvProductTime.text = date
-                        tvProductStatus.text = productStatus
-                        tvProductBid.text = requireContext().getString(
-                            R.string.text_seller_order_bid_price,
-                            bidStatus,
-                            bidPrice
-                        )
+                            tvProductTime.text = date
+                            tvProductStatus.text = productStatus
+                            tvProductBid.text = requireContext().getString(
+                                R.string.text_seller_order_bid_price,
+                                bidStatus,
+                                bidPrice
+                            )
+                        }
                     }
                 }
                 Helper.showToast(requireContext(), "Status order berhasil diperbarui")
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.error)
+                Helper.showToast(requireContext(), result.message.toString())
             }
         }
     }

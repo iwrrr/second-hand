@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.SellerOrderEntity
 import id.binar.fp.secondhand.domain.model.SellerOrder
 
 data class SellerOrderDto(
@@ -60,6 +61,24 @@ data class SellerOrderDto(
             updatedAt,
             product?.toDomain(),
             user?.toDomain()
+        )
+    }
+
+    fun toEntity(): SellerOrderEntity {
+        return SellerOrderEntity(
+            id,
+            productId,
+            buyerId,
+            price,
+            transactionDate,
+            productName,
+            basePrice,
+            imageProduct,
+            status,
+            createdAt,
+            updatedAt,
+            product?.toEntity(),
+            user?.toEntity()
         )
     }
 }

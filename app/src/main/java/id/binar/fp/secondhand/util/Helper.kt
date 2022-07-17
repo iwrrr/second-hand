@@ -22,7 +22,7 @@ object Helper {
                 outputFormat.format(it)
             }
         } else {
-            "-"
+            ""
         }
     }
 

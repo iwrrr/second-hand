@@ -21,7 +21,7 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val sellerAdapter by lazy { SellerAdapter(SellerType.SOLD, ::onProductClicked) }
+    private val sellerAdapter by lazy { SellerAdapter<Product>(SellerType.SOLD) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSoldBinding
         get() = FragmentSoldBinding::inflate
@@ -38,6 +38,15 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
     private fun setupRecyclerView() {
         binding.content.rvSold.adapter = sellerAdapter
         binding.content.rvSold.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        sellerAdapter.itemClickCallback = object : SellerAdapter.ItemClickCallback<Product> {
+            override fun onClick(data: Product) {
+                onProductClicked(data)
+            }
+
+            override fun onDelete(id: Int) {}
+        }
+
         observeProduct()
     }
 
@@ -52,20 +61,22 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
                     binding.loading.root.isVisible = true
                 }
                 is Result.Success -> {
-                    binding.loading.root.isVisible = false
-                    binding.swipeRefresh.isRefreshing = false
-                    val availableProduct = result.data.filter { it.status == Status.PRODUCT_SOLD }
-                    if (availableProduct.isNotEmpty()) {
-                        sellerAdapter.submitList(availableProduct)
-                    } else {
-                        binding.content.root.isVisible = false
-                        binding.empty.root.isVisible = true
+                    if (result.data != null) {
+                        binding.loading.root.isVisible = false
+                        binding.swipeRefresh.isRefreshing = false
+                        val availableProduct = result.data.filter { it.status == Status.SOLD }
+                        if (availableProduct.isNotEmpty()) {
+                            sellerAdapter.submitList(availableProduct)
+                        } else {
+                            binding.content.root.isVisible = false
+                            binding.empty.root.isVisible = true
+                        }
                     }
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
                     binding.swipeRefresh.isRefreshing = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }

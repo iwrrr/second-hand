@@ -13,8 +13,6 @@ interface OrderRepository {
 
     fun updateSellerOrderById(id: Int, status: String): LiveData<Result<SellerOrder>>
 
-    fun getSellerOrderByProductId(id: Int) // TODO: Response Body Not Yet Implemented
-
     fun addBuyerOrder(
         productId: Int,
         bidPrice: String,

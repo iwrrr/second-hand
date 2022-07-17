@@ -35,7 +35,6 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
         onBackClicked()
         observeUser()
         initProduct()
-//        observeDetailProduct()
     }
 
     private fun initProduct() {
@@ -44,11 +43,6 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
         val basePrice = arguments?.getString("base_price") as String
         val imagePath = arguments?.getString("image_path") as String
         val categories = arguments?.getParcelableArrayList<Category>("categories") as List<Category>
-
-//        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(
-//            requireContext().contentResolver,
-//            Uri.fromFile(File(imagePath))
-//        )
 
         val uri = Uri.fromFile(File(imagePath))
 
@@ -71,9 +65,11 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    binding.tvName.text = result.data.fullName
-                    binding.tvCity.text = result.data.city
-                    binding.ivProfile.loadImage(result.data.imageUrl)
+                    if (result.data != null) {
+                        binding.tvName.text = result.data.fullName
+                        binding.tvCity.text = result.data.city
+                        binding.ivProfile.loadImage(result.data.imageUrl)
+                    }
                 }
                 is Result.Error -> {}
             }

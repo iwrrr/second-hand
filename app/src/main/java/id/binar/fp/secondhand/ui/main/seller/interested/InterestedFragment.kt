@@ -23,7 +23,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val sellerAdapter by lazy { SellerAdapter(SellerType.INTERESTED, ::onProductClicked) }
+    private val sellerAdapter by lazy { SellerAdapter<SellerOrder>(SellerType.INTERESTED) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInterestedBinding
         get() = FragmentInterestedBinding::inflate
@@ -45,6 +45,14 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
             addItemDecoration(itemDecoration)
         }
 
+        sellerAdapter.itemClickCallback = object : SellerAdapter.ItemClickCallback<SellerOrder> {
+            override fun onClick(data: SellerOrder) {
+                onProductClicked(data)
+            }
+
+            override fun onDelete(id: Int) {}
+        }
+
         observeProduct()
     }
 
@@ -59,19 +67,21 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
                     binding.loading.root.isVisible = true
                 }
                 is Result.Success -> {
-                    binding.loading.root.isVisible = false
-                    binding.swipeRefresh.isRefreshing = false
-                    if (result.data.isNotEmpty()) {
-                        sellerAdapter.submitList(result.data)
-                    } else {
-                        binding.content.root.isVisible = false
-                        binding.empty.root.isVisible = true
+                    if (result.data != null) {
+                        binding.loading.root.isVisible = false
+                        binding.swipeRefresh.isRefreshing = false
+                        if (result.data.isNotEmpty()) {
+                            sellerAdapter.submitList(result.data)
+                        } else {
+                            binding.content.root.isVisible = false
+                            binding.empty.root.isVisible = true
+                        }
                     }
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
                     binding.swipeRefresh.isRefreshing = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }

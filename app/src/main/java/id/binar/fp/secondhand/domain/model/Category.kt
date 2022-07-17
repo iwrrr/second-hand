@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.domain.model
 
 import android.os.Parcelable
+import id.binar.fp.secondhand.data.source.local.entity.CategoryEntity
 import id.binar.fp.secondhand.data.source.network.response.CategoryDto
 import kotlinx.parcelize.Parcelize
 
@@ -14,6 +15,15 @@ data class Category(
 
     fun toDto(): CategoryDto {
         return CategoryDto(
+            id,
+            name,
+            createdAt,
+            updatedAt
+        )
+    }
+
+    fun toEntity(): CategoryEntity {
+        return CategoryEntity(
             id,
             name,
             createdAt,

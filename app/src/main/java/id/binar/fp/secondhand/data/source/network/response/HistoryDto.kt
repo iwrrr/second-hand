@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.HistoryEntity
 import id.binar.fp.secondhand.domain.model.History
 
 data class HistoryDto(
@@ -38,6 +39,21 @@ data class HistoryDto(
 
     fun toDomain(): History {
         return History(
+            id,
+            productName,
+            price,
+            category,
+            transactionDate,
+            status,
+            userId,
+            imageUrl,
+            createdAt,
+            updatedAt
+        )
+    }
+
+    fun toEntity(): HistoryEntity {
+        return HistoryEntity(
             id,
             productName,
             price,

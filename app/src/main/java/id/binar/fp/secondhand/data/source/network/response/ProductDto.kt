@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.ProductEntity
 import id.binar.fp.secondhand.domain.model.Product
 
 data class ProductDto(
@@ -57,6 +58,25 @@ data class ProductDto(
             location,
             userId,
             user?.toDomain(),
+            status,
+            categories,
+            createdAt,
+            updatedAt
+        )
+    }
+
+    fun toEntity(): ProductEntity {
+        val categories = categories?.map { it.toEntity() }
+        return ProductEntity(
+            id,
+            name,
+            basePrice,
+            description,
+            imageUrl,
+            imageName,
+            location,
+            userId,
+            user?.toEntity(),
             status,
             categories,
             createdAt,

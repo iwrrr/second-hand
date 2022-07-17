@@ -29,13 +29,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
 
     override fun setup() {
         super.setup()
-        setupRecyclerView()
         onLoginClicked()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        observeHistory()
     }
 
     private fun setupRecyclerView() {
@@ -49,6 +43,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
                 binding.auth.root.isVisible = false
+                setupRecyclerView()
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
@@ -61,15 +56,17 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    if (result.data.isNotEmpty()) {
-                        historyAdapter.submitList(result.data)
-                    } else {
-                        binding.empty.root.isVisible = true
-                        binding.content.root.isVisible = false
+                    if (result.data != null) {
+                        if (result.data.isNotEmpty()) {
+                            historyAdapter.submitList(result.data)
+                        } else {
+                            binding.empty.root.isVisible = true
+                            binding.content.root.isVisible = false
+                        }
                     }
                 }
                 is Result.Error -> {
-//                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }

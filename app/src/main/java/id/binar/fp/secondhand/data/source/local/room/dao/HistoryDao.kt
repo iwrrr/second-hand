@@ -12,11 +12,14 @@ interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHistories(histories: List<HistoryEntity>)
 
-    @Query("SELECT * FROM histories WHERE user_id = :userId")
-    suspend fun getHistory(userId: Int): List<HistoryEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertHistory(history: HistoryEntity)
 
-    @Query("SELECT * FROM histories WHERE id = :id AND user_id = :userId")
-    suspend fun getHistoryById(id: Int, userId: Int): HistoryEntity
+    @Query("SELECT * FROM histories ORDER BY transaction_date DESC")
+    suspend fun getHistory(): List<HistoryEntity>
+
+    @Query("SELECT * FROM histories WHERE id = :id")
+    suspend fun getHistoryById(id: Int): HistoryEntity?
 
     @Query("DELETE FROM histories")
     suspend fun deleteHistories()

@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.CategoryEntity
 import id.binar.fp.secondhand.domain.model.Category
 
 data class CategoryDto(
@@ -20,6 +21,15 @@ data class CategoryDto(
 
     fun toDomain(): Category {
         return Category(
+            id,
+            name,
+            createdAt,
+            updatedAt
+        )
+    }
+
+    fun toEntity(): CategoryEntity {
+        return CategoryEntity(
             id,
             name,
             createdAt,

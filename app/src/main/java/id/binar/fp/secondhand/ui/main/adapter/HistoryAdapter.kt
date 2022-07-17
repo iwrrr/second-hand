@@ -33,12 +33,12 @@ class HistoryAdapter(
                 var status = ""
 
                 when (data.status) {
-                    Status.ORDER_ACCEPTED -> {
+                    Status.ACCEPTED -> {
                         status = "Selesai"
                         tvProductStatus.setTextColor(context.getColor(R.color.colorTextAccept))
                         tvProductStatus.background.setTint(context.getColor(R.color.colorBgAccept))
                     }
-                    Status.ORDER_DECLINED -> {
+                    Status.DECLINED -> {
                         status = "Dibatalkan"
                         tvProductStatus.setTextColor(context.getColor(R.color.colorTextDeclined))
                         tvProductStatus.background.setTint(context.getColor(R.color.colorBgDeclined))

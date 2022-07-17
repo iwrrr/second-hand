@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -12,6 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentLoginBinding
 import id.binar.fp.secondhand.util.Extensions.isValidated
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 
 @AndroidEntryPoint
@@ -80,7 +80,7 @@ class LoginFragment : Fragment() {
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
                     binding.btnLogin.isVisible = true
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_LONG).show()
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }

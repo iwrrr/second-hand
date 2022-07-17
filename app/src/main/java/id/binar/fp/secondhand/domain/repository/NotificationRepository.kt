@@ -10,5 +10,5 @@ interface NotificationRepository {
 
     fun getNotificationById(id: Int): LiveData<Result<Notification>>
 
-    fun updateNotificationById(id: Int): LiveData<Result<Notification>>
+    fun updateNotificationById(id: Int, notification: Notification): LiveData<Result<Notification>>
 }

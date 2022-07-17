@@ -13,6 +13,7 @@ import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.model.SellerType
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
+import id.binar.fp.secondhand.ui.main.bottomsheet.DeleteBottomSheet
 import id.binar.fp.secondhand.ui.main.product.EditProductFragment
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
 import id.binar.fp.secondhand.util.Helper
@@ -24,7 +25,9 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val sellerAdapter by lazy { SellerAdapter(SellerType.PRODUCT, ::onProductClicked) }
+    private val sellerAdapter by lazy { SellerAdapter<Product>(SellerType.PRODUCT) }
+
+    private val products = mutableListOf<Product>()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProductBinding
         get() = FragmentProductBinding::inflate
@@ -36,12 +39,20 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         super.setup()
         setupRecyclerView()
         setupRefresh()
-//        setupSwipeToDelete()
     }
 
     private fun setupRecyclerView() {
         binding.content.rvProduct.adapter = sellerAdapter
         binding.content.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
+        sellerAdapter.itemClickCallback = object : SellerAdapter.ItemClickCallback<Product> {
+            override fun onClick(data: Product) {
+                onProductClicked(data)
+            }
+
+            override fun onDelete(id: Int) {
+                onDeleteClicked(id)
+            }
+        }
         observeProduct()
     }
 
@@ -56,22 +67,35 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                     binding.loading.root.isVisible = true
                 }
                 is Result.Success -> {
-                    binding.loading.root.isVisible = false
-                    binding.swipeRefresh.isRefreshing = false
-                    val availableProduct =
-                        result.data.filter { it.status == Status.PRODUCT_AVAILABLE }
-                    if (availableProduct.isNotEmpty()) {
-                        sellerAdapter.submitList(availableProduct)
-                    } else {
-                        binding.content.root.isVisible = false
-                        binding.empty.root.isVisible = true
+                    if (result.data != null) {
+                        products.addAll(result.data)
+                        binding.loading.root.isVisible = false
+                        binding.swipeRefresh.isRefreshing = false
+                        val availableProduct =
+                            result.data.filter { it.status == Status.AVAILABLE }
+                        if (availableProduct.isNotEmpty()) {
+                            sellerAdapter.submitList(availableProduct)
+                        } else {
+                            binding.content.root.isVisible = false
+                            binding.empty.root.isVisible = true
+                        }
                     }
                 }
                 is Result.Error -> {
                     binding.loading.root.isVisible = false
                     binding.swipeRefresh.isRefreshing = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
+            }
+        }
+    }
+
+    private fun observeDelete(id: Int) {
+        sellerViewModel.deleteSellerProductById(id).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> observeProduct()
+                is Result.Error -> {}
             }
         }
     }
@@ -86,6 +110,17 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
             add(R.id.main_nav_host, editProductFragment)
             addToBackStack(null)
             commit()
+        }
+    }
+
+    private fun onDeleteClicked(id: Int) {
+        val deleteBottomSheet = DeleteBottomSheet()
+        deleteBottomSheet.show(childFragmentManager, DeleteBottomSheet.TAG)
+        deleteBottomSheet.bottomSheetCallback = object : DeleteBottomSheet.BottomSheetCallback {
+            override fun onDelete() {
+                observeDelete(id)
+                deleteBottomSheet.dismiss()
+            }
         }
     }
 }

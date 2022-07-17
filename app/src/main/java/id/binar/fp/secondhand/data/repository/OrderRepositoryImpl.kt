@@ -2,6 +2,8 @@ package id.binar.fp.secondhand.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import id.binar.fp.secondhand.data.source.local.room.dao.OrderDao
+import id.binar.fp.secondhand.data.source.local.room.dao.SellerOrderDao
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.domain.model.Order
 import id.binar.fp.secondhand.domain.model.SellerOrder
@@ -11,28 +13,40 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val orderDao: OrderDao,
+    private val sellerOrderDao: SellerOrderDao
 ) : OrderRepository {
 
     override fun getSellerOrder(): LiveData<Result<List<SellerOrder>>> = liveData {
-        emit(Result.Loading)
+        emit(Result.Loading())
+
+        val oldOrder = sellerOrderDao.getSellerOrder().map { it.toDomain() }
+        emit(Result.Loading(oldOrder))
+
         try {
-            val response = apiService.getSellerOrder().map { it.toDomain() }
-            emit(Result.Success(response))
+            val data = apiService.getSellerOrder().map { it.toEntity() }
+            sellerOrderDao.deleteSellerOrders()
+            sellerOrderDao.insertSellerOrders(data)
         } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            emit(Result.Error(e.message(), oldOrder))
         } catch (e: Exception) {
-            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error", oldOrder))
         }
+
+        val newOrder = sellerOrderDao.getSellerOrder().map { it.toDomain() }
+        emit(Result.Success(newOrder))
     }
 
     override fun getSellerOrderById(id: Int): LiveData<Result<SellerOrder>> = liveData {
-        emit(Result.Loading)
+        emit(Result.Loading())
         try {
-            val response = apiService.getSellerOrderById(id).toDomain()
-            emit(Result.Success(response))
-        } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            val order = sellerOrderDao.getSellerOrderById(id)?.toDomain()
+            if (order != null) {
+                emit(Result.Success(order))
+            }
+        } catch (e: NullPointerException) {
+            emit(Result.Error("Order tidak ditemukan"))
         } catch (e: Exception) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
         }
@@ -40,7 +54,7 @@ class OrderRepositoryImpl @Inject constructor(
 
     override fun updateSellerOrderById(id: Int, status: String): LiveData<Result<SellerOrder>> =
         liveData {
-            emit(Result.Loading)
+            emit(Result.Loading())
             try {
                 val response = apiService.updateSellerOrderById(id, status).toDomain()
                 emit(Result.Success(response))
@@ -51,13 +65,9 @@ class OrderRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun getSellerOrderByProductId(id: Int) {
-        TODO("Not yet implemented")
-    }
-
     override fun addBuyerOrder(productId: Int, bidPrice: String): LiveData<Result<Order>> =
         liveData {
-            emit(Result.Loading)
+            emit(Result.Loading())
             try {
                 val response = apiService.addBuyerOrder(productId, bidPrice).toDomain()
                 emit(Result.Success(response))

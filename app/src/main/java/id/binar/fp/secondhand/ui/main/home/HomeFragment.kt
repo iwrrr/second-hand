@@ -75,8 +75,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    binding.swipeRefresh.isRefreshing = false
-                    binding.ivBanner.setImageList(result.data.map { it.imageUrl })
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        binding.ivBanner.setImageList(result.data.map { it.imageUrl })
+                    }
                 }
                 is Result.Error -> {}
             }
@@ -90,14 +92,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 }
                 is Result.Success -> {
-                    binding.swipeRefresh.isRefreshing = false
-                    val allCategory = result.data.toMutableList()
-                    allCategory.add(0, Category(id = 0, name = "Semua"))
-                    categoryAdapter.submitList(allCategory as List<Category>)
-                    categories = allCategory
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        val allCategory = result.data.toMutableList()
+                        allCategory.add(0, Category(id = 0, name = "Semua"))
+                        categoryAdapter.submitList(allCategory as List<Category>)
+                        categories = allCategory
+                    }
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -110,14 +115,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 }
                 is Result.Success -> {
-                    binding.swipeRefresh.isRefreshing = false
-                    val availableProduct =
-                        result.data.filter { it.status == Status.PRODUCT_AVAILABLE }
-                    productAdapter.submitList(availableProduct)
-                    products = availableProduct
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        val availableProduct =
+                            result.data.filter { it.status == Status.AVAILABLE }
+                        productAdapter.submitList(availableProduct)
+                        products = availableProduct
+                    }
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), result.message.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

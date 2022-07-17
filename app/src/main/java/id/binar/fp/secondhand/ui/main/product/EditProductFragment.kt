@@ -55,7 +55,6 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
         observeCategories()
         onChooseImage()
         onEditProduct()
-        onDeleteClicked()
         onLoginClicked()
     }
 
@@ -158,27 +157,29 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    val categories = mutableMapOf<Int, String>()
+                    if (result.data != null) {
+                        val categories = mutableMapOf<Int, String>()
 
-                    result.data.categories?.let { list ->
-                        for (category in list) {
-                            categories[category.id] = category.name
+                        result.data.categories?.let { list ->
+                            for (category in list) {
+                                categories[category.id] = category.name
+                            }
                         }
-                    }
 
-                    for (category in categories) {
-                        setupChips(category.key, category.value)
-                        categoryIds.add(category.key)
-                        categoryNames.add(category.value)
-                        newCategories.add(Category(category.key, category.value))
-                    }
+                        for (category in categories) {
+                            setupChips(category.key, category.value)
+                            categoryIds.add(category.key)
+                            categoryNames.add(category.value)
+                            newCategories.add(Category(category.key, category.value))
+                        }
 
-                    binding.content.apply {
-                        etProductName.setText(result.data.name)
-                        etProductPrice.setText(result.data.basePrice.toString())
-                        etProductLocation.setText(result.data.location)
-                        etProductDescription.setText(result.data.description)
-                        ivProductImage.loadImage(result.data.imageUrl)
+                        binding.content.apply {
+                            etProductName.setText(result.data.name)
+                            etProductPrice.setText(result.data.basePrice.toString())
+                            etProductLocation.setText(result.data.location)
+                            etProductDescription.setText(result.data.description)
+                            ivProductImage.loadImage(result.data.imageUrl)
+                        }
                     }
                 }
                 is Result.Error -> {}
@@ -190,7 +191,11 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
         productViewModel.getCategory().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {}
-                is Result.Success -> setupCategories(result.data)
+                is Result.Success -> {
+                    if (result.data != null) {
+                        setupCategories(result.data)
+                    }
+                }
                 is Result.Error -> {}
             }
         }
@@ -225,7 +230,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
@@ -306,26 +311,6 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
                     }
                 }
             }
-        }
-    }
-
-    private fun onDeleteClicked() {
-        binding.btnDelete.setOnClickListener {
-            productViewModel.deleteSellerProductById(productId)
-                .observe(viewLifecycleOwner) { result ->
-                    when (result) {
-                        is Result.Loading -> {
-
-                        }
-                        is Result.Success -> {
-                            parentFragmentManager.popBackStack()
-                            Helper.showToast(requireContext(), "Produk berhasil dihapus")
-                        }
-                        is Result.Error -> {
-                            Helper.showToast(requireContext(), result.error)
-                        }
-                    }
-                }
         }
     }
 

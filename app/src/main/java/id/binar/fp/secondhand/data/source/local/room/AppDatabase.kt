@@ -14,7 +14,8 @@ import id.binar.fp.secondhand.data.source.local.room.dao.*
         NotificationEntity::class,
         OrderEntity::class,
         SellerOrderEntity::class,
-        ProductEntity::class
+        ProductEntity::class,
+        BannerEntity::class
     ],
     version = 1,
     exportSchema = false

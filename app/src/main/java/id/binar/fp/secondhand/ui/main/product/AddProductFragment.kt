@@ -133,9 +133,11 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         authViewModel.getToken().observe(viewLifecycleOwner) { token ->
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
+                binding.layoutButton.isVisible = true
                 binding.auth.root.isVisible = false
             } else {
                 binding.content.root.isVisible = false
+                binding.layoutButton.isVisible = false
                 binding.auth.root.isVisible = true
                 onLoginClicked()
             }
@@ -152,7 +154,11 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
         productViewModel.getCategory().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {}
-                is Result.Success -> setupCategories(result.data)
+                is Result.Success -> {
+                    if (result.data != null) {
+                        setupCategories(result.data)
+                    }
+                }
                 is Result.Error -> {}
             }
         }
@@ -189,7 +195,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), result.error)
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }

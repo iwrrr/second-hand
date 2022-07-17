@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.UserEntity
 import id.binar.fp.secondhand.domain.model.User
 
 data class UserDto(
@@ -47,6 +48,24 @@ data class UserDto(
 
     fun toDomain(): User {
         return User(
+            id,
+            fullName,
+            email,
+            password,
+            phoneNumber,
+            city,
+            address,
+            imageUrl,
+            createdAt,
+            updatedAt,
+            accessToken,
+            error,
+            message
+        )
+    }
+
+    fun toEntity(): UserEntity {
+        return UserEntity(
             id,
             fullName,
             email,

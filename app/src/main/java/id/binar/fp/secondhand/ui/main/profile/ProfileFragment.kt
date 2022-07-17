@@ -70,13 +70,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-//                    user = result.data
-                    with(binding) {
-                        ivProfile.loadImage(result.data.imageUrl)
-                        tvName.text = result.data.fullName
-                        tvPhone.text = result.data.phoneNumber
-                        tvEmail.text = result.data.email
-                        swipeRefresh.isRefreshing = false
+                    if (result.data != null) {
+                        with(binding) {
+                            ivProfile.loadImage(result.data.imageUrl)
+                            tvName.text = result.data.fullName
+                            tvPhone.text = result.data.phoneNumber
+                            tvEmail.text = result.data.email
+                            swipeRefresh.isRefreshing = false
+                        }
                     }
                 }
                 is Result.Error -> {
