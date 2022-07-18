@@ -37,10 +37,10 @@ data class SellerOrderEntity(
     @ColumnInfo(name = "status")
     val status: String? = null,
 
-    @ColumnInfo(name = "createdAt")
+    @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
 
-    @ColumnInfo(name = "updatedAt")
+    @ColumnInfo(name = "updated_at")
     val updatedAt: String? = null,
 
     @Expose

@@ -2,6 +2,7 @@ package id.binar.fp.secondhand.ui.main.seller.sold
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -58,11 +59,13 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
         sellerViewModel.getSellerProduct().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.loading.root.isVisible = true
+                    showShimmer()
+//                    binding.loading.root.isVisible = true
                 }
                 is Result.Success -> {
+                    hideShimmer()
                     if (result.data != null) {
-                        binding.loading.root.isVisible = false
+//                        binding.loading.root.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
                         val availableProduct = result.data.filter { it.status == Status.SOLD }
                         if (availableProduct.isNotEmpty()) {
@@ -74,7 +77,8 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
                     }
                 }
                 is Result.Error -> {
-                    binding.loading.root.isVisible = false
+                    hideShimmer()
+//                    binding.loading.root.isVisible = false
                     binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.message.toString())
                 }
@@ -88,5 +92,23 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
 //                addToBackStack(null)
 //                commit()
 //            }
+    }
+
+    private fun showShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = false
+            shimmer.root.startShimmer()
+            content.root.isInvisible = true
+            empty.root.isInvisible = true
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = true
+            shimmer.root.stopShimmer()
+            content.root.isInvisible = false
+            empty.root.isInvisible = true
+        }
     }
 }

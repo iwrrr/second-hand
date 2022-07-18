@@ -18,8 +18,6 @@ class NotificationAdapter(
     private val onClick: (Notification) -> Unit
 ) : BaseAdapter<BaseType>() {
 
-    private var selectedItem = 0
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseType> {
         val binding =
             ItemNotificationBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -31,7 +29,7 @@ class NotificationAdapter(
 
         override fun onBind(data: Notification, position: Int) {
             with(binding) {
-                val date = Helper.dateFormatter(data.transactionDate)
+                val date = Helper.dateFormatter(data.createdAt)
                 val basePrice = Helper.numberFormatter(data.basePrice?.toInt())
                 val bidPrice: String
                 val bidStatus: String

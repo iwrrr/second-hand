@@ -313,7 +313,7 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                         contentBtnNotAcceptedYet.root.isVisible = false
                         contentBtnAccepted.root.isVisible = false
                         contentProduct.apply {
-                            val date = Helper.dateFormatter(result.data.transactionDate)
+                            val date = Helper.dateFormatter(result.data.updatedAt)
                             val bidPrice = Helper.numberFormatter(result.data.price)
 
                             var productStatus = ""

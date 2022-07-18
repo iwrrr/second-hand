@@ -141,19 +141,19 @@ interface ApiService {
     ): OrderDto
 
     @GET(Endpoints.GET_BUYER_ORDER)
-    suspend fun getBuyerOrder(): List<OrderDto>
+    suspend fun getBuyerOrder(): List<BuyerOrderDto>
 
     @GET(Endpoints.GET_BUYER_ORDER_BY_ID)
     suspend fun getBuyerOrderById(
         @Path("id") id: Int
-    ): OrderDto
+    ): BuyerOrderDto
 
     @PUT(Endpoints.UPDATE_BUYER_ORDER_BY_ID)
     suspend fun updateBuyerOrderById(
         @Path("id") id: Int,
         @Field("product_id") productId: Int,
         @Field("bid_price") bidPrice: Int,
-    ): OrderDto
+    ): BuyerOrderDto
 
     @DELETE(Endpoints.DELETE_BUYER_ORDER_BY_ID)
     suspend fun deleteBuyerOrderById(

@@ -56,7 +56,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
 
     override fun setupToolbar() {
         binding.toolbar.toolbarTitle.text = "Tambah Produk"
-        binding.toolbar.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun setupCategories(categories: List<Category>) {

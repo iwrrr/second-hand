@@ -58,6 +58,12 @@ object DatabaseModule {
 
     @Provides
     @Singleton
+    fun provideBuyerOrderDao(database: AppDatabase): BuyerOrderDao {
+        return database.buyerOrderDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideProductDao(database: AppDatabase): ProductDao {
         return database.productDao()
     }

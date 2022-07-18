@@ -42,7 +42,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         setupSearch()
         setupBanner()
         setupRecyclerView()
-        onRefreshProduct()
+        setupRefresh()
     }
 
     private fun setupSearch() {
@@ -68,6 +68,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
         observeListProduct()
+    }
+
+    private fun setupRefresh() {
+        binding.appBar.addOnOffsetChangedListener { _, verticalOffset ->
+            binding.swipeRefresh.isEnabled = verticalOffset == 0
+        }
+        binding.swipeRefresh.setOnRefreshListener { observeListProduct() }
     }
 
     private fun observeBanner() {
@@ -153,9 +160,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             addToBackStack(null)
             commit()
         }
-    }
-
-    private fun onRefreshProduct() {
-        binding.swipeRefresh.setOnRefreshListener { observeListProduct() }
     }
 }

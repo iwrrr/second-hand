@@ -41,9 +41,10 @@ object RepositoryModule {
     fun provideOrderRepository(
         apiService: ApiService,
         orderDao: OrderDao,
-        sellerOrderDao: SellerOrderDao
+        sellerOrderDao: SellerOrderDao,
+        buyerOrderDao: BuyerOrderDao
     ): OrderRepository {
-        return OrderRepositoryImpl(apiService, orderDao, sellerOrderDao)
+        return OrderRepositoryImpl(apiService, orderDao, sellerOrderDao, buyerOrderDao)
     }
 
     @Provides

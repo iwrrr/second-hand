@@ -2,9 +2,11 @@ package id.binar.fp.secondhand.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import id.binar.fp.secondhand.data.source.local.room.dao.BuyerOrderDao
 import id.binar.fp.secondhand.data.source.local.room.dao.OrderDao
 import id.binar.fp.secondhand.data.source.local.room.dao.SellerOrderDao
 import id.binar.fp.secondhand.data.source.network.ApiService
+import id.binar.fp.secondhand.domain.model.BuyerOrder
 import id.binar.fp.secondhand.domain.model.Order
 import id.binar.fp.secondhand.domain.model.SellerOrder
 import id.binar.fp.secondhand.domain.repository.OrderRepository
@@ -15,7 +17,8 @@ import javax.inject.Inject
 class OrderRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val orderDao: OrderDao,
-    private val sellerOrderDao: SellerOrderDao
+    private val sellerOrderDao: SellerOrderDao,
+    private val buyerOrderDao: BuyerOrderDao
 ) : OrderRepository {
 
     override fun getSellerOrder(): LiveData<Result<List<SellerOrder>>> = liveData {
@@ -84,12 +87,38 @@ class OrderRepositoryImpl @Inject constructor(
             }
         }
 
-    override fun getBuyerOrder(): LiveData<Result<List<Order>>> = liveData {
-        TODO("Not yet implemented")
+    override fun getBuyerOrder(): LiveData<Result<List<BuyerOrder>>> = liveData {
+        emit(Result.Loading())
+
+        val oldOrder = buyerOrderDao.getBuyerOrder().map { it.toDomain() }
+        emit(Result.Loading(oldOrder))
+
+        try {
+            val data = apiService.getBuyerOrder().map { it.toEntity() }
+            buyerOrderDao.deleteBuyerOrders()
+            buyerOrderDao.insertBuyerOrders(data)
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message(), oldOrder))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error", oldOrder))
+        }
+
+        val newOrder = buyerOrderDao.getBuyerOrder().map { it.toDomain() }
+        emit(Result.Success(newOrder))
     }
 
-    override fun getBuyerOrderById(id: Int): LiveData<Result<Order>> = liveData {
-        TODO("Not yet implemented")
+    override fun getBuyerOrderById(id: Int): LiveData<Result<BuyerOrder>> = liveData {
+        emit(Result.Loading())
+        try {
+            val order = buyerOrderDao.getBuyerOrderById(id)?.toDomain()
+            if (order != null) {
+                emit(Result.Success(order))
+            }
+        } catch (e: NullPointerException) {
+            emit(Result.Error("Order tidak ditemukan"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
     }
 
     override fun updateBuyerOrderById(

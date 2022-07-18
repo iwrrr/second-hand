@@ -14,6 +14,7 @@ import id.binar.fp.secondhand.data.source.local.room.dao.*
         NotificationEntity::class,
         OrderEntity::class,
         SellerOrderEntity::class,
+        BuyerOrderEntity::class,
         ProductEntity::class,
         BannerEntity::class
     ],
@@ -29,5 +30,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun notificationDao(): NotificationDao
     abstract fun orderDao(): OrderDao
     abstract fun sellerOrderDao(): SellerOrderDao
+    abstract fun buyerOrderDao(): BuyerOrderDao
     abstract fun productDao(): ProductDao
 }

@@ -13,6 +13,7 @@
     <string name="text_title_page_profile">Akun Saya</string>
     <string name="text_title_page_sell_list">Daftar Jual Saya</string>
     <string name="text_title_page_transaction">Transaksi</string>
+    <string name="text_title_page_order">Pesanan Saya</string>
 
     <string name="tab_sell_list_1">Produk</string>
     <string name="tab_sell_list_2">Diminati</string>
@@ -54,8 +55,9 @@
     <string name="text_add_edit_product_btn_update">Perbarui Produk</string>
 
     <string name="text_profile_edit">Ubah Akun</string>
-    <string name="text_profile_settings">Pengaturan</string>
     <string name="text_profile_seller">Daftar Jual Saya</string>
+    <string name="text_profile_order">Pesanan Saya</string>
+    <string name="text_profile_settings">Pengaturan</string>
     <string name="text_profile_logout">Keluar</string>
 
     <string name="text_edit_profile_name">Nama</string>

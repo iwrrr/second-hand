@@ -14,6 +14,7 @@ import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.MainActivity
+import id.binar.fp.secondhand.ui.main.order.OrderFragment
 import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Result
@@ -37,6 +38,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
         onEditClicked()
         onSellerClicked()
+        onOrderClicked()
         onLoginClicked()
         onLogoutClicked()
     }
@@ -50,6 +52,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     tvEmail.isVisible = true
                     ivEdit.isVisible = true
                     menu.seller.isVisible = true
+                    menu.order.isVisible = true
                     menu.logout.isVisible = true
                     btnLogin.isVisible = false
                 }
@@ -101,6 +104,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.menu.seller.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 add(R.id.main_nav_host, SellerFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
+
+    private fun onOrderClicked() {
+        binding.menu.order.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, OrderFragment())
                 addToBackStack(null)
                 commit()
             }
