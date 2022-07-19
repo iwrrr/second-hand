@@ -28,7 +28,7 @@ class HistoryAdapter(
 
         override fun onBind(data: History) {
             with(binding) {
-                val date = Helper.dateFormatter(data.transactionDate)
+                val date = Helper.dateFormatter(data.updatedAt)
                 val price = Helper.numberFormatter(data.price)
                 var status = ""
 

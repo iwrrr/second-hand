@@ -25,6 +25,10 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/drawable/nav_selector.xml" value="0.1" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/activity_auth.xml" value="0.25" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/bottom_sheet_bid.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/bottom_sheet_choose_image.xml" value="0.20364583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/bottom_sheet_contact.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/bottom_sheet_status.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_add_product.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_bidder_info.xml" value="0.3558974358974359" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_contact_bottom_sheet.xml" value="0.3614583333333333" />
@@ -39,8 +43,10 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_product_detail.xml" value="0.33" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_profile.xml" value="0.3558974358974359" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_profile_edit.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_profile_image_bottom_sheet.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_profile_setting.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_register.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_search.xml" value="0.25" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_sell_list.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_sign_in.xml" value="0.225" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/fragment_sold.xml" value="0.3614583333333333" />
@@ -51,67 +57,91 @@
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/item_profile_city.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/item_sell_list_interested.xml" value="0.3614583333333333" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/item_sell_list_product.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_add_product.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_auth.xml" value="0.22" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_bidder_info_btn_accepted.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_bidder_info_btn_not_accepted_yet.xml" value="0.33" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_profile.xml" value="0.3558974358974359" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_toolbar.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_bidder_info_btn_not_accepted_yet.xml" value="0.3227848101265823" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_empty.xml" value="0.36041666666666666" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_interested.xml" value="0.20416666666666666" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_loading.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_notification.xml" value="0.36041666666666666" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_product.xml" value="0.20416666666666666" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_profile.xml" value="0.1328125" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_sell_list.xml" value="0.36041666666666666" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_sold.xml" value="0.20416666666666666" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/layout/layout_toolbar.xml" value="0.14166666666666666" />
         <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/Final Project/second-hand/app/src/main/res/menu/nav_menu.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/gradient.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_arrow_right.xml" value="0.16" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_delete.xml" value="0.2055" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_image.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_image_broken.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_image_placeholder.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_list.xml" value="0.2195" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/ic_settings.xml" value="0.2195" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/indicator_active.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/indicator_inactive.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/drawable/indicator_selector.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/activity_auth.xml" value="0.2759259259259259" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/activity_main.xml" value="0.184375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_bid.xml" value="0.184375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_contact.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_delete.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_edit_profile.xml" value="0.5" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_image.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/bottom_sheet_status.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_add_product.xml" value="0.3558974358974359" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_bidder_info.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_contact_bottom_sheet.xml" value="0.1859375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_edit_product.xml" value="0.3558974358974359" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_history.xml" value="0.21822916666666667" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_home.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_interested.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_login.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_notification.xml" value="0.33" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_product.xml" value="0.2759259259259259" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_product_detail.xml" value="0.2759259259259259" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_profile.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_profile_edit.xml" value="0.5" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_register.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_search.xml" value="0.2759259259259259" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_sell_list.xml" value="0.1859375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_seller.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/fragment_sold.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/image_slider.xml" value="0.25" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_add_product_category.xml" value="0.225" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_edit_profile.xml" value="0.5" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_history.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_image_slider.xml" value="0.1" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_notification.xml" value="0.40198511166253104" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_notification_list.xml" value="0.5" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_product.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_product_category.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_search_product.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_sell_list_interested.xml" value="0.1859375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_sell_list_product.xml" value="0.1859375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_seller_interested.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/item_seller_product.xml" value="0.5" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/layout_add_product.xml" value="0.3253012048192771" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/layout_loading.xml" value="0.184375" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/layout_notification.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/layout_product.xml" value="0.3614583333333333" />
-        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/second-hand/app/src/main/res/layout/layout_profile.xml" value="0.5435684647302904" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/bg_rounded.xml" value="0.2095" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/bg_status.xml" value="0.216" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_edit_2.xml" value="0.203" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_history.xml" value="0.203" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_list.xml" value="0.2085" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_order.xml" value="0.2085" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_receipt.xml" value="0.2085" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_search.xml" value="0.267" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_settings.xml" value="0.267" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/ic_store.xml" value="0.267" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/drawable/shimmer_placeholder.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/bottom_sheet_bid.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/bottom_sheet_contact.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/bottom_sheet_edit_profile.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_add_product.xml" value="0.3558974358974359" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_bidder_info.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_edit_product.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_history.xml" value="0.22406639004149378" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_home.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_interested.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_notification.xml" value="0.2" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_notification_detail.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_order.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_preview_product.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_product.xml" value="0.3540315106580167" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_product_detail.xml" value="0.22552083333333334" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_profile.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_profile_edit.xml" value="0.22552083333333334" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_register.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_search.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_seller.xml" value="0.18" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/fragment_sold.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/image_slider.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_edit_profile.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_history.xml" value="0.67" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_notification.xml" value="0.23788546255506607" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_order.xml" value="0.1" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_product.xml" value="0.22" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_product_category.xml" value="0.67" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_sell_list_interested.xml" value="0.75" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_seller_interested.xml" value="0.67" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_seller_product.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_shimmer_history.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_shimmer_notification.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_shimmer_search.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_shimmer_seller_interested.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_shimmer_seller_product.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/item_skeleton.xml" value="0.40198511166253104" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_add_product.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_button_edit_product.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_dialog.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_edit_product.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_history.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_loading.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_notification.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_order.xml" value="0.22" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_product.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_product_bid.xml" value="0.5" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_profile.xml" value="0.2892857142857143" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_sell_list.xml" value="0.27239583333333334" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_seller.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_sold.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/layout_toolbar.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/shimmer_history.xml" value="0.25" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/shimmer_notification.xml" value="0.22" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/shimmer_search.xml" value="0.3614583333333333" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/shimmer_seller_interested.xml" value="0.33365384615384613" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/layout/shimmer_seller_product.xml" value="0.33" />
+        <entry key="..\:/Dev/Code/Studi Independen/Binar/Android/forked-second-hand/app/src/main/res/menu/nav_menu.xml" value="0.3614583333333333" />
         <entry key="..\:/pemrograman/file baru android/.binar/final chapter/final chapter/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1785" />
         <entry key="..\:/pemrograman/file baru android/.binar/final chapter/final chapter/app/src/main/res/drawable/bg_tab.xml" value="0.1785" />
         <entry key="..\:/pemrograman/file baru android/.binar/final chapter/final chapter/app/src/main/res/drawable/ic_arrow_left.xml" value="0.1785" />

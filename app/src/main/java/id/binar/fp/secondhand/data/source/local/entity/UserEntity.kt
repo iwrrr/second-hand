@@ -34,10 +34,10 @@ data class UserEntity(
     @ColumnInfo(name = "image_url")
     val imageUrl: String? = null,
 
-    @ColumnInfo(name = "createdAt")
+    @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
 
-    @ColumnInfo(name = "updatedAt")
+    @ColumnInfo(name = "updated_at")
     val updatedAt: String? = null,
 
     @ColumnInfo(name = "access_token")

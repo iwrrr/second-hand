@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main.notification
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,10 +51,12 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
                 binding.auth.root.isVisible = false
+                binding.shimmer.root.isVisible = false
                 setupRecyclerView()
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
+                binding.shimmer.root.isVisible = false
             }
         }
     }
@@ -61,8 +64,11 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
     private fun observeNotification() {
         notificationViewModel.getNotification().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {}
+                is Result.Loading -> {
+                    showShimmer()
+                }
                 is Result.Success -> {
+                    hideShimmer()
                     if (result.data != null) {
                         binding.swipeRefresh.isRefreshing = false
                         if (result.data.isNotEmpty()) {
@@ -75,6 +81,7 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
                     }
                 }
                 is Result.Error -> {
+                    hideShimmer()
                     binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.message.toString())
                 }
@@ -104,6 +111,22 @@ class NotificationFragment : BaseFragment<FragmentNotificationBinding>() {
     private fun onNotificationClicked(notification: Notification) {
         if (!notification.read) {
             observeUpdateNotification(notification)
+        }
+    }
+
+    private fun showShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = false
+            shimmer.root.startShimmer()
+            content.root.isInvisible = true
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = true
+            shimmer.root.stopShimmer()
+            content.root.isInvisible = false
         }
     }
 }

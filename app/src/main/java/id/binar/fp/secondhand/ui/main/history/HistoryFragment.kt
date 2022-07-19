@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main.history
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,12 +31,17 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     override fun setup() {
         super.setup()
         onLoginClicked()
+        setupRefresh()
     }
 
     private fun setupRecyclerView() {
         binding.content.rvHistory.adapter = historyAdapter
         binding.content.rvHistory.layoutManager = LinearLayoutManager(requireContext())
         observeHistory()
+    }
+
+    private fun setupRefresh() {
+        binding.swipeRefresh.setOnRefreshListener { observeHistory() }
     }
 
     override fun checkAuth() {
@@ -54,9 +60,13 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
     private fun observeHistory() {
         historyViewModel.getHistory().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {}
+                is Result.Loading -> {
+                    showShimmer()
+                }
                 is Result.Success -> {
+                    hideShimmer()
                     if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
                         if (result.data.isNotEmpty()) {
                             historyAdapter.submitList(result.data)
                         } else {
@@ -66,6 +76,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                     }
                 }
                 is Result.Error -> {
+                    binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.message.toString())
                 }
             }
@@ -80,5 +91,21 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
 
     private fun onHistoryClicked(history: History) {
         Helper.showToast(requireContext(), history.id.toString())
+    }
+
+    private fun showShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = false
+            shimmer.root.startShimmer()
+            content.root.isInvisible = true
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = true
+            shimmer.root.stopShimmer()
+            content.root.isInvisible = false
+        }
     }
 }

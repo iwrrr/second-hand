@@ -15,7 +15,7 @@ interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHistory(history: HistoryEntity)
 
-    @Query("SELECT * FROM histories ORDER BY transaction_date DESC")
+    @Query("SELECT * FROM histories ORDER BY updated_at DESC")
     suspend fun getHistory(): List<HistoryEntity>
 
     @Query("SELECT * FROM histories WHERE id = :id")

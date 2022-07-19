@@ -15,10 +15,10 @@ data class CategoryEntity(
     @ColumnInfo(name = "name")
     val name: String,
 
-    @ColumnInfo(name = "createdAt")
+    @ColumnInfo(name = "created_at")
     val createdAt: String? = null,
 
-    @ColumnInfo(name = "updatedAt")
+    @ColumnInfo(name = "updated_at")
     val updatedAt: String? = null
 ) {
 

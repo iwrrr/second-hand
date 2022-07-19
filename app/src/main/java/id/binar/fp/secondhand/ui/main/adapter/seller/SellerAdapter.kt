@@ -17,8 +17,7 @@ import id.binar.fp.secondhand.util.Status
 
 @Suppress("UNCHECKED_CAST")
 class SellerAdapter<T>(
-    private val type: SellerType,
-//    private val onClick: (T) -> Unit
+    private val type: SellerType
 ) : BaseAdapter<BaseType>() {
 
     var itemClickCallback: ItemClickCallback<T>? = null
@@ -83,7 +82,6 @@ class SellerAdapter<T>(
                 btnDelete.setOnClickListener { itemClickCallback?.onDelete(data.id) }
                 itemView.setOnClickListener {
                     itemClickCallback?.onClick(data as T)
-//                    onClick(data as T)
                 }
             }
         }
@@ -94,7 +92,7 @@ class SellerAdapter<T>(
 
         override fun onBind(data: SellerOrder) {
             with(binding) {
-                val date = Helper.dateFormatter(data.transactionDate)
+                val date = Helper.dateFormatter(data.updatedAt)
                 val basePrice = Helper.numberFormatter(data.basePrice)
                 val bidPrice = Helper.numberFormatter(data.price)
 
@@ -142,7 +140,6 @@ class SellerAdapter<T>(
 
             itemView.setOnClickListener {
                 itemClickCallback?.onClick(data as T)
-//                onClick(data as T)
             }
         }
     }
@@ -162,7 +159,6 @@ class SellerAdapter<T>(
                 ivProductImage.loadImage(data.imageUrl)
                 itemView.setOnClickListener {
                     itemClickCallback?.onClick(data as T)
-//                    onClick(data as T)
                 }
             }
         }

@@ -4,7 +4,9 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -46,6 +48,9 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
 
     private fun setupSearch() {
         binding.etSearch.requestFocus()
+        binding.btnBack.setOnClickListener { requireActivity().onBackPressed() }
+
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val imm: InputMethodManager =
             requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -63,14 +68,12 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
         viewModel.searchResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.loading.root.isVisible = true
-                    binding.rvSearch.isVisible = false
+                    showShimmer()
                     binding.placeholder.root.isVisible = false
                 }
                 is Result.Success -> {
+                    hideShimmer()
                     if (result.data != null) {
-                        binding.loading.root.isVisible = false
-                        binding.rvSearch.isVisible = true
                         binding.placeholder.root.isVisible = false
                         val availableProduct =
                             result.data.filter { it.status == Status.AVAILABLE }
@@ -78,9 +81,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
                     }
                 }
                 is Result.Error -> {
-                    binding.loading.root.isVisible = false
-                    binding.rvSearch.isVisible = false
-                    binding.placeholder.root.isVisible = false
+                    hideShimmer()
+                    binding.placeholder.root.isVisible = true
                     Helper.showToast(requireContext(), result.message.toString())
                 }
             }
@@ -97,6 +99,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             add(R.id.main_nav_host, fragment)
             addToBackStack(null)
             commit()
+        }
+    }
+
+    private fun showShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = false
+            shimmer.root.startShimmer()
+            rvSearch.isInvisible = true
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = true
+            shimmer.root.stopShimmer()
+            rvSearch.isInvisible = false
         }
     }
 }

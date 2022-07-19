@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.domain.repository
 
 import androidx.lifecycle.LiveData
+import id.binar.fp.secondhand.domain.model.BuyerOrder
 import id.binar.fp.secondhand.domain.model.Order
 import id.binar.fp.secondhand.domain.model.SellerOrder
 import id.binar.fp.secondhand.util.Result
@@ -18,9 +19,9 @@ interface OrderRepository {
         bidPrice: String,
     ): LiveData<Result<Order>>
 
-    fun getBuyerOrder(): LiveData<Result<List<Order>>>
+    fun getBuyerOrder(): LiveData<Result<List<BuyerOrder>>>
 
-    fun getBuyerOrderById(id: Int): LiveData<Result<Order>>
+    fun getBuyerOrderById(id: Int): LiveData<Result<BuyerOrder>>
 
     fun updateBuyerOrderById(
         id: Int,

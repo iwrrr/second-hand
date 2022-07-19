@@ -48,10 +48,10 @@ data class NotificationDto(
     @SerializedName("order_id")
     val orderId: Int? = null,
 
-    @SerializedName("created_at")
+    @SerializedName("createdAt")
     val createdAt: String? = null,
 
-    @SerializedName("updated_at")
+    @SerializedName("updatedAt")
     val updatedAt: String? = null,
 
     @SerializedName("Product")

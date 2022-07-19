@@ -12,7 +12,7 @@ interface SellerOrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSellerOrders(orders: List<SellerOrderEntity>)
 
-    @Query("SELECT * FROM seller_orders")
+    @Query("SELECT * FROM seller_orders ORDER BY updated_at DESC")
     suspend fun getSellerOrder(): List<SellerOrderEntity>
 
     @Query("SELECT * FROM seller_orders WHERE id = :id")
