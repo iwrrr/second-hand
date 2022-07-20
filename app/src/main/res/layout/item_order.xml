@@ -13,51 +13,38 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_status"
+            style="@style/Text.Primary.Bold.10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Penawaran produk"
-            android:textColor="@android:color/black"
-            android:textSize="10sp"
-            android:textStyle="bold"
+            android:text="@string/text_product_offer"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_product_status"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_product_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_status"
-            tools:text="14 Juli 2022" />
+            app:layout_constraintTop_toTopOf="@+id/tv_product_status" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_status"
+            style="@style/Text.Primary.Bold.12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:background="@drawable/bg_status"
-            android:backgroundTint="@color/colorSecondary"
             android:paddingStart="4dp"
             android:paddingTop="2dp"
             android:paddingEnd="4dp"
             android:paddingBottom="2dp"
-            android:text="Selesai"
-            android:textColor="@color/colorPrimary"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_product_time"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tv_status" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:backgroundTint="@color/colorBgAccept"
+            tools:text="Selesai"
+            tools:textColor="@color/colorTextAccept" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/divider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_product_time" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_product_status" />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/iv_product_image"
@@ -73,14 +60,13 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_name"
+            style="@style/Text.Primary.Bold.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_product_image"
             app:layout_constraintTop_toTopOf="@+id/iv_product_image"
@@ -88,21 +74,18 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_bid"
+            style="@style/Text.Secondary.12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Harga Tawar"
-            android:textSize="12sp"
+            android:text="@string/text_bid_product_bid_price"
             app:layout_constraintStart_toStartOf="@+id/tv_product_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_price"
+            style="@style/Text.Primary.Bold.12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
-            android:textSize="12sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/tv_product_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_product_bid"
             tools:text="Rp 10.000" />

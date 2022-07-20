@@ -12,10 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,12 +30,6 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
 
     open val isNavigationVisible: Boolean
         get() = true
-
-    open val isLightStatusBar: Boolean
-        get() = true
-
-    open val swipeRefreshLayout: SwipeRefreshLayout
-        get() = requireParentFragment().view?.findViewById(R.id.swipe_refresh) as SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,14 +56,8 @@ abstract class BaseFragment<VB : ViewBinding> : Fragment() {
     }
 
     open fun setup() {
-        setupStatusBar()
         setupToolbar()
         setupBottomNavigation()
-    }
-
-    private fun setupStatusBar() {
-        ViewCompat.getWindowInsetsController(requireActivity().window.decorView)?.isAppearanceLightStatusBars =
-            isLightStatusBar
     }
 
     private fun setupBottomNavigation() {

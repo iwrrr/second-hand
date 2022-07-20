@@ -7,8 +7,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.imageview.ShapeableImageView
 import id.binar.fp.secondhand.R
-import java.text.SimpleDateFormat
-import java.util.*
 
 object Extensions {
 
@@ -45,21 +43,4 @@ object Extensions {
         return Patterns.EMAIL_ADDRESS.matcher(this).matches()
     }
 
-    fun String.toDate(): String? {
-        val inputPattern = "yyyy-MM-dd"
-        val outputPattern = "yyyy"
-
-        val inputFormat = SimpleDateFormat(inputPattern, Locale.getDefault())
-        val outputFormat = SimpleDateFormat(outputPattern, Locale.getDefault())
-
-        val inputDate = inputFormat.parse(this)
-
-        return if (this != "") {
-            inputDate?.let {
-                "(${outputFormat.format(it)})"
-            }
-        } else {
-            "-"
-        }
-    }
 }

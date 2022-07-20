@@ -34,33 +34,43 @@
                         android:id="@+id/iv_banner"
                         android:layout_width="0dp"
                         android:layout_height="160dp"
-                        android:layout_marginTop="80dp"
+                        android:layout_marginTop="50dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:slider_auto_cycle="true"
                         app:slider_delay="0"
-                        app:slider_period="2000" />
+                        app:slider_period="3000" />
+
+                    <include
+                        android:id="@+id/shimmer_banner"
+                        layout="@layout/shimmer_banner"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/iv_banner"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_banner"
+                        app:layout_constraintStart_toStartOf="@+id/iv_banner"
+                        app:layout_constraintTop_toTopOf="@+id/iv_banner" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_category"
+                        style="@style/Text.Primary.14"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="4dp"
                         android:ellipsize="end"
                         android:text="@string/browse_categories"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/iv_banner" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.Toolbar
+                <com.google.android.material.appbar.MaterialToolbar
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:windowBackground"
+                    app:contentInsetEnd="16dp"
                     app:layout_collapseMode="pin">
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -68,60 +78,66 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:fitsSystemWindows="true"
-                        android:focusable="false"
-                        app:boxBackgroundColor="@color/colorSearch"
-                        app:boxCornerRadiusBottomEnd="16dp"
-                        app:boxCornerRadiusBottomStart="16dp"
-                        app:boxCornerRadiusTopEnd="16dp"
-                        app:boxCornerRadiusTopStart="16dp"
+                        app:boxCornerRadiusBottomEnd="8dp"
+                        app:boxCornerRadiusBottomStart="8dp"
+                        app:boxCornerRadiusTopEnd="8dp"
+                        app:boxCornerRadiusTopStart="8dp"
                         app:boxStrokeWidth="0.1dp"
-                        app:boxStrokeWidthFocused="0dp"
                         app:expandedHintEnabled="false"
                         app:hintAnimationEnabled="false"
                         app:hintEnabled="false"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:startIconDrawable="@drawable/ic_search">
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_search"
+                            style="@style/Text.Primary.12"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="35dp"
                             android:cursorVisible="false"
+                            android:drawableStart="@drawable/ic_search"
+                            android:drawablePadding="10dp"
                             android:focusable="false"
                             android:hint="@string/text_search_hint"
+                            android:imeOptions="actionSearch"
                             android:maxLength="40"
                             android:maxLines="1"
-                            android:padding="0dp"
-                            android:textSize="12sp" />
+                            android:paddingStart="12dp"
+                            android:paddingTop="0dp"
+                            android:paddingEnd="12dp"
+                            android:paddingBottom="0dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                </androidx.appcompat.widget.Toolbar>
+                </com.google.android.material.appbar.MaterialToolbar>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_category"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_category"
-                tools:listitem="@layout/item_product_category" />
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_product_category" />
+
+                <include
+                    android:id="@+id/shimmer_category"
+                    layout="@layout/shimmer_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp" />
+
+            </FrameLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -146,10 +162,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_category"
                 tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_seller_product"
+                tools:listitem="@layout/item_product"
                 tools:spanCount="2" />
 
         </androidx.core.widget.NestedScrollView>
+
+        <include
+            android:id="@+id/shimmer_product"
+            layout="@layout/shimmer_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

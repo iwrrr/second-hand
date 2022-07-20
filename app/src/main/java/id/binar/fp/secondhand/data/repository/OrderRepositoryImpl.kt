@@ -3,7 +3,6 @@ package id.binar.fp.secondhand.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import id.binar.fp.secondhand.data.source.local.room.dao.BuyerOrderDao
-import id.binar.fp.secondhand.data.source.local.room.dao.OrderDao
 import id.binar.fp.secondhand.data.source.local.room.dao.SellerOrderDao
 import id.binar.fp.secondhand.data.source.network.ApiService
 import id.binar.fp.secondhand.domain.model.BuyerOrder
@@ -16,7 +15,6 @@ import javax.inject.Inject
 
 class OrderRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val orderDao: OrderDao,
     private val sellerOrderDao: SellerOrderDao,
     private val buyerOrderDao: BuyerOrderDao
 ) : OrderRepository {

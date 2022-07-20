@@ -24,11 +24,9 @@ import id.binar.fp.secondhand.data.source.local.room.dao.*
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun userDao(): UserDao
     abstract fun categoryDao(): CategoryDao
     abstract fun historyDao(): HistoryDao
     abstract fun notificationDao(): NotificationDao
-    abstract fun orderDao(): OrderDao
     abstract fun sellerOrderDao(): SellerOrderDao
     abstract fun buyerOrderDao(): BuyerOrderDao
     abstract fun productDao(): ProductDao

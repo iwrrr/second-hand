@@ -6,15 +6,13 @@
     android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/Text.Primary.Bold.18"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="Hapus produk ini?"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:text="@string/text_delete_title" />
 
     <LinearLayout
         android:id="@+id/delete"
@@ -24,12 +22,12 @@
         android:padding="16dp">
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/Text.Primary.16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Hapus"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="16sp" />
+            android:text="@string/text_delete_yes"
+            android:textColor="@android:color/holo_red_light" />
 
     </LinearLayout>
 
@@ -45,12 +43,11 @@
         android:padding="16dp">
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/Text.Primary.16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Batalkan"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:text="@string/text_delete_cancel" />
 
     </LinearLayout>
 

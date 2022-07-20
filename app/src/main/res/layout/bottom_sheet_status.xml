@@ -17,6 +17,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bottom_sheet_title"
+        style="@style/Text.Primary.Bold.20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -24,9 +25,6 @@
         android:layout_marginEnd="32dp"
         android:maxLines="2"
         android:text="@string/text_update_status_product_title"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
@@ -42,6 +40,7 @@
 
         <RadioButton
             android:id="@+id/radio_success"
+            style="@style/Text.Primary.14"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="12dp"
@@ -49,6 +48,7 @@
             android:text="@string/text_update_status_product_success_title" />
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/Text.Secondary.12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
@@ -58,6 +58,7 @@
 
         <RadioButton
             android:id="@+id/radio_cancel"
+            style="@style/Text.Primary.14"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingStart="12dp"
@@ -65,6 +66,7 @@
             android:text="@string/text_update_status_product_cancel_title" />
 
         <com.google.android.material.textview.MaterialTextView
+            style="@style/Text.Secondary.12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="44dp"
@@ -76,6 +78,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_set_status"
+        style="@style/Text.Bold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -83,12 +86,11 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="36dp"
         android:enabled="false"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:padding="12dp"
         android:text="@string/text_btn_save"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        app:cornerRadius="16dp"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

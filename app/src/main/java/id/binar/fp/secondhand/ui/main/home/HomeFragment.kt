@@ -3,7 +3,8 @@ package id.binar.fp.secondhand.ui.main.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
 import id.binar.fp.secondhand.ui.main.product.DetailProductFragment
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -67,27 +69,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-        observeListProduct()
+        observeProduct()
     }
 
     private fun setupRefresh() {
         binding.appBar.addOnOffsetChangedListener { _, verticalOffset ->
             binding.swipeRefresh.isEnabled = verticalOffset == 0
         }
-        binding.swipeRefresh.setOnRefreshListener { observeListProduct() }
+        binding.swipeRefresh.setOnRefreshListener {
+            observeBanner()
+            observeCategory()
+            observeProduct()
+        }
     }
 
     private fun observeBanner() {
         viewModel.getBanner().observe(viewLifecycleOwner) { result ->
             when (result) {
-                is Result.Loading -> {}
+                is Result.Loading -> {
+                    showShimmerBanner()
+                }
                 is Result.Success -> {
+                    hideShimmerBanner()
                     if (result.data != null) {
                         binding.swipeRefresh.isRefreshing = false
                         binding.ivBanner.setImageList(result.data.map { it.imageUrl })
                     }
                 }
-                is Result.Error -> {}
+                is Result.Error -> {
+                    hideShimmerBanner()
+                }
             }
         }
     }
@@ -96,9 +107,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         viewModel.getCategory().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-
+                    showShimmerCategory()
                 }
                 is Result.Success -> {
+                    hideShimmerCategory()
                     if (result.data != null) {
                         binding.swipeRefresh.isRefreshing = false
                         val allCategory = result.data.toMutableList()
@@ -108,20 +120,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), result.message.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    hideShimmerCategory()
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
     }
 
-    private fun observeListProduct() {
+    private fun observeProduct() {
         viewModel.getAllProduct().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-
+                    showShimmerProduct()
                 }
                 is Result.Success -> {
+                    hideShimmerProduct()
                     if (result.data != null) {
                         binding.swipeRefresh.isRefreshing = false
                         val availableProduct =
@@ -131,8 +144,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), result.message.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                    hideShimmerProduct()
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
@@ -159,6 +172,54 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             add(R.id.main_nav_host, detailFragment)
             addToBackStack(null)
             commit()
+        }
+    }
+
+    private fun showShimmerBanner() {
+        binding.apply {
+            shimmerBanner.root.isInvisible = false
+            shimmerBanner.root.startShimmer()
+            ivBanner.isInvisible = true
+        }
+    }
+
+    private fun hideShimmerBanner() {
+        binding.apply {
+            shimmerBanner.root.isInvisible = true
+            shimmerBanner.root.stopShimmer()
+            ivBanner.isInvisible = false
+        }
+    }
+
+    private fun showShimmerCategory() {
+        binding.apply {
+            shimmerCategory.root.isVisible = true
+            shimmerCategory.root.startShimmer()
+            rvCategory.isVisible = false
+        }
+    }
+
+    private fun hideShimmerCategory() {
+        binding.apply {
+            shimmerCategory.root.isVisible = false
+            shimmerCategory.root.stopShimmer()
+            rvCategory.isVisible = true
+        }
+    }
+
+    private fun showShimmerProduct() {
+        binding.apply {
+            shimmerProduct.root.isVisible = true
+            shimmerProduct.root.startShimmer()
+            rvProduct.isVisible = false
+        }
+    }
+
+    private fun hideShimmerProduct() {
+        binding.apply {
+            shimmerProduct.root.isVisible = false
+            shimmerProduct.root.stopShimmer()
+            rvProduct.isVisible = true
         }
     }
 }

@@ -28,7 +28,6 @@ class OrderAdapter(
 
         override fun onBind(data: BuyerOrder) {
             with(binding) {
-                val date = Helper.dateFormatter(data.updatedAt)
                 val price = Helper.numberFormatter(data.price)
                 var status = ""
 
@@ -53,7 +52,6 @@ class OrderAdapter(
                 ivProductImage.loadImage(data.product?.imageUrl)
                 tvProductName.text = data.productName
                 tvProductStatus.text = status
-                tvProductTime.text = date
                 tvProductPrice.text = itemView.context.getString(
                     R.string.text_seller_order_base_price,
                     price

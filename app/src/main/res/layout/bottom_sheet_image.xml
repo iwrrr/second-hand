@@ -7,15 +7,13 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bottom_sheet_title"
+        style="@style/Text.Primary.Bold.20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:text="@string/text_choose_image_title"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +33,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_camera"
+        style="@style/Text.Primary.14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -60,6 +59,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_title" />
 
     <com.google.android.material.textview.MaterialTextView
+        style="@style/Text.Primary.14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

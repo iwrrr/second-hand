@@ -40,11 +40,10 @@ object RepositoryModule {
     @Singleton
     fun provideOrderRepository(
         apiService: ApiService,
-        orderDao: OrderDao,
         sellerOrderDao: SellerOrderDao,
         buyerOrderDao: BuyerOrderDao
     ): OrderRepository {
-        return OrderRepositoryImpl(apiService, orderDao, sellerOrderDao, buyerOrderDao)
+        return OrderRepositoryImpl(apiService, sellerOrderDao, buyerOrderDao)
     }
 
     @Provides

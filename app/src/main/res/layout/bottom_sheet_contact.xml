@@ -17,6 +17,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bottom_sheet_title"
+        style="@style/Text.Primary.Bold.20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -25,15 +26,13 @@
         android:lines="2"
         android:maxLines="2"
         android:text="@string/text_contact_product_title"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bottom_sheet_subtitle"
+        style="@style/Text.Secondary.14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -54,7 +53,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,13 +66,11 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_product_match"
+                style="@style/Text.Primary.Bold.16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/text_product_match"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -91,14 +88,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_name"
+                style="@style/Text.Primary.16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_seller_name"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_city"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -108,14 +104,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_city"
+                style="@style/Text.Secondary.12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_seller_city"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -135,30 +130,31 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_product_name"
+                style="@style/Text.Primary.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_product_name"
-                android:textColor="@android:color/black"
                 app:layout_constraintStart_toEndOf="@+id/iv_product_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_product_image" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_product_price"
+                style="@style/Text.Primary.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_product_price"
-                android:textColor="@android:color/black"
                 app:layout_constraintStart_toEndOf="@+id/iv_product_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_product_bid"
+                style="@style/Text.Primary.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
@@ -166,7 +162,6 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_product_bid"
-                android:textColor="@android:color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_product_image"
                 app:layout_constraintTop_toBottomOf="@+id/tv_product_price" />
@@ -182,12 +177,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="36dp"
         android:backgroundTint="@color/colorPrimary"
-        android:paddingTop="14dp"
-        android:paddingBottom="14dp"
+        android:padding="12dp"
         android:text="@string/text_btn_contact_1"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        app:cornerRadius="16dp"
+        android:theme="@style/Text.Bold"
+        app:cornerRadius="8dp"
         app:icon="@drawable/ic_whatsapp"
         app:iconGravity="textEnd"
         app:iconPadding="12dp"

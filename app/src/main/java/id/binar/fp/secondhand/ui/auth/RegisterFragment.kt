@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentRegisterBinding
 import id.binar.fp.secondhand.util.Extensions.isValidated
 import id.binar.fp.secondhand.util.Helper
@@ -100,42 +101,42 @@ class RegisterFragment : Fragment() {
     ): Boolean {
         return when {
             name.isEmpty() -> {
-                binding.etlName.error = "Nama tidak boleh kosong"
+                binding.etlName.error = getString(R.string.text_name_required)
                 binding.etlName.requestFocus()
                 false
             }
             email.isEmpty() -> {
-                binding.etlEmail.error = "Email tidak boleh kosong"
+                binding.etlEmail.error = getString(R.string.text_email_required)
                 binding.etlEmail.requestFocus()
                 false
             }
             !email.isValidated() -> {
-                binding.etlEmail.error = "Email tidak valid"
+                binding.etlEmail.error = getString(R.string.text_email_not_valid)
                 binding.etlEmail.requestFocus()
                 false
             }
             password.isEmpty() -> {
-                binding.etlPassword.error = "Password tidak boleh kosong"
+                binding.etlPassword.error = getString(R.string.text_password_required)
                 binding.etlPassword.requestFocus()
                 false
             }
             password.length < 6 -> {
-                binding.etlPassword.error = "Password harus lebih dari 6 karakter"
+                binding.etlPassword.error = getString(R.string.text_password_more_than_6_characters)
                 binding.etlPassword.requestFocus()
                 false
             }
             phoneNumber.isBlank() -> {
-                binding.etlPhone.error = "Nomor telepon tidak boleh kosong"
+                binding.etlPhone.error = getString(R.string.text_phone_number_required)
                 binding.etlPhone.requestFocus()
                 false
             }
             city.isEmpty() -> {
-                binding.etlCity.error = "Kota tidak boleh kosong"
+                binding.etlCity.error = getString(R.string.text_city_required)
                 binding.etlCity.requestFocus()
                 false
             }
             address.isEmpty() -> {
-                binding.etlAddress.error = "Alamat tidak boleh kosong"
+                binding.etlAddress.error = getString(R.string.text_address_required)
                 binding.etlAddress.requestFocus()
                 false
             }

@@ -169,18 +169,13 @@ class ProductRepositoryImpl @Inject constructor(
     override fun getBuyerProductById(id: Int): LiveData<Result<Product>> = liveData {
         emit(Result.Loading())
         try {
-            val oldProduct = productDao.getBuyerProductById(id)?.toDomain()
-            if (oldProduct != null) {
-                emit(Result.Loading(oldProduct))
-            }
-        } catch (e: NullPointerException) {
-            emit(Result.Error("Produk tidak ditemukan"))
+            val data = apiService.getBuyerProductById(id).toDomain()
+            emit(Result.Success(data))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
         } catch (e: Exception) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
         }
-
-        val newProduct = productDao.getBuyerProductById(id)?.toDomain()
-        emit(Result.Success(newProduct))
     }
 
     override fun searchProduct(query: String): Flow<Result<List<Product>>> = flow {

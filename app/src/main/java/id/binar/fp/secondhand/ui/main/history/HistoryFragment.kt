@@ -49,10 +49,12 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
             if (!token.isNullOrBlank()) {
                 binding.content.root.isVisible = true
                 binding.auth.root.isVisible = false
+                binding.shimmer.root.isVisible = false
                 setupRecyclerView()
             } else {
                 binding.content.root.isVisible = false
                 binding.auth.root.isVisible = true
+                binding.shimmer.root.isVisible = false
             }
         }
     }

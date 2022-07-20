@@ -10,14 +10,12 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_title_page"
+        style="@style/Text.Primary.Bold.20"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="@string/text_title_page_sell_list"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/btn_back"
         app:layout_constraintTop_toTopOf="parent" />
 

@@ -11,6 +11,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@id/tv_product_name"
+            style="@style/Text.Primary.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -19,8 +20,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_add_edit_product_name"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +39,8 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="@color/colorPrimary"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,17 +48,20 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_product_name"
+                style="@style/Text.Primary.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_add_edit_product_hint_name"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLength="30"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:padding="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@id/tv_product_price"
+            style="@style/Text.Primary.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -66,8 +70,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_add_edit_product_price"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etl_product_name" />
@@ -88,6 +90,8 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="@color/colorPrimary"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,16 +99,19 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_product_price"
+                style="@style/Text.Primary.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_add_edit_product_hint_price"
                 android:inputType="number"
                 android:maxLength="30"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:padding="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@id/tv_product_category"
+            style="@style/Text.Primary.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -113,8 +120,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_add_edit_product_category"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etl_product_price" />
@@ -133,6 +138,8 @@
             app:boxCornerRadiusTopEnd="12dp"
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="@color/colorPrimary"
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -140,11 +147,13 @@
 
             <com.google.android.material.textfield.MaterialAutoCompleteTextView
                 android:id="@+id/et_product_category"
+                style="@style/Text.Primary.14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="@string/text_add_edit_product_hint_category"
                 android:imeOptions="actionNext"
-                android:inputType="none" />
+                android:inputType="none"
+                android:padding="16dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -161,6 +170,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_location"
+            style="@style/Text.Primary.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -169,8 +179,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_add_edit_product_location"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chip_group" />
@@ -190,6 +198,8 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="@color/colorPrimary"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -197,17 +207,20 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_product_location"
+                style="@style/Text.Primary.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/text_add_edit_product_hint_location"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLength="30"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:padding="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_description"
+            style="@style/Text.Primary.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -216,8 +229,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_add_edit_product_description"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etl_product_location" />
@@ -237,6 +248,8 @@
             app:boxCornerRadiusTopStart="12dp"
             app:boxStrokeColor="@color/colorPrimary"
             app:endIconMode="clear_text"
+            app:expandedHintEnabled="false"
+            app:hintAnimationEnabled="false"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -244,17 +257,20 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_product_description"
+                style="@style/Text.Primary.14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="start"
                 android:hint="@string/text_add_edit_product_hint_description"
                 android:inputType="textMultiLine"
                 android:lines="3"
-                android:maxLines="3" />
+                android:maxLines="3"
+                android:padding="16dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_product_image"
+            style="@style/Text.Primary.14"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -263,8 +279,6 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/text_add_edit_product_image"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etl_product_description" />

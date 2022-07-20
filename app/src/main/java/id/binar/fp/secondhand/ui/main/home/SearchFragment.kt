@@ -47,24 +47,26 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun setupSearch() {
-        binding.etSearch.requestFocus()
-        binding.btnBack.setOnClickListener { requireActivity().onBackPressed() }
+        binding.toolbar.etSearch.requestFocus()
+        binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
 
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val imm: InputMethodManager =
             requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding.etSearch, 0)
+        imm.showSoftInput(binding.toolbar.etSearch, 0)
 
-        binding.etSearch.doOnTextChanged { text, _, _, _ ->
+        binding.toolbar.etSearch.doOnTextChanged { text, _, _, _ ->
             lifecycleScope.launch { viewModel.queryChannel.send(text.toString()) }
         }
 
         binding.rvSearch.adapter = searchAdapter
         binding.rvSearch.layoutManager = LinearLayoutManager(requireContext())
-
         binding.placeholder.root.isVisible = true
+        observeProduct()
+    }
 
+    private fun observeProduct() {
         viewModel.searchResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {

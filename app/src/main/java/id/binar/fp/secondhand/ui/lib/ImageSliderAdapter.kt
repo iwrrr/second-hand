@@ -43,10 +43,6 @@ class ImageSliderAdapter : RecyclerView.Adapter<ImageSliderAdapter.ViewHolder>()
         placeholder = image
     }
 
-    fun setBackgroundImage(image: Int) {
-        background = image
-    }
-
     fun setWithTitle(it: Boolean) {
         withTitle = it
     }
