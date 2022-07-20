@@ -75,66 +75,6 @@ class SellerViewModelTest{
     }
 
     /**
-     * UPDATE SELLER PRODUCT BY ID
-     */
-    @Test
-    fun `when update seller should not null`(){
-        val expectedValue = MutableLiveData<Result<Product>>()
-        expectedValue.value = Result.Success(dummyProduct)
-
-        `when`(viewModel.updateSellerProductById(dummyProduct.id, dummyProduct.status.toString())).thenReturn(expectedValue)
-
-        val actualValue = viewModel.updateSellerProductById(dummyProduct.id, dummyProduct.status.toString()).getOrAwaitValue()
-        verify(repoProduct).updateSellerProductById(dummyProduct.id, dummyProduct.status.toString())
-        assertNotNull(actualValue)
-        assertTrue(actualValue is Result.Success)
-        assertEquals(dummyProduct, (actualValue as Result.Success).data)
-    }
-
-    @Test
-    fun `when update seller should null`(){
-        val expectedValue = MutableLiveData<Result<Product>>()
-        expectedValue.value = Result.Error("Error")
-
-        `when`(viewModel.updateSellerProductById(dummyProduct.id, dummyProduct.status.toString())).thenReturn(expectedValue)
-
-        val actualValue = viewModel.updateSellerProductById(dummyProduct.id, dummyProduct.status.toString()).getOrAwaitValue()
-        verify(repoProduct).updateSellerProductById(dummyProduct.id, dummyProduct.status.toString())
-        assertNotNull(actualValue)
-        assertTrue(actualValue is Result.Error)
-    }
-
-    /**
-     * DELETE SELLER BY ID
-     */
-    @Test
-    fun `when delete seller should not null`(){
-        val expectedValue = MutableLiveData<Result<MessageDto>>()
-        expectedValue.value = Result.Success(dummyDeleteSeller)
-
-        `when`(viewModel.deleteSellerProductById(dummyProduct.id)).thenReturn(expectedValue)
-
-        val actualValue = viewModel.deleteSellerProductById(dummyProduct.id).getOrAwaitValue()
-        verify(repoProduct).deleteSellerProductById(dummyProduct.id)
-        assertNotNull(actualValue)
-        assertTrue(actualValue is Result.Success)
-        assertEquals(dummyDeleteSeller, (actualValue as Result.Success).data)
-    }
-
-    @Test
-    fun `when delete seller should null`(){
-        val expectedValue = MutableLiveData<Result<MessageDto>>()
-        expectedValue.value = Result.Error("Error")
-
-        `when`(viewModel.deleteSellerProductById(dummyProduct.id)).thenReturn(expectedValue)
-
-        val actualValue = viewModel.deleteSellerProductById(dummyProduct.id).getOrAwaitValue()
-        verify(repoProduct).deleteSellerProductById(dummyProduct.id)
-        assertNotNull(actualValue)
-        assertTrue(actualValue is Result.Error)
-    }
-
-    /**
      * GET SELLER ORDER
      */
     @Test
@@ -190,36 +130,6 @@ class SellerViewModelTest{
 
         val actualValue = viewModel.getSellerOrderById(dummyOrderId.id).getOrAwaitValue()
         verify(repoOrder).getSellerOrderById(dummyOrderId.id)
-        assertNotNull(actualValue)
-        assertTrue(actualValue is Result.Error)
-    }
-
-    /**
-     * UPDATE SELER ORDER BY ID
-     */
-    @Test
-    fun `when update seller order id shoud not null`(){
-        val expectedValue = MutableLiveData<Result<SellerOrder>>()
-        expectedValue.value = Result.Success(dummyOrderId)
-
-        `when`(viewModel.updateSellerOrderById(dummyOrderId.id, dummyOrderId.status.toString())).thenReturn(expectedValue)
-
-        val actualValue = viewModel.updateSellerOrderById(dummyOrderId.id, dummyOrderId.status.toString()).getOrAwaitValue()
-        verify(repoOrder).updateSellerOrderById(dummyOrderId.id, dummyOrderId.status.toString())
-        assertNotNull(actualValue)
-        assertTrue(actualValue is Result.Success)
-        assertEquals(dummyOrderId, (actualValue as Result.Success).data)
-    }
-
-    @Test
-    fun `when update seller order id shoud null`(){
-        val expectedValue = MutableLiveData<Result<SellerOrder>>()
-        expectedValue.value = Result.Error("Error")
-
-        `when`(viewModel.updateSellerOrderById(dummyOrderId.id, dummyOrderId.status.toString())).thenReturn(expectedValue)
-
-        val actualValue = viewModel.updateSellerOrderById(dummyOrderId.id, dummyOrderId.status.toString()).getOrAwaitValue()
-        verify(repoOrder).updateSellerOrderById(dummyOrderId.id, dummyOrderId.status.toString())
         assertNotNull(actualValue)
         assertTrue(actualValue is Result.Error)
     }

@@ -46,12 +46,4 @@ class NotificationRepositoryImplTest {
         assertNotNull(actualData)
         assertEquals(expectedData, actualData)
     }
-
-    @Test
-    fun `when update notif`() = runTest {
-        val expectedData = DataDummy.generateNotifId()
-        val actualData = apiService.updateNotificationById(dummyNotifId.id).toDomain()
-        assertNotNull(actualData)
-        assertEquals(expectedData, actualData)
-    }
 }
