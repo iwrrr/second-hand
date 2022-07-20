@@ -88,7 +88,7 @@ object DataDummy {
                 description = "description",
                 categories = listOf(),
                 location = "lokasi",
-                imageUrl = "url"
+                imageUrl = "url",
             )
             products.add(product)
         }
