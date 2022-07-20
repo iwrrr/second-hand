@@ -106,7 +106,6 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
     }
 
     private fun observeProduct() {
-//        val orderId = arguments?.getInt("order_id") as Int
         val order = arguments?.getParcelable<SellerOrder>("order") as SellerOrder
         this.orderId = order.id
         sellerViewModel.getSellerOrderById(order.id).observe(viewLifecycleOwner) { result ->
@@ -116,9 +115,9 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                 }
                 is Result.Success -> {
                     if (result.data != null) {
-
                         this.order = result.data
                         this.productId = result.data.productId as Int
+
                         binding.apply {
                             progressBar.isVisible = false
                             ivProfile.loadImage(result.data.user?.imageUrl)
@@ -213,6 +212,11 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                     contentBtnAccepted.root.isVisible = true
                     contentProduct.tvProductStatus.text = "Penawaran produk"
                 }
+                Helper.showSnackbar(
+                    requireContext(),
+                    binding.root,
+                    getString(R.string.text_bid_status_success)
+                )
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
@@ -233,7 +237,11 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                     contentBtnAccepted.root.isVisible = false
                     contentProduct.tvProductStatus.text = "Berhasil terjual"
                 }
-                Helper.showToast(requireContext(), "Status produk berhasil diperbarui")
+                Helper.showSnackbar(
+                    requireContext(),
+                    binding.root,
+                    getString(R.string.text_bid_status_success)
+                )
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
@@ -291,7 +299,11 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                         }
                     }
                 }
-                Helper.showToast(requireContext(), "Status order berhasil diperbarui")
+                Helper.showSnackbar(
+                    requireContext(),
+                    binding.root,
+                    getString(R.string.text_bid_status_success)
+                )
                 setupBottomSheetContact()
             }
             is Result.Error -> {
@@ -337,7 +349,11 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                         }
                     }
                 }
-                Helper.showToast(requireContext(), "Status order berhasil diperbarui")
+                Helper.showSnackbar(
+                    requireContext(),
+                    binding.root,
+                    getString(R.string.text_bid_status_success)
+                )
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false

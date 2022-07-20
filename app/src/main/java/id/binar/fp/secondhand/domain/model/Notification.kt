@@ -1,7 +1,6 @@
 package id.binar.fp.secondhand.domain.model
 
 import id.binar.fp.secondhand.data.source.local.entity.NotificationEntity
-import id.binar.fp.secondhand.data.source.network.response.NotificationDto
 
 data class Notification(
     val id: Int,
@@ -23,29 +22,6 @@ data class Notification(
     val product: Product? = null,
     val user: User? = null,
 ) : BaseType {
-
-    fun toDto(): NotificationDto {
-        return NotificationDto(
-            id,
-            productId,
-            productName,
-            basePrice,
-            bidPrice,
-            imageUrl,
-            transactionDate,
-            status,
-            sellerName,
-            buyerName,
-            receiverId,
-            read,
-            notificationType,
-            orderId,
-            createdAt,
-            updatedAt,
-            product?.toDto(),
-            user?.toDto(),
-        )
-    }
 
     fun toEntity(): NotificationEntity {
         return NotificationEntity(

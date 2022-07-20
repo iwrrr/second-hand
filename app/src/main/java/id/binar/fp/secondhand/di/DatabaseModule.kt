@@ -22,12 +22,6 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideUserDao(database: AppDatabase): UserDao {
-        return database.userDao()
-    }
-
-    @Provides
-    @Singleton
     fun provideCategoryDao(database: AppDatabase): CategoryDao {
         return database.categoryDao()
     }
@@ -42,12 +36,6 @@ object DatabaseModule {
     @Singleton
     fun provideNotificationDao(database: AppDatabase): NotificationDao {
         return database.notificationDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideOrderDao(database: AppDatabase): OrderDao {
-        return database.orderDao()
     }
 
     @Provides

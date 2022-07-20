@@ -1,7 +1,5 @@
 package id.binar.fp.secondhand.domain.model
 
-import id.binar.fp.secondhand.data.source.network.response.HistoryDto
-
 data class History(
     val id: Int,
     val productName: String? = null,
@@ -13,20 +11,4 @@ data class History(
     val imageUrl: String? = null,
     val createdAt: String? = null,
     val updatedAt: String? = null
-) : BaseType {
-
-    fun toDto(): HistoryDto {
-        return HistoryDto(
-            id,
-            productName,
-            price,
-            category,
-            transactionDate,
-            status,
-            userId,
-            imageUrl,
-            createdAt,
-            updatedAt
-        )
-    }
-}
+) : BaseType

@@ -30,13 +30,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_seller"
-            style="@style/Widget.MaterialComponents.TextView"
+            style="@style/Text.Primary.16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/text_profile_seller"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_seller"
             app:layout_constraintStart_toEndOf="@id/iv_seller"
             app:layout_constraintTop_toTopOf="@id/iv_seller" />
@@ -79,13 +77,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_order"
-            style="@style/Widget.MaterialComponents.TextView"
+            style="@style/Text.Primary.16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/text_profile_order"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_order"
             app:layout_constraintStart_toEndOf="@id/iv_order"
             app:layout_constraintTop_toTopOf="@id/iv_order" />
@@ -126,13 +122,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_setting"
-            style="@style/Widget.MaterialComponents.TextView"
+            style="@style/Text.Primary.16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/text_profile_settings"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_setting"
             app:layout_constraintStart_toEndOf="@id/iv_setting"
             app:layout_constraintTop_toTopOf="@id/iv_setting" />
@@ -175,13 +169,11 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_logout"
-            style="@style/Widget.MaterialComponents.TextView"
+            style="@style/Text.Primary.16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/text_profile_logout"
-            android:textColor="@color/black"
-            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@id/iv_logout"
             app:layout_constraintStart_toEndOf="@id/iv_logout"
             app:layout_constraintTop_toTopOf="@id/iv_logout" />

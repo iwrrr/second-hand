@@ -59,7 +59,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
     }
 
     override fun setupToolbar() {
-        binding.toolbar.toolbarTitle.text = "Ubah Produk"
+        binding.toolbar.toolbarTitle.text = getString(R.string.text_toolbar_edit_product)
         binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
@@ -96,7 +96,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
                 categoryIds.add(categoryId)
                 categoryNames.add(categoryName)
 
-                setText("Pilih Kategori")
+                setText(context.getString(R.string.text_add_edit_product_hint_category))
                 text.clear()
 
                 setupChips(categoryId, categoryName)
@@ -225,7 +225,11 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
                 }
                 is Result.Success -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), "Produk berhasil diperbarui")
+                    Helper.showSnackbar(
+                        requireContext(),
+                        binding.root,
+                        getString(R.string.text_update_product_success)
+                    )
                     parentFragmentManager.popBackStack()
                 }
                 is Result.Error -> {
@@ -245,7 +249,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
 
             etProductName.doOnTextChanged { text, _, _, count ->
                 if (text.isNullOrBlank()) {
-                    etlProductName.error = "Nama produk tidak boleh kosong"
+                    etlProductName.error = getString(R.string.text_product_name_required)
                 }
                 if (count > 0) {
                     etlProductName.isErrorEnabled = false
@@ -253,7 +257,8 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
             }
             etProductDescription.doOnTextChanged { text, _, _, count ->
                 if (text.isNullOrBlank()) {
-                    etlProductDescription.error = "Deskripsi produk tidak boleh kosong"
+                    etlProductDescription.error =
+                        getString(R.string.text_product_description_required)
                 }
                 if (count > 0) {
                     etlProductDescription.isErrorEnabled = false
@@ -261,7 +266,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
             }
             etProductPrice.doOnTextChanged { text, _, _, count ->
                 if (text.isNullOrBlank()) {
-                    etlProductPrice.error = "Harga tidak boleh kosong"
+                    etlProductPrice.error = getString(R.string.text_product_price_required)
                 }
                 if (count > 0) {
                     etlProductPrice.isErrorEnabled = false
@@ -269,7 +274,7 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
             }
             etProductLocation.doOnTextChanged { text, _, _, count ->
                 if (text.isNullOrBlank()) {
-                    etlProductLocation.error = "Lokasi tidak boleh kosong"
+                    etlProductLocation.error = getString(R.string.text_product_location_required)
                 }
                 if (count > 0) {
                     etlProductLocation.isErrorEnabled = false
@@ -283,7 +288,10 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
                 val location = etProductLocation.text.toString()
 
                 if (categoryIds.isEmpty()) {
-                    Helper.showToast(requireContext(), "Pilih minimal 1 kategori")
+                    Helper.showToast(
+                        requireContext(),
+                        getString(R.string.text_product_category_required)
+                    )
                     return@setOnClickListener
                 }
 
@@ -328,22 +336,26 @@ class EditProductFragment : BaseFragment<FragmentEditProductBinding>() {
     ): Boolean {
         return when {
             name.isBlank() -> {
-                binding.content.etlProductName.error = "Nama produk tidak boleh kosong"
+                binding.content.etlProductName.error =
+                    getString(R.string.text_product_name_required)
                 binding.content.etlProductName.requestFocus()
                 false
             }
             description.isBlank() -> {
-                binding.content.etlProductDescription.error = "Deskripsi produk tidak boleh kosong"
+                binding.content.etlProductDescription.error =
+                    getString(R.string.text_product_description_required)
                 binding.content.etlProductDescription.requestFocus()
                 false
             }
             basePrice.isBlank() -> {
-                binding.content.etlProductPrice.error = "Harga tidak boleh kosong"
+                binding.content.etlProductPrice.error =
+                    getString(R.string.text_product_price_required)
                 binding.content.etlProductPrice.requestFocus()
                 false
             }
             location.isBlank() -> {
-                binding.content.etlProductLocation.error = "Lokasi tidak boleh kosong"
+                binding.content.etlProductLocation.error =
+                    getString(R.string.text_product_location_required)
                 binding.content.etlProductLocation.requestFocus()
                 false
             }

@@ -17,8 +17,6 @@ import java.io.File
 
 @AndroidEntryPoint
 class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
-
-    private val productViewModel: ProductViewModel by viewModels()
     private val authViewModel: AuthViewModel by viewModels()
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentPreviewProductBinding
@@ -27,14 +25,16 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
     override val isNavigationVisible: Boolean
         get() = false
 
-    override val isLightStatusBar: Boolean
-        get() = false
-
     override fun setup() {
         super.setup()
         onBackClicked()
         observeUser()
         initProduct()
+    }
+
+    override fun setupToolbar() {
+        binding.toolbar.toolbarTitle.text = "Tinjau Produk"
+        binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
     private fun initProduct() {
@@ -46,14 +46,16 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
 
         val uri = Uri.fromFile(File(imagePath))
 
-        binding.ivProductImage.loadImage(uri)
-        binding.tvProductName.text = name
-        binding.tvProductCategory.text = Helper.initCategory(categories)
-        binding.tvProductPrice.text = requireContext().getString(
-            R.string.text_seller_order_base_price,
-            basePrice
-        )
-        binding.tvProductDescription.text = description
+        binding.content.apply {
+            ivProductImage.loadImage(uri)
+            tvProductName.text = name
+            tvProductCategory.text = Helper.initCategory(categories)
+            tvProductPrice.text = requireContext().getString(
+                R.string.text_seller_order_base_price,
+                basePrice
+            )
+            tvProductDescription.text = description
+        }
 
         binding.btnPublish.setOnClickListener {
             parentFragmentManager.popBackStack()
@@ -66,9 +68,11 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
                 is Result.Loading -> {}
                 is Result.Success -> {
                     if (result.data != null) {
-                        binding.tvName.text = result.data.fullName
-                        binding.tvCity.text = result.data.city
-                        binding.ivProfile.loadImage(result.data.imageUrl)
+                        binding.content.apply {
+                            tvName.text = result.data.fullName
+                            tvCity.text = result.data.city
+                            ivProfile.loadImage(result.data.imageUrl)
+                        }
                     }
                 }
                 is Result.Error -> {}
@@ -77,6 +81,6 @@ class PreviewProductFragment : BaseFragment<FragmentPreviewProductBinding>() {
     }
 
     private fun onBackClicked() {
-        binding.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
+        binding.toolbar.btnBack.setOnClickListener { parentFragmentManager.popBackStack() }
     }
 }

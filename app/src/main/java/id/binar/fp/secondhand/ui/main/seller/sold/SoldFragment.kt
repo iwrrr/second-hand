@@ -7,11 +7,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentSoldBinding
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.model.SellerType
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.seller.SellerAdapter
+import id.binar.fp.secondhand.ui.main.bottomsheet.DeleteBottomSheet
 import id.binar.fp.secondhand.ui.main.seller.SellerViewModel
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
@@ -41,11 +43,11 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
         binding.content.rvSold.layoutManager = GridLayoutManager(requireContext(), 2)
 
         sellerAdapter.itemClickCallback = object : SellerAdapter.ItemClickCallback<Product> {
-            override fun onClick(data: Product) {
-                onProductClicked(data)
-            }
+            override fun onClick(data: Product) {}
 
-            override fun onDelete(id: Int) {}
+            override fun onDelete(id: Int) {
+                onDeleteClicked(id)
+            }
         }
 
         observeProduct()
@@ -60,12 +62,10 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
             when (result) {
                 is Result.Loading -> {
                     showShimmer()
-//                    binding.loading.root.isVisible = true
                 }
                 is Result.Success -> {
                     hideShimmer()
                     if (result.data != null) {
-//                        binding.loading.root.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
                         val availableProduct = result.data.filter { it.status == Status.SOLD }
                         if (availableProduct.isNotEmpty()) {
@@ -73,12 +73,12 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
                         } else {
                             binding.content.root.isVisible = false
                             binding.empty.root.isVisible = true
+                            binding.empty.tvEmpty.text = getString(R.string.text_product_sold_empty)
                         }
                     }
                 }
                 is Result.Error -> {
                     hideShimmer()
-//                    binding.loading.root.isVisible = false
                     binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.message.toString())
                 }
@@ -86,12 +86,32 @@ class SoldFragment : BaseFragment<FragmentSoldBinding>() {
         }
     }
 
-    private fun onProductClicked(product: Product) {
-//            requireParentFragment().parentFragmentManager.beginTransaction().apply {
-//                add(R.id.main_nav_host, ProductDetailFragment())
-//                addToBackStack(null)
-//                commit()
-//            }
+    private fun observeDelete(id: Int) {
+        sellerViewModel.deleteSellerProductById(id).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> {
+                    observeProduct()
+                    Helper.showSnackbar(
+                        requireContext(),
+                        binding.root,
+                        getString(R.string.text_delete_product_success)
+                    )
+                }
+                is Result.Error -> {}
+            }
+        }
+    }
+
+    private fun onDeleteClicked(id: Int) {
+        val deleteBottomSheet = DeleteBottomSheet()
+        deleteBottomSheet.show(childFragmentManager, DeleteBottomSheet.TAG)
+        deleteBottomSheet.bottomSheetCallback = object : DeleteBottomSheet.BottomSheetCallback {
+            override fun onDelete() {
+                observeDelete(id)
+                deleteBottomSheet.dismiss()
+            }
+        }
     }
 
     private fun showShimmer() {

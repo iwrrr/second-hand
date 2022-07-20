@@ -43,9 +43,6 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     override val isNavigationVisible: Boolean
         get() = false
 
-    override val isLightStatusBar: Boolean
-        get() = true
-
     override fun setup() {
         super.setup()
         observeCategories()
@@ -55,7 +52,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     }
 
     override fun setupToolbar() {
-        binding.toolbar.toolbarTitle.text = "Tambah Produk"
+        binding.toolbar.toolbarTitle.text = getString(R.string.text_toolbar_add_product)
         binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
@@ -186,7 +183,11 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 }
                 is Result.Success -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), "Produk berhasil diterbitkan")
+                    Helper.showSnackbar(
+                        requireContext(),
+                        binding.root,
+                        getString(R.string.text_add_product_success)
+                    )
                     parentFragmentManager.beginTransaction().apply {
                         add(R.id.main_nav_host, SellerFragment())
                         addToBackStack(null)
@@ -214,7 +215,10 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 val location = etProductLocation.text.toString()
 
                 if (categoryIds.isEmpty()) {
-                    Helper.showToast(requireContext(), "Pilih minimal 1 kategori")
+                    Helper.showToast(
+                        requireContext(),
+                        getString(R.string.text_product_category_required)
+                    )
                     return@setOnClickListener
                 }
 
@@ -224,7 +228,7 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 } else {
                     Helper.showToast(
                         requireContext(),
-                        "Silahkan masukkan foto produk terlebih dahulu."
+                        getString(R.string.text_product_image_required)
                     )
                 }
             }
@@ -239,7 +243,10 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
             val location = binding.content.etProductLocation.text.toString()
 
             if (categoryIds.isEmpty()) {
-                Helper.showToast(requireContext(), "Pilih minimal 1 kategori")
+                Helper.showToast(
+                    requireContext(),
+                    getString(R.string.text_product_category_required)
+                )
                 return@setOnClickListener
             }
 
@@ -279,22 +286,26 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
     ): Boolean {
         return when {
             name.isBlank() -> {
-                binding.content.etlProductName.error = "Nama produk tidak boleh kosong"
+                binding.content.etlProductName.error =
+                    getString(R.string.text_product_name_required)
                 binding.content.etlProductName.requestFocus()
                 false
             }
             description.isBlank() -> {
-                binding.content.etlProductDescription.error = "Deskripsi produk tidak boleh kosong"
+                binding.content.etlProductDescription.error =
+                    getString(R.string.text_product_description_required)
                 binding.content.etlProductDescription.requestFocus()
                 false
             }
             basePrice.isBlank() -> {
-                binding.content.etlProductPrice.error = "Harga tidak boleh kosong"
+                binding.content.etlProductPrice.error =
+                    getString(R.string.text_product_price_required)
                 binding.content.etlProductPrice.requestFocus()
                 false
             }
             location.isBlank() -> {
-                binding.content.etlProductLocation.error = "Lokasi tidak boleh kosong"
+                binding.content.etlProductLocation.error =
+                    getString(R.string.text_product_location_required)
                 binding.content.etlProductLocation.requestFocus()
                 false
             }

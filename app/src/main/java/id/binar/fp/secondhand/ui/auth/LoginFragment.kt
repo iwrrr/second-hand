@@ -89,22 +89,22 @@ class LoginFragment : Fragment() {
     private fun validateData(email: String, password: String): Boolean {
         return when {
             email.isEmpty() -> {
-                binding.etlEmail.error = "Email tidak boleh kosong"
+                binding.etlEmail.error = getString(R.string.text_email_required)
                 binding.etlEmail.requestFocus()
                 false
             }
             !email.isValidated() -> {
-                binding.etlEmail.error = "Email tidak valid"
+                binding.etlEmail.error = getString(R.string.text_email_not_valid)
                 binding.etlEmail.requestFocus()
                 false
             }
             password.isEmpty() -> {
-                binding.etlPassword.error = "Password tidak boleh kosong"
+                binding.etlPassword.error = getString(R.string.text_password_required)
                 binding.etlPassword.requestFocus()
                 false
             }
             password.length < 6 -> {
-                binding.etlPassword.error = "Password harus lebih dari 6 karakter"
+                binding.etlPassword.error = getString(R.string.text_password_more_than_6_characters)
                 binding.etlPassword.requestFocus()
                 false
             }

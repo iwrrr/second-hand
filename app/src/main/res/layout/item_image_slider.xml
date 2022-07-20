@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="12dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_slider"
@@ -11,12 +12,11 @@
         android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        android:theme="@style/ShapeAppearanceOverlay.App.CornerSize.8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:srcCompat="@drawable/ic_image_placeholder" />
+        tools:srcCompat="@drawable/ic_launcher_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,7 +34,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     override fun setup() {
         super.setup()
-        setupSwipeLayout()
+        setupRefresh()
 
         onEditClicked()
         onSellerClicked()
@@ -62,10 +62,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
     }
 
-    private fun setupSwipeLayout() {
-        binding.swipeRefresh.setOnRefreshListener {
-            observeUser()
-        }
+    private fun setupRefresh() {
+        binding.swipeRefresh.setOnRefreshListener { observeUser() }
     }
 
     private fun observeUser() {

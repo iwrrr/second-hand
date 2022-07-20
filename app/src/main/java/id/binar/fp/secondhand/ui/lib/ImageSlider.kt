@@ -6,9 +6,7 @@ import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import id.binar.fp.secondhand.R
 import java.util.*
@@ -21,11 +19,8 @@ class ImageSlider @JvmOverloads constructor(
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private var viewPager: ViewPager2? = null
-    private var pagerDots: LinearLayout? = null
 
     private val mAdapter by lazy { ImageSliderAdapter() }
-
-    private var dots: Array<ImageView?>? = null
 
     private var currentPage = 0
     private var imageCount = 0
@@ -39,7 +34,6 @@ class ImageSlider @JvmOverloads constructor(
     private var unselectedDot = 0
     private var errorImage = 0
     private var placeholder = 0
-    private var titleBackground = 0
     private var withTitle = true
     private var withBackground = true
     private var titleGravity: Int = 0x00800003 or 0x10
@@ -146,20 +140,7 @@ class ImageSlider @JvmOverloads constructor(
         }
     }
 
-    fun setImageListWithAdapter(adapter: RecyclerView.Adapter<*>?, size: Int = 0) {
-        imageCount = size
-        viewPager?.adapter = adapter
-        if (size != 0) {
-//            setupDots(size)
-//            setCurrentIndicator(currentPage)
-            if (autoCycle) {
-                stopSliding()
-                startSliding()
-            }
-        }
-    }
-
-//    private fun setupDots(size: Int) {
+    //    private fun setupDots(size: Int) {
 //        println(indicatorGravity)
 //        pagerDots?.gravity = indicatorGravity
 //        pagerDots?.removeAllViews()
@@ -204,7 +185,7 @@ class ImageSlider @JvmOverloads constructor(
      *
      * @param  changeablePeriod  optional period value
      */
-    fun startSliding(changeablePeriod: Long = period) {
+    private fun startSliding(changeablePeriod: Long = period) {
         stopSliding()
         scheduleTimer(changeablePeriod)
     }
@@ -213,7 +194,7 @@ class ImageSlider @JvmOverloads constructor(
      * Stop image sliding.
      *
      */
-    fun stopSliding() {
+    private fun stopSliding() {
         swipeTimer.cancel()
         swipeTimer.purge()
     }

@@ -65,14 +65,13 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         sellerViewModel.getSellerProduct().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    showShimmer()
-//                    binding.loading.root.isVisible = true
+                    showShimmer(true)
                 }
                 is Result.Success -> {
-                    hideShimmer()
+                    showShimmer(false)
+//                    hideShimmer()
                     if (result.data != null) {
                         products.addAll(result.data)
-//                        binding.loading.root.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
                         val availableProduct =
                             result.data.filter { it.status == Status.AVAILABLE }
@@ -81,14 +80,20 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
                         } else {
                             binding.content.root.isVisible = false
                             binding.empty.root.isVisible = true
+                            binding.empty.tvEmpty.text = getString(R.string.text_product_empty)
                         }
                     }
                 }
                 is Result.Error -> {
-                    hideShimmer()
-//                    binding.loading.root.isVisible = false
+                    showShimmer(false)
                     binding.swipeRefresh.isRefreshing = false
-                    Helper.showToast(requireContext(), result.message.toString())
+                    if (result.message != null) {
+                        if ("host" in result.message || "connect" in result.message) {
+                            Helper.showToast(requireContext(), "Periksa koneksi Anda")
+                        } else {
+                            Helper.showToast(requireContext(), result.message)
+                        }
+                    }
                 }
             }
         }
@@ -98,7 +103,14 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         sellerViewModel.deleteSellerProductById(id).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {}
-                is Result.Success -> observeProduct()
+                is Result.Success -> {
+                    observeProduct()
+                    Helper.showSnackbar(
+                        requireContext(),
+                        binding.root,
+                        getString(R.string.text_delete_product_success)
+                    )
+                }
                 is Result.Error -> {}
             }
         }
@@ -128,20 +140,11 @@ class ProductFragment : BaseFragment<FragmentProductBinding>() {
         }
     }
 
-    private fun showShimmer() {
+    private fun showShimmer(isLoading: Boolean) {
         binding.apply {
-            shimmer.root.isInvisible = false
-            shimmer.root.startShimmer()
-            content.root.isInvisible = true
-            empty.root.isInvisible = true
-        }
-    }
-
-    private fun hideShimmer() {
-        binding.apply {
-            shimmer.root.isInvisible = true
-            shimmer.root.stopShimmer()
-            content.root.isInvisible = false
+            shimmer.root.isInvisible = !isLoading
+            shimmer.root.showShimmer(isLoading)
+            content.root.isInvisible = isLoading
             empty.root.isInvisible = true
         }
     }

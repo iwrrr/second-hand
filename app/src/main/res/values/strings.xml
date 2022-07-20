@@ -49,6 +49,7 @@
     <string name="text_add_edit_product_hint_category">Pilih Kategori</string>
     <string name="text_add_edit_product_hint_description">Contoh: Barang bagus mantap</string>
 
+    <string name="text_add_edit_product_btn_back">Kembali ke Halaman Sebelumnya</string>
     <string name="text_add_edit_product_btn_preview">Preview</string>
     <string name="text_add_edit_product_btn_delete">Hapus</string>
     <string name="text_add_edit_product_btn_publish">Terbitkan</string>
@@ -89,8 +90,8 @@
     <string name="text_product_price">Rp250.000</string>
     <string name="text_product_bid">Ditawar Rp200.000</string>
     <string name="text_product_date">20 Apr, 14:04</string>
-    <string name="text_product_category">Aksesoris</string>
-    <string name="text_product_desc">Deskripsi</string>
+    <string name="text_product_category">Kategori</string>
+    <string name="text_product_desc">Detail Produk</string>
     <string name="text_product_description">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, comes from a line in section 1.10.32.</string>
     <string name="text_product_offer">Penawaran produk</string>
     <string name="text_product_offered">Produk yang Ditawar</string>
@@ -106,14 +107,59 @@
     <string name="text_btn_buy">Saya Tertarik dan Ingin Nego</string>
     <string name="text_btn_reject">Tolak</string>
     <string name="text_btn_accept">Terima</string>
+    <string name="text_btn_send">Kirim</string>
 
     <string name="text_choose_image_title">Pilih gambar</string>
     <string name="text_choose_image_camera">Kamera</string>
     <string name="text_choose_image_gallery">Galeri</string>
 
-    <string name="text_seller_order_bid_price">%1$s Rp %2$s</string>
-    <string name="text_seller_order_base_price">Rp %1$s</string>
+    <string name="text_seller_order_bid_price">%1$s Rp%2$s</string>
+    <string name="text_seller_order_base_price">Rp%1$s</string>
     <string name="text_seller_order_product_name">Jam Tangan Casio</string>
     <string name="text_seller_order_transaction_date">20 Apr, 14:04</string>
     <string name="text_seller_order_bid_title">Penawaran produk</string>
+
+    <string name="text_bid_product_title">Masukkan Harga Tawarmu</string>
+    <string name="text_bid_product_subtitle">Harga tawaranmu akan diketahui penjual, jika penjual cocok kamu akan segera dihubungi penjual.</string>
+    <string name="text_bid_product_bid_price">Harga Tawar</string>
+
+    <string name="text_delete_title">Hapus produk ini?</string>
+    <string name="text_delete_yes">Hapus</string>
+    <string name="text_delete_cancel">Batalkan</string>
+
+    <string name="text_auth_title">Masuk dulu yuk!</string>
+    <string name="text_auth_subtitle">Masuk untuk akses mudah melihat pesanan Anda di sini</string>
+    <string name="text_edit_profile_info">Info Profil</string>
+
+    <string name="text_no_connection">Ups, Periksa kembali koneksimu!</string>
+    <string name="text_notification_empty">Sabar ya, nanti juga bakalan ada notif kok, tapi bukan notif dari si Dia :)</string>
+    <string name="text_order_empty">Kamu belum pesan barang nih, yuk pesan barang dulu!</string>
+    <string name="text_product_empty">Kamu belum jual barang nih, yuk jual barang dulu!</string>
+    <string name="text_product_sold_empty">Sabar ya, nanti juga ada yang beli produk kamu kok!</string>
+
+    <string name="text_order_success">Harga tawarmu berhasil dikirim ke penjual</string>
+    <string name="text_add_product_success">Produk berhasil diterbitkan</string>
+    <string name="text_update_product_success">Produk berhasil diperbarui</string>
+    <string name="text_delete_product_success">Produk berhasil dihapus</string>
+    <string name="text_bid_status_success">Status produk berhasil diperbarui</string>
+    <string name="text_update_profile_success">Profil berhasil diperbarui</string>
+
+    <string name="text_product_name_required">Nama produk tidak boleh kosong</string>
+    <string name="text_product_price_required">Harga tidak boleh kosong</string>
+    <string name="text_product_category_required">Pilih minimal 1 kategori</string>
+    <string name="text_product_location_required">Lokasi tidak boleh kosong</string>
+    <string name="text_product_description_required">Deskripsi produk tidak boleh kosong</string>
+    <string name="text_product_image_required">Silahkan masukkan foto produk terlebih dahulu.</string>
+
+    <string name="text_toolbar_add_product">Tambah Produk</string>
+    <string name="text_toolbar_edit_product">Ubah Produk</string>
+    <string name="text_name_required">Nama tidak boleh kosong</string>
+    <string name="text_email_required">Email tidak boleh kosong</string>
+    <string name="text_email_not_valid">Email tidak valid</string>
+    <string name="text_password_required">Password tidak boleh kosong</string>
+    <string name="text_password_more_than_6_characters">Password harus lebih dari 6 karakter</string>
+    <string name="text_phone_number_required">Nomor telepon tidak boleh kosong</string>
+    <string name="text_city_required">Kota tidak boleh kosong</string>
+    <string name="text_address_required">Alamat tidak boleh kosong</string>
+    <string name="text_placeholder">Yuk cari produk impianmu!</string>
 </resources>

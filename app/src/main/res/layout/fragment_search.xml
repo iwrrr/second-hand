@@ -10,56 +10,14 @@
     android:focusable="true"
     tools:context=".ui.main.home.SearchFragment">
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/btn_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tl_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tl_search"
-        app:srcCompat="@drawable/ic_arrow_left"
-        app:tint="@color/iconTintPrimary" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tl_search"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar_search"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:fitsSystemWindows="true"
-        android:focusable="false"
-        app:boxBackgroundColor="@color/colorSearch"
-        app:boxCornerRadiusBottomEnd="16dp"
-        app:boxCornerRadiusBottomStart="16dp"
-        app:boxCornerRadiusTopEnd="16dp"
-        app:boxCornerRadiusTopStart="16dp"
-        app:boxStrokeColor="@color/colorAccent"
-        app:boxStrokeWidth="0.1dp"
-        app:boxStrokeWidthFocused="0.1dp"
-        app:endIconMode="clear_text"
-        app:expandedHintEnabled="false"
-        app:hintAnimationEnabled="false"
-        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:startIconDrawable="@drawable/ic_search">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_search"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="@string/text_search_hint"
-            android:imeOptions="actionSearch"
-            android:maxLength="40"
-            android:maxLines="1"
-            android:padding="0dp"
-            android:textSize="12sp" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_search"
@@ -70,15 +28,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tl_search"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:listitem="@layout/item_search_product" />
 
     <include
         android:id="@+id/placeholder"
-        layout="@layout/layout_search"
+        layout="@layout/layout_placeholder"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

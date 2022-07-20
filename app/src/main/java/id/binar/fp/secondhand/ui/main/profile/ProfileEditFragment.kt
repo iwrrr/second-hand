@@ -36,6 +36,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
 
     override fun setup() {
         super.setup()
+        setupRefresh()
         observeUser()
         onChooseImage()
     }
@@ -43,6 +44,10 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
     override fun setupToolbar() {
         binding.toolbar.toolbarTitle.text = "Lengkapi Info Akun"
         binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
+    }
+
+    private fun setupRefresh() {
+        binding.swipeRefresh.setOnRefreshListener { observeUser() }
     }
 
     private fun setupImageBottomSheet() {
@@ -120,6 +125,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                 is Result.Loading -> {}
                 is Result.Success -> {
                     if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
                         binding.ivProfile.loadImage(result.data.imageUrl)
                         binding.tvProfileName.data.text = result.data.fullName
                         binding.tvProfilePhone.data.text = result.data.phoneNumber.toString()
@@ -129,6 +135,7 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     }
                 }
                 is Result.Error -> {
+                    binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.message.toString())
                 }
             }
