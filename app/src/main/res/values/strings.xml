@@ -61,10 +61,14 @@
     <string name="text_profile_settings">Pengaturan</string>
     <string name="text_profile_logout">Keluar</string>
 
+    <string name="text_edit_account_info">Info Akun</string>
+    <string name="text_edit_profile_info">Info Profil</string>
     <string name="text_edit_profile_name">Nama</string>
     <string name="text_edit_profile_city">Kota</string>
     <string name="text_edit_profile_address">Alamat</string>
     <string name="text_edit_profile_phone">Nomor HP</string>
+    <string name="text_edit_profile_email">Email</string>
+    <string name="text_edit_profile_password">Kata Sandi</string>
 
     <string name="text_edit_profile_hint_name">Nama</string>
     <string name="text_edit_profile_hint_city">Kota</string>
@@ -129,7 +133,6 @@
 
     <string name="text_auth_title">Masuk dulu yuk!</string>
     <string name="text_auth_subtitle">Masuk untuk akses mudah melihat pesanan Anda di sini</string>
-    <string name="text_edit_profile_info">Info Profil</string>
 
     <string name="text_no_connection">Ups, Periksa kembali koneksimu!</string>
     <string name="text_notification_empty">Sabar ya, nanti juga bakalan ada notif kok, tapi bukan notif dari si Dia :)</string>

@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import id.binar.fp.secondhand.data.source.network.ApiService
+import id.binar.fp.secondhand.data.source.network.response.MessageDto
 import id.binar.fp.secondhand.domain.model.User
 import id.binar.fp.secondhand.domain.repository.AuthRepository
 import id.binar.fp.secondhand.util.Result
@@ -80,6 +81,20 @@ class AuthRepositoryImpl @Inject constructor(
             val user =
                 apiService.updateUser(body)
             emit(Result.Success(user.toDomain()))
+        } catch (e: HttpException) {
+            emit(Result.Error(e.message()))
+        } catch (e: NullPointerException) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
+        } catch (e: Exception) {
+            emit(Result.Error(e.localizedMessage?.toString() ?: "Unknown Error"))
+        }
+    }
+
+    override fun changePassword(body: RequestBody): LiveData<Result<MessageDto>> = liveData {
+        emit(Result.Loading())
+        try {
+            val data = apiService.changePassword(body)
+            emit(Result.Success(data))
         } catch (e: HttpException) {
             emit(Result.Error(e.message()))
         } catch (e: NullPointerException) {

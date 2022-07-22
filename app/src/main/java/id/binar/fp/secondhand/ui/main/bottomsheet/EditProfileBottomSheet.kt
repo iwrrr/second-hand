@@ -34,20 +34,20 @@ class EditProfileBottomSheet : BaseBottomSheet<BottomSheetEditProfileBinding>() 
             Constants.HINT_NAME -> {
                 binding.textLayout.hint = hint
                 binding.editText.setText(data)
-                binding.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
                 binding.editText.filters = arrayOf(InputFilter.LengthFilter(50))
+                binding.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
             }
             Constants.HINT_PHONE -> {
                 binding.textLayout.hint = hint
                 binding.editText.setText(data)
-                binding.editText.inputType = InputType.TYPE_CLASS_PHONE
                 binding.editText.filters = arrayOf(InputFilter.LengthFilter(14))
+                binding.editText.inputType = InputType.TYPE_CLASS_PHONE
             }
             Constants.HINT_CITY -> {
                 binding.textLayout.hint = hint
                 binding.editText.setText(data)
-                binding.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
                 binding.editText.filters = arrayOf(InputFilter.LengthFilter(50))
+                binding.editText.inputType = InputType.TYPE_TEXT_FLAG_CAP_WORDS
             }
             Constants.HINT_ADDRESS -> {
                 binding.textLayout.hint = hint
@@ -58,6 +58,12 @@ class EditProfileBottomSheet : BaseBottomSheet<BottomSheetEditProfileBinding>() 
                 binding.editText.imeOptions = EditorInfo.IME_FLAG_NO_ENTER_ACTION
                 binding.editText.gravity = Gravity.START or Gravity.TOP
                 binding.editText.minLines = 3
+            }
+            Constants.HINT_EMAIL -> {
+                binding.textLayout.hint = hint
+                binding.editText.setText(data)
+                binding.editText.filters = arrayOf(InputFilter.LengthFilter(100))
+                binding.editText.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             }
         }
 

@@ -7,6 +7,7 @@ object Endpoints {
     const val LOGIN = "auth/login"
     const val GET_USER = "auth/user"
     const val UPDATE_USER = "auth/user"
+    const val CHANGE_PASSWORD = "auth/change-password"
 
     // Seller
     const val ADD_BANNER = "seller/banner"
