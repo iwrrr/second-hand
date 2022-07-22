@@ -66,24 +66,22 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
             when (result) {
                 is Result.Loading -> {
                     showShimmer()
-//                    binding.loading.root.isVisible = true
                 }
                 is Result.Success -> {
                     hideShimmer()
                     if (result.data != null) {
-//                        binding.loading.root.isVisible = false
                         binding.swipeRefresh.isRefreshing = false
                         if (result.data.isNotEmpty()) {
                             sellerAdapter.submitList(result.data)
                         } else {
                             binding.content.root.isVisible = false
                             binding.empty.root.isVisible = true
+                            binding.empty.tvEmpty.text = getString(R.string.text_product_sold_empty)
                         }
                     }
                 }
                 is Result.Error -> {
                     hideShimmer()
-//                    binding.loading.root.isVisible = false
                     binding.swipeRefresh.isRefreshing = false
                     Helper.showToast(requireContext(), result.message.toString())
                 }

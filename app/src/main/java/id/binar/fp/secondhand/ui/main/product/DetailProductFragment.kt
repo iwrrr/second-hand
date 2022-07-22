@@ -24,7 +24,6 @@ import id.binar.fp.secondhand.util.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
-
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint

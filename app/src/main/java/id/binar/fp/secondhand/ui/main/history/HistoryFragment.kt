@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentHistoryBinding
 import id.binar.fp.secondhand.domain.model.History
 import id.binar.fp.secondhand.ui.auth.AuthActivity
@@ -74,6 +75,7 @@ class HistoryFragment : BaseFragment<FragmentHistoryBinding>() {
                         } else {
                             binding.empty.root.isVisible = true
                             binding.content.root.isVisible = false
+                            binding.empty.tvEmpty.text = getString(R.string.text_order_empty)
                         }
                     }
                 }

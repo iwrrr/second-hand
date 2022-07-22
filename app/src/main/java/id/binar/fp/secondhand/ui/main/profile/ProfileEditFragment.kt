@@ -3,6 +3,8 @@ package id.binar.fp.secondhand.ui.main.profile
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -12,6 +14,7 @@ import id.binar.fp.secondhand.databinding.FragmentProfileEditBinding
 import id.binar.fp.secondhand.domain.model.User
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
+import id.binar.fp.secondhand.ui.main.bottomsheet.ChangePasswordBottomSheet
 import id.binar.fp.secondhand.ui.main.bottomsheet.EditProfileBottomSheet
 import id.binar.fp.secondhand.ui.main.bottomsheet.ImageBottomSheet
 import id.binar.fp.secondhand.util.Constants
@@ -71,51 +74,78 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
 
     private fun setupEditBottomSheet(title: String, hint: String, data: String?) {
         val editProfileBottomSheet = EditProfileBottomSheet()
+        val changePasswordBottomSheet = ChangePasswordBottomSheet()
         val bundle = Bundle()
 
         bundle.putString("data", data)
         editProfileBottomSheet.arguments = bundle
         editProfileBottomSheet.title = title
         editProfileBottomSheet.hint = hint
-        editProfileBottomSheet.show(childFragmentManager, null)
 
-        when (hint) {
-            Constants.HINT_NAME -> {
-                editProfileBottomSheet.updateProfileCallback =
-                    object : EditProfileBottomSheet.UpdateProfileCallback {
-                        override fun onUpdate(data: String) {
-                            updateProfile(fullName = data)
-                            editProfileBottomSheet.dismiss()
+        if (hint != Constants.HINT_PASSWORD) {
+            editProfileBottomSheet.show(childFragmentManager, null)
+            when (hint) {
+                Constants.HINT_NAME -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(fullName = data)
+                                editProfileBottomSheet.dismiss()
+                            }
                         }
-                    }
-            }
-            Constants.HINT_PHONE -> {
-                editProfileBottomSheet.updateProfileCallback =
-                    object : EditProfileBottomSheet.UpdateProfileCallback {
-                        override fun onUpdate(data: String) {
-                            updateProfile(phoneNumber = data)
-                            editProfileBottomSheet.dismiss()
+                }
+                Constants.HINT_PHONE -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(phoneNumber = data)
+                                editProfileBottomSheet.dismiss()
+                            }
                         }
-                    }
-            }
-            Constants.HINT_CITY -> {
-                editProfileBottomSheet.updateProfileCallback =
-                    object : EditProfileBottomSheet.UpdateProfileCallback {
-                        override fun onUpdate(data: String) {
-                            updateProfile(city = data)
-                            editProfileBottomSheet.dismiss()
+                }
+                Constants.HINT_CITY -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(city = data)
+                                editProfileBottomSheet.dismiss()
+                            }
                         }
-                    }
-            }
-            Constants.HINT_ADDRESS -> {
-                editProfileBottomSheet.updateProfileCallback =
-                    object : EditProfileBottomSheet.UpdateProfileCallback {
-                        override fun onUpdate(data: String) {
-                            updateProfile(address = data)
-                            editProfileBottomSheet.dismiss()
+                }
+                Constants.HINT_ADDRESS -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(address = data)
+                                editProfileBottomSheet.dismiss()
+                            }
                         }
-                    }
+                }
+                Constants.HINT_EMAIL -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(email = data)
+                                editProfileBottomSheet.dismiss()
+                            }
+                        }
+                }
             }
+        } else {
+            changePasswordBottomSheet.title = title
+            changePasswordBottomSheet.hint = hint
+            changePasswordBottomSheet.show(childFragmentManager, null)
+            changePasswordBottomSheet.changePasswordCallback =
+                object : ChangePasswordBottomSheet.ChangePasswordCallback {
+                    override fun onUpdate(
+                        currPassword: String,
+                        newPassword: String,
+                        confirmPassword: String
+                    ) {
+                        changePassword(currPassword, newPassword, confirmPassword)
+                        changePasswordBottomSheet.dismiss()
+                    }
+                }
         }
     }
 
@@ -131,6 +161,8 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                         binding.tvProfilePhone.data.text = result.data.phoneNumber.toString()
                         binding.tvProfileCity.data.text = result.data.city
                         binding.tvProfileAddress.text = result.data.address
+                        binding.tvProfileEmail.data.text = result.data.email
+                        binding.tvProfilePassword.data.text = result.data.password
                         onDataClicked(result.data)
                     }
                 }
@@ -147,9 +179,10 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
         phoneNumber: String? = null,
         city: String? = null,
         address: String? = null,
+        email: String? = null,
         image: File? = null
     ) {
-        profileViewModel.updateProfile(fullName, phoneNumber, city, address, image)
+        profileViewModel.updateProfile(fullName, phoneNumber, city, address, email, image)
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Result.Loading -> {
@@ -157,7 +190,31 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), "Profile berhasil diperbarui")
+                        Helper.showToast(requireContext(), "Profil berhasil diperbarui")
+                        observeUser()
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.isVisible = false
+                        Helper.showToast(requireContext(), result.message.toString())
+                    }
+                }
+            }
+    }
+
+    private fun changePassword(
+        currentPassword: String,
+        newPassword: String,
+        confirmPassword: String
+    ) {
+        profileViewModel.changePassword(currentPassword, newPassword, confirmPassword)
+            .observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
+                    is Result.Success -> {
+                        binding.progressBar.isVisible = false
+                        Helper.showToast(requireContext(), "Kata sandi berhasil diperbarui")
                         observeUser()
                     }
                     is Result.Error -> {
@@ -187,6 +244,16 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
 
         binding.tvProfileAddress.setOnClickListener {
             setupEditBottomSheet(Constants.TITLE_ADDRESS, Constants.HINT_ADDRESS, user.address)
+        }
+
+        binding.tvProfileEmail.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_EMAIL, Constants.HINT_EMAIL, user.email)
+        }
+
+        binding.tvProfilePassword.data.filters = arrayOf(InputFilter.LengthFilter(12))
+        binding.tvProfilePassword.data.transformationMethod = PasswordTransformationMethod()
+        binding.tvProfilePassword.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_PASSWORD, Constants.HINT_PASSWORD, user.password)
         }
     }
 }

@@ -11,4 +11,6 @@ class OrderViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getBuyerOrder() = orderRepository.getBuyerOrder()
+
+    fun getBuyerOrderById(id: Int) = orderRepository.getBuyerOrderById(id)
 }

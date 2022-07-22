@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentOrderBinding
 import id.binar.fp.secondhand.domain.model.BuyerOrder
 import id.binar.fp.secondhand.ui.base.BaseFragment
@@ -58,6 +59,7 @@ class OrderFragment : BaseFragment<FragmentOrderBinding>() {
                         } else {
                             binding.empty.root.isVisible = true
                             binding.content.root.isVisible = false
+                            binding.empty.tvEmpty.text = getString(R.string.text_order_empty)
                         }
                     }
                 }

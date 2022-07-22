@@ -34,6 +34,11 @@ interface ApiService {
         @Body body: RequestBody
     ): UserDto
 
+    @PUT(Endpoints.CHANGE_PASSWORD)
+    suspend fun changePassword(
+        @Body body: RequestBody
+    ): MessageDto
+
     @POST(Endpoints.ADD_SELLER_PRODUCT)
     suspend fun addSellerProduct(
         @Body body: RequestBody
