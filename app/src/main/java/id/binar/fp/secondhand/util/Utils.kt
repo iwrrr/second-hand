@@ -3,10 +3,12 @@ package id.binar.fp.secondhand.util
 
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Environment
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -21,6 +23,17 @@ val timeStamp: String = SimpleDateFormat(
 fun createTempFile(context: Context): File {
     val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
     return File.createTempFile(timeStamp, ".jpg", storageDir)
+}
+
+@Throws(IOException::class)
+fun bitmapToFile(bitmap: Bitmap, context: Context): File {
+    val file = createTempFile(context)
+    val outputStream = FileOutputStream(file)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream)
+    outputStream.flush()
+    outputStream.close()
+
+    return file
 }
 
 fun uriToFile(selectedImage: Uri, context: Context): File {

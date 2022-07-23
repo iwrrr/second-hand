@@ -19,14 +19,13 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_product_status"
+        style="@style/Text.Secondary.12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/text_seller_order_bid_title"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/iv_product_image"
         app:layout_constraintTop_toTopOf="@+id/iv_product_image" />
 
@@ -44,18 +43,20 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_product_name"
+        style="@style/Text.Primary.14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/text_seller_order_product_name"
-        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/tv_product_time"
         app:layout_constraintStart_toEndOf="@+id/iv_product_image"
         app:layout_constraintTop_toBottomOf="@+id/tv_product_status" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_product_price"
+        style="@style/Text.Primary.14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -63,12 +64,13 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/text_seller_order_base_price"
-        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/tv_product_time"
         app:layout_constraintStart_toEndOf="@+id/iv_product_image"
         app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_product_bid"
+        style="@style/Text.Primary.14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
@@ -77,8 +79,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/text_seller_order_bid_price"
-        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_product_time"
         app:layout_constraintStart_toEndOf="@+id/iv_product_image"
         app:layout_constraintTop_toBottomOf="@+id/tv_product_price" />
 

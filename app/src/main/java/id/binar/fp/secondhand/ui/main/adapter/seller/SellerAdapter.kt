@@ -1,5 +1,6 @@
 package id.binar.fp.secondhand.ui.main.adapter.seller
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import id.binar.fp.secondhand.R
@@ -16,9 +17,10 @@ import id.binar.fp.secondhand.util.Status
 
 @Suppress("UNCHECKED_CAST")
 class SellerAdapter<T>(
-    private val type: SellerType,
-    private val onClick: (T) -> Unit
+    private val type: SellerType
 ) : BaseAdapter<BaseType>() {
+
+    var itemClickCallback: ItemClickCallback<T>? = null
 
     override fun getItemId(position: Int): Long {
         return when (getItem(position)) {
@@ -50,7 +52,10 @@ class SellerAdapter<T>(
     override fun onBindViewHolder(holder: BaseViewHolder<BaseType>, position: Int) {
         when (type) {
             SellerType.PRODUCT -> {
-                (holder as SellerAdapter<Product>.ProductViewHolder).onBind(getItem(position) as Product)
+                (holder as SellerAdapter<Product>.ProductViewHolder).onBind(
+                    getItem(position) as Product,
+                    position
+                )
             }
             SellerType.INTERESTED -> {
                 (holder as SellerAdapter<SellerOrder>.InterestedViewHolder).onBind(getItem(position) as SellerOrder)
@@ -64,7 +69,7 @@ class SellerAdapter<T>(
     inner class ProductViewHolder(private val binding: ItemSellerProductBinding) :
         BaseViewHolder<Product>(binding.root) {
 
-        override fun onBind(data: Product) {
+        override fun onBind(data: Product, position: Int) {
             with(binding) {
                 val price = Helper.numberFormatter(data.basePrice)
                 tvProductName.text = data.name
@@ -74,7 +79,10 @@ class SellerAdapter<T>(
                     price
                 )
                 ivProductImage.loadImage(data.imageUrl)
-                itemView.setOnClickListener { onClick(data as T) }
+                btnDelete.setOnClickListener { itemClickCallback?.onDelete(data.id) }
+                itemView.setOnClickListener {
+                    itemClickCallback?.onClick(data as T)
+                }
             }
         }
     }
@@ -84,18 +92,39 @@ class SellerAdapter<T>(
 
         override fun onBind(data: SellerOrder) {
             with(binding) {
-                var status = ""
-                val date = Helper.dateFormatter(data.transactionDate)
+                val date = Helper.dateFormatter(data.updatedAt)
                 val basePrice = Helper.numberFormatter(data.basePrice)
                 val bidPrice = Helper.numberFormatter(data.price)
 
+                var productStatus = ""
+                var bidStatus = ""
+
                 when (data.status) {
-                    Status.PENDING -> status = "Ditawar"
-                    Status.ACCEPTED -> status = "Berhasil Ditawar"
-                    Status.DECLINED -> status = "Ditolak"
+                    Status.PENDING -> {
+                        productStatus = "Penawaran produk"
+                        bidStatus = "Ditawar"
+                        tvProductBid.paintFlags =
+                            tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    }
+                    Status.ACCEPTED -> {
+                        productStatus = if (data.product?.status == Status.SOLD) {
+                            "Berhasil terjual"
+                        } else {
+                            "Penawaran produk"
+                        }
+                        bidStatus = "Berhasil Ditawar"
+                        tvProductBid.paintFlags =
+                            tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                    }
+                    Status.DECLINED -> {
+                        productStatus = "Penawaran ditolak"
+                        bidStatus = "Ditolak"
+                        tvProductBid.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    }
                 }
 
                 tvProductTime.text = date
+                tvProductStatus.text = productStatus
                 tvProductName.text = data.productName
                 tvProductPrice.text = itemView.context.getString(
                     R.string.text_seller_order_base_price,
@@ -103,13 +132,15 @@ class SellerAdapter<T>(
                 )
                 tvProductBid.text = itemView.context.getString(
                     R.string.text_seller_order_bid_price,
-                    status,
+                    bidStatus,
                     bidPrice
                 )
                 ivProductImage.loadImage(data.product?.imageUrl)
             }
 
-            itemView.setOnClickListener { onClick(data as T) }
+            itemView.setOnClickListener {
+                itemClickCallback?.onClick(data as T)
+            }
         }
     }
 
@@ -126,8 +157,15 @@ class SellerAdapter<T>(
                     price
                 )
                 ivProductImage.loadImage(data.imageUrl)
-                itemView.setOnClickListener { onClick(data as T) }
+                itemView.setOnClickListener {
+                    itemClickCallback?.onClick(data as T)
+                }
             }
         }
+    }
+
+    interface ItemClickCallback<T> {
+        fun onClick(data: T)
+        fun onDelete(id: Int)
     }
 }

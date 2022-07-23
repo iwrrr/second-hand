@@ -1,243 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
-    android:fillViewport="true"
-    android:overScrollMode="never"
+    android:clickable="true"
+    android:fitsSystemWindows="true"
+    android:focusable="true"
     tools:context=".ui.main.profile.ProfileEditFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/layout_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/iv_profile"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="24dp"
-            android:scaleType="centerCrop"
-            android:theme="@style/ShapeAppearanceOverlay.App.CornerSize.12"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:srcCompat="@drawable/ic_image" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_edit_profile_name"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_name"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/text_edit_profile_hint_name"
-                android:inputType="textCapWords"
-                android:maxLength="50"
-                android:maxLines="1" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_phone"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_edit_profile_phone"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_name" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_phone"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_phone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_phone"
-                android:layout_width="match_parent"
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/layout_toolbar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/text_edit_profile_hint_phone"
-                android:inputType="phone"
-                android:maxLength="14"
-                android:maxLines="1" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="24dp"
+                android:scaleType="centerCrop"
+                android:theme="@style/ShapeAppearanceOverlay.App.Circle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                app:srcCompat="@drawable/ic_image" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_city"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_edit_profile_city"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_phone" />
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_city"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:hintEnabled="false"
-            app:layout_constraintBottom_toTopOf="@+id/tv_address"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_city">
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_profile_info"
+                style="@style/Text.Primary.Bold.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_edit_profile_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_city"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="@string/text_edit_profile_hint_city"
-                android:inputType="textCapWords"
-                android:maxLength="50"
-                android:maxLines="1" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_name"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/text_edit_profile_name"
+                app:layout_constraintEnd_toStartOf="@+id/tv_profile_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_profile_info" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <include
+                android:id="@+id/tv_profile_name"
+                layout="@layout/item_edit_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_name" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_address"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_edit_profile_address"
-            android:textColor="@android:color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etl_city" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_phone"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/text_edit_profile_phone"
+                app:layout_constraintEnd_toStartOf="@+id/tv_profile_phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/etl_address"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="16dp"
-            app:boxCornerRadiusBottomEnd="16dp"
-            app:boxCornerRadiusBottomStart="16dp"
-            app:boxCornerRadiusTopEnd="16dp"
-            app:boxCornerRadiusTopStart="16dp"
-            app:boxStrokeColor="@color/colorPrimary"
-            app:hintEnabled="false"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_address">
+            <include
+                android:id="@+id/tv_profile_phone"
+                layout="@layout/item_edit_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_phone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_phone"
+                app:layout_constraintTop_toTopOf="@+id/tv_phone" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_address"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="start"
-                android:hint="@string/text_edit_profile_hint_address"
-                android:inputType="textMultiLine"
-                android:lines="3"
-                android:maxLines="3" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_city"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/text_edit_profile_city"
+                app:layout_constraintEnd_toStartOf="@+id/tv_profile_city"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <include
+                android:id="@+id/tv_profile_city"
+                layout="@layout/item_edit_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_city"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_city"
+                app:layout_constraintTop_toTopOf="@+id/tv_city" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_save"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:padding="14dp"
-            android:text="@string/text_edit_profile_btn_save"
-            android:textAllCaps="false"
-            android:textAppearance="@style/TextAppearance.AppCompat.Button"
-            app:cornerRadius="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/etl_address"
-            app:layout_constraintStart_toStartOf="@+id/etl_address"
-            app:layout_constraintTop_toBottomOf="@+id/etl_address"
-            app:layout_constraintVertical_bias="0.0" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_address"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/text_edit_profile_address"
+                app:layout_constraintEnd_toStartOf="@+id/tv_profile_address"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_city" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_profile_address"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:gravity="start|center"
+                android:paddingStart="0dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_address"
+                app:layout_constraintTop_toTopOf="@+id/tv_address"
+                tools:text="@tools:sample/lorem" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shapeableImageView"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_address"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_city"
+                app:srcCompat="@drawable/ic_arrow_right" />
 
-</ScrollView>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_account_info"
+                style="@style/Text.Primary.Bold.16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_edit_account_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_email"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/text_edit_profile_email"
+                app:layout_constraintEnd_toStartOf="@+id/tv_profile_email"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_account_info" />
+
+            <include
+                android:id="@+id/tv_profile_email"
+                layout="@layout/item_edit_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_email"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_email"
+                app:layout_constraintTop_toTopOf="@+id/tv_email" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_password"
+                style="@style/Text.Primary.14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:text="@string/text_edit_profile_password"
+                app:layout_constraintEnd_toStartOf="@+id/tv_profile_password"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_email" />
+
+            <include
+                android:id="@+id/tv_profile_password"
+                layout="@layout/item_edit_profile"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_password"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_password"
+                app:layout_constraintTop_toTopOf="@+id/tv_password" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

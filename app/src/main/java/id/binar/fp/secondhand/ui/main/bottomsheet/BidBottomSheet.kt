@@ -1,43 +1,31 @@
 package id.binar.fp.secondhand.ui.main.bottomsheet
 
 import android.content.DialogInterface
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.databinding.BottomSheetBidBinding
+import id.binar.fp.secondhand.ui.base.BaseBottomSheet
 import id.binar.fp.secondhand.ui.main.product.ProductViewModel
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 
 @AndroidEntryPoint
-class BidBottomSheet : BottomSheetDialogFragment() {
-
-    private var _binding: BottomSheetBidBinding? = null
-    private val binding get() = _binding!!
+class BidBottomSheet : BaseBottomSheet<BottomSheetBidBinding>() {
 
     private val viewModel: ProductViewModel by viewModels()
 
     var statusOrder: Int = 0
     var bottomSheetCallback: BottomSheetCallback? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetBidBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> BottomSheetBidBinding
+        get() = BottomSheetBidBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setup() {
         val productId = arguments?.getInt("id")
         val image = arguments?.getString("image")
         val name = arguments?.getString("name")
@@ -66,23 +54,22 @@ class BidBottomSheet : BottomSheetDialogFragment() {
                             binding.progressBar.isVisible = false
                             statusOrder = 1
                             dialog?.dismiss()
-                            Helper.showToast(requireContext(), "Produk berhasil ditawar!")
                         }
                         is Result.Error -> {
                             binding.progressBar.isVisible = false
                             statusOrder = 0
                             dialog?.dismiss()
-                            Helper.showToast(requireContext(), result.error)
+                            Helper.showSnackbar(
+                                requireContext(),
+                                binding.root,
+                                result.message.toString(),
+                                Status.FAILED
+                            )
                         }
                     }
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onDismiss(dialog: DialogInterface) {

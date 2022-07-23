@@ -4,7 +4,9 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
@@ -16,7 +18,7 @@ import id.binar.fp.secondhand.databinding.FragmentSearchBinding
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.SearchAdapter
-import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
+import id.binar.fp.secondhand.ui.main.product.DetailProductFragment
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.Status
@@ -45,47 +47,52 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
     }
 
     private fun setupSearch() {
-        binding.etSearch.requestFocus()
+        binding.toolbar.etSearch.requestFocus()
+        binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
+
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         val imm: InputMethodManager =
             requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.showSoftInput(binding.etSearch, 0)
+        imm.showSoftInput(binding.toolbar.etSearch, 0)
 
-        binding.etSearch.doOnTextChanged { text, _, _, _ ->
+        binding.toolbar.etSearch.doOnTextChanged { text, _, _, _ ->
             lifecycleScope.launch { viewModel.queryChannel.send(text.toString()) }
         }
 
         binding.rvSearch.adapter = searchAdapter
         binding.rvSearch.layoutManager = LinearLayoutManager(requireContext())
-
         binding.placeholder.root.isVisible = true
+        observeProduct()
+    }
 
+    private fun observeProduct() {
         viewModel.searchResult.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.loading.root.isVisible = true
-                    binding.rvSearch.isVisible = false
+                    showShimmer()
                     binding.placeholder.root.isVisible = false
                 }
                 is Result.Success -> {
-                    binding.loading.root.isVisible = false
-                    binding.rvSearch.isVisible = true
-                    binding.placeholder.root.isVisible = false
-                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
-                    searchAdapter.submitList(availableProduct)
+                    hideShimmer()
+                    if (result.data != null) {
+                        binding.placeholder.root.isVisible = false
+                        val availableProduct =
+                            result.data.filter { it.status == Status.AVAILABLE }
+                        searchAdapter.submitList(availableProduct)
+                    }
                 }
                 is Result.Error -> {
-                    binding.loading.root.isVisible = false
-                    binding.rvSearch.isVisible = false
-                    binding.placeholder.root.isVisible = false
-                    Helper.showToast(requireContext(), result.error)
+                    hideShimmer()
+                    binding.placeholder.root.isVisible = true
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
     }
 
     private fun onProductClicked(product: Product) {
-        val fragment = ProductDetailFragment()
+        val fragment = DetailProductFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)
         fragment.arguments = bundle
@@ -94,6 +101,22 @@ class SearchFragment : BaseFragment<FragmentSearchBinding>() {
             add(R.id.main_nav_host, fragment)
             addToBackStack(null)
             commit()
+        }
+    }
+
+    private fun showShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = false
+            shimmer.root.startShimmer()
+            rvSearch.isInvisible = true
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = true
+            shimmer.root.stopShimmer()
+            rvSearch.isInvisible = false
         }
     }
 }

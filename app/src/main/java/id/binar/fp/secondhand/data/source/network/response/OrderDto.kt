@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.data.source.network.response
 
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.OrderEntity
 import id.binar.fp.secondhand.domain.model.Order
 
 data class OrderDto(
@@ -36,6 +37,18 @@ data class OrderDto(
             status,
             product?.toDomain(),
             user?.toDomain()
+        )
+    }
+
+    fun toEntity(): OrderEntity {
+        return OrderEntity(
+            id,
+            productId,
+            buyerId,
+            price,
+            status,
+            product?.toEntity(),
+            user?.toEntity()
         )
     }
 }

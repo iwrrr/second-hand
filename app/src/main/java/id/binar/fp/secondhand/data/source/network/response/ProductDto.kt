@@ -1,11 +1,9 @@
 package id.binar.fp.secondhand.data.source.network.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import id.binar.fp.secondhand.data.source.local.entity.ProductEntity
 import id.binar.fp.secondhand.domain.model.Product
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class ProductDto(
 
     @SerializedName("id")
@@ -29,6 +27,9 @@ data class ProductDto(
     @SerializedName("location")
     val location: String? = null,
 
+    @SerializedName("user_id")
+    val userId: Int = 0,
+
     @SerializedName("User")
     val user: UserDto? = null,
 
@@ -43,7 +44,7 @@ data class ProductDto(
 
     @SerializedName("updated_at")
     val updatedAt: String? = null,
-) : Parcelable {
+) {
 
     fun toDomain(): Product {
         val categories = categories?.map { it.toDomain() }
@@ -55,7 +56,27 @@ data class ProductDto(
             imageUrl,
             imageName,
             location,
+            userId,
             user?.toDomain(),
+            status,
+            categories,
+            createdAt,
+            updatedAt
+        )
+    }
+
+    fun toEntity(): ProductEntity {
+        val categories = categories?.map { it.toEntity() }
+        return ProductEntity(
+            id,
+            name,
+            basePrice,
+            description,
+            imageUrl,
+            imageName,
+            location,
+            userId,
+            user?.toEntity(),
             status,
             categories,
             createdAt,

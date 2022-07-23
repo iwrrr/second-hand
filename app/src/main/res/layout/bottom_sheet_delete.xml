@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
+    android:orientation="vertical">
+
+    <com.google.android.material.textview.MaterialTextView
+        style="@style/Text.Primary.Bold.18"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/text_delete_title" />
+
+    <LinearLayout
+        android:id="@+id/delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:padding="16dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/Text.Primary.16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_delete_yes"
+            android:textColor="@android:color/holo_red_light" />
+
+    </LinearLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackgroundBorderless"
+        android:padding="16dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/Text.Primary.16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_delete_cancel" />
+
+    </LinearLayout>
+
+</LinearLayout>

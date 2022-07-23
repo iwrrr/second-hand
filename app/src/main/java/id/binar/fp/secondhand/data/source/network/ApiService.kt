@@ -34,6 +34,11 @@ interface ApiService {
         @Body body: RequestBody
     ): UserDto
 
+    @PUT(Endpoints.CHANGE_PASSWORD)
+    suspend fun changePassword(
+        @Body body: RequestBody
+    ): MessageDto
+
     @POST(Endpoints.ADD_SELLER_PRODUCT)
     suspend fun addSellerProduct(
         @Body body: RequestBody
@@ -50,12 +55,14 @@ interface ApiService {
     @PUT(Endpoints.UPDATE_SELLER_PRODUCT_BY_ID)
     suspend fun updateSellerProductById(
         @Path("id") id: Int,
-        @Field("name") name: String,
-        @Field("description") description: String,
-        @Field("base_price") basePrice: String,
-        @Field("category_ids") categoryIds: List<Int>,
-        @Field("location") location: String,
-        @Part("image") image: MultipartBody.Part,
+        @Body body: RequestBody
+    ): ProductDto
+
+    @FormUrlEncoded
+    @PATCH(Endpoints.UPDATE_SELLER_PRODUCT_BY_ID)
+    suspend fun updateSellerProductById(
+        @Path("id") id: Int,
+        @Field("status") status: String
     ): ProductDto
 
     @DELETE(Endpoints.DELETE_SELLER_PRODUCT_BY_ID)
@@ -71,10 +78,12 @@ interface ApiService {
         @Path("id") id: Int
     ): SellerOrderDto
 
+    @FormUrlEncoded
     @PATCH(Endpoints.UPDATE_SELLER_ORDER_BY_ID)
     suspend fun updateSellerOrderById(
-        @Path("id") id: Int
-    ) // TODO: Response Body Not Yet Implemented
+        @Path("id") id: Int,
+        @Field("status") status: String
+    ): SellerOrderDto
 
     @GET(Endpoints.GET_SELLER_ORDER_BY_PRODUCT_ID)
     suspend fun getSellerOrderByProductId(
@@ -106,7 +115,7 @@ interface ApiService {
     )
 
     @GET(Endpoints.GET_BANNER)
-    suspend fun getBanner()
+    suspend fun getBanner(): List<BannerDto>
 
     @GET(Endpoints.GET_BANNER_BY_ID)
     suspend fun getBannerById(
@@ -137,19 +146,19 @@ interface ApiService {
     ): OrderDto
 
     @GET(Endpoints.GET_BUYER_ORDER)
-    suspend fun getBuyerOrder(): List<OrderDto>
+    suspend fun getBuyerOrder(): List<BuyerOrderDto>
 
     @GET(Endpoints.GET_BUYER_ORDER_BY_ID)
     suspend fun getBuyerOrderById(
         @Path("id") id: Int
-    ): OrderDto
+    ): BuyerOrderDto
 
     @PUT(Endpoints.UPDATE_BUYER_ORDER_BY_ID)
     suspend fun updateBuyerOrderById(
         @Path("id") id: Int,
         @Field("product_id") productId: Int,
         @Field("bid_price") bidPrice: Int,
-    ): OrderDto
+    ): BuyerOrderDto
 
     @DELETE(Endpoints.DELETE_BUYER_ORDER_BY_ID)
     suspend fun deleteBuyerOrderById(

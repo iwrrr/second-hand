@@ -2,18 +2,27 @@ package id.binar.fp.secondhand.ui.main.profile
 
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Bundle
+import android.text.InputFilter
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProfileEditBinding
+import id.binar.fp.secondhand.domain.model.User
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
+import id.binar.fp.secondhand.ui.main.bottomsheet.ChangePasswordBottomSheet
+import id.binar.fp.secondhand.ui.main.bottomsheet.EditProfileBottomSheet
 import id.binar.fp.secondhand.ui.main.bottomsheet.ImageBottomSheet
+import id.binar.fp.secondhand.util.Constants
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 import java.io.File
 
 @AndroidEntryPoint
@@ -32,9 +41,9 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
 
     override fun setup() {
         super.setup()
+        setupRefresh()
         observeUser()
-        chooseImage()
-        editProfile()
+        onChooseImage()
     }
 
     override fun setupToolbar() {
@@ -42,62 +51,139 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
         binding.toolbar.btnBack.setOnClickListener { requireActivity().onBackPressed() }
     }
 
+    private fun setupRefresh() {
+        binding.swipeRefresh.setOnRefreshListener { observeUser() }
+    }
+
+    private fun setupImageBottomSheet() {
+        val bottomSheet = ImageBottomSheet()
+        bottomSheet.show(childFragmentManager, ImageBottomSheet.TAG)
+        bottomSheet.bottomSheetCallback = object : ImageBottomSheet.BottomSheetCallback {
+            override fun onSelectImage(bitmap: Bitmap, file: File) {
+                binding.ivProfile.loadImage(bitmap)
+                getFile = file
+                updateProfile(image = getFile)
+                bottomSheet.dismiss()
+            }
+
+            override fun onSelectImage(uri: Uri, file: File) {
+                binding.ivProfile.loadImage(uri)
+                updateProfile(image = file)
+                bottomSheet.dismiss()
+            }
+        }
+    }
+
+    private fun setupEditBottomSheet(title: String, hint: String, data: String?) {
+        val editProfileBottomSheet = EditProfileBottomSheet()
+        val changePasswordBottomSheet = ChangePasswordBottomSheet()
+        val bundle = Bundle()
+        bundle.putString("data", data)
+
+        if (hint != Constants.HINT_PASSWORD) {
+            editProfileBottomSheet.arguments = bundle
+            editProfileBottomSheet.title = title
+            editProfileBottomSheet.hint = hint
+            editProfileBottomSheet.show(childFragmentManager, null)
+            when (hint) {
+                Constants.HINT_NAME -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(fullName = data)
+                                editProfileBottomSheet.dismiss()
+                            }
+                        }
+                }
+                Constants.HINT_PHONE -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(phoneNumber = data)
+                                editProfileBottomSheet.dismiss()
+                            }
+                        }
+                }
+                Constants.HINT_CITY -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(city = data)
+                                editProfileBottomSheet.dismiss()
+                            }
+                        }
+                }
+                Constants.HINT_ADDRESS -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(address = data)
+                                editProfileBottomSheet.dismiss()
+                            }
+                        }
+                }
+                Constants.HINT_EMAIL -> {
+                    editProfileBottomSheet.updateProfileCallback =
+                        object : EditProfileBottomSheet.UpdateProfileCallback {
+                            override fun onUpdate(data: String) {
+                                updateProfile(email = data)
+                                editProfileBottomSheet.dismiss()
+                            }
+                        }
+                }
+            }
+        } else {
+            changePasswordBottomSheet.title = title
+            changePasswordBottomSheet.hint = hint
+            changePasswordBottomSheet.show(childFragmentManager, null)
+            changePasswordBottomSheet.changePasswordCallback =
+                object : ChangePasswordBottomSheet.ChangePasswordCallback {
+                    override fun onUpdate(
+                        currPassword: String,
+                        newPassword: String,
+                        confirmPassword: String
+                    ) {
+                        changePassword(currPassword, newPassword, confirmPassword)
+                        changePasswordBottomSheet.dismiss()
+                    }
+                }
+        }
+    }
+
     private fun observeUser() {
         authViewModel.getUser().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-                    binding.ivProfile.loadImage(result.data.imageUrl)
-                    binding.etName.setText(result.data.fullName)
-                    binding.etPhone.setText(result.data.phoneNumber.toString())
-                    binding.etCity.setText(result.data.city)
-                    binding.etAddress.setText(result.data.address)
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        binding.ivProfile.loadImage(result.data.imageUrl)
+                        binding.tvProfileName.data.text = result.data.fullName
+                        binding.tvProfilePhone.data.text = result.data.phoneNumber.toString()
+                        binding.tvProfileCity.data.text = result.data.city
+                        binding.tvProfileAddress.text = result.data.address
+                        binding.tvProfileEmail.data.text = result.data.email
+                        binding.tvProfilePassword.data.text = result.data.password
+                        onDataClicked(result.data)
+                    }
                 }
                 is Result.Error -> {
-                    Helper.showToast(requireContext(), result.error)
+                    binding.swipeRefresh.isRefreshing = false
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
-            }
-        }
-    }
-
-    private fun chooseImage() {
-        binding.ivProfile.setOnClickListener { checkPermissions(::initBottomSheet) }
-    }
-
-    private fun editProfile() {
-//        if (arguments != null) {
-//            val user = arguments?.getParcelable<UserDto>("user") as UserDto
-//
-//            binding.ivProfile.loadImage(user.imageUrl)
-//            binding.etName.setText(user.fullName)
-//            binding.etPhone.setText(user.phoneNumber.toString())
-//            binding.etCity.setText(user.city)
-//            binding.etAddress.setText(user.address)
-//        }
-
-        binding.btnSave.setOnClickListener {
-            val name = binding.etName.text.toString()
-            val phoneNumber = binding.etPhone.text.toString()
-            val city = binding.etCity.text.toString()
-            val address = binding.etAddress.text.toString()
-
-            if (getFile != null) {
-                val file = getFile as File
-                updateProfile(name, phoneNumber, city, address, file)
-            } else {
-                updateProfile(name, phoneNumber, city, address)
             }
         }
     }
 
     private fun updateProfile(
-        fullName: String,
-        phoneNumber: String,
-        city: String,
-        address: String,
+        fullName: String? = null,
+        phoneNumber: String? = null,
+        city: String? = null,
+        address: String? = null,
+        email: String? = null,
         image: File? = null
     ) {
-        profileViewModel.editProfile(fullName, phoneNumber, city, address, image)
+        profileViewModel.updateProfile(fullName, phoneNumber, city, address, email, image)
             .observe(viewLifecycleOwner) { result ->
                 when (result) {
                     is Result.Loading -> {
@@ -105,32 +191,88 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), "Profile berhasil diperbarui")
-                        requireActivity().onBackPressed()
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            getString(R.string.text_update_profile_success)
+                        )
+                        observeUser()
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), result.error)
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            result.message.toString(),
+                            Status.FAILED
+                        )
                     }
                 }
             }
     }
 
-    private fun initBottomSheet() {
-        val bottomSheet = ImageBottomSheet()
-        bottomSheet.show(childFragmentManager, ImageBottomSheet.TAG)
-        bottomSheet.bottomSheetCallback = object : ImageBottomSheet.BottomSheetCallback {
-            override fun onSelectImage(bitmap: Bitmap, file: File) {
-                binding.ivProfile.loadImage(bitmap)
-                getFile = file
-                bottomSheet.dismiss()
+    private fun changePassword(
+        currentPassword: String,
+        newPassword: String,
+        confirmPassword: String
+    ) {
+        profileViewModel.changePassword(currentPassword, newPassword, confirmPassword)
+            .observe(viewLifecycleOwner) { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        binding.progressBar.isVisible = true
+                    }
+                    is Result.Success -> {
+                        binding.progressBar.isVisible = false
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            getString(R.string.text_change_password_success)
+                        )
+                        observeUser()
+                    }
+                    is Result.Error -> {
+                        binding.progressBar.isVisible = false
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            result.message.toString(),
+                            Status.FAILED
+                        )
+                    }
+                }
             }
+    }
 
-            override fun onSelectImage(uri: Uri, file: File) {
-                binding.ivProfile.loadImage(uri)
-                getFile = file
-                bottomSheet.dismiss()
-            }
+    private fun onChooseImage() {
+        binding.ivProfile.setOnClickListener { checkPermissions(::setupImageBottomSheet) }
+    }
+
+    private fun onDataClicked(user: User) {
+        binding.tvProfileName.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_NAME, Constants.HINT_NAME, user.fullName)
+        }
+
+        binding.tvProfilePhone.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_PHONE, Constants.HINT_PHONE, user.phoneNumber)
+        }
+
+        binding.tvProfileCity.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_CITY, Constants.HINT_CITY, user.city)
+        }
+
+        binding.tvProfileAddress.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_ADDRESS, Constants.HINT_ADDRESS, user.address)
+        }
+
+        binding.tvProfileEmail.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_EMAIL, Constants.HINT_EMAIL, user.email)
+        }
+
+        binding.tvProfilePassword.data.filters = arrayOf(InputFilter.LengthFilter(12))
+        binding.tvProfilePassword.data.transformationMethod = PasswordTransformationMethod()
+        binding.tvProfilePassword.root.setOnClickListener {
+            setupEditBottomSheet(Constants.TITLE_PASSWORD, Constants.HINT_PASSWORD, user.password)
         }
     }
 }

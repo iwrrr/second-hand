@@ -9,12 +9,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
-import id.binar.fp.secondhand.data.source.network.response.UserDto
 import id.binar.fp.secondhand.databinding.FragmentProfileBinding
 import id.binar.fp.secondhand.ui.auth.AuthActivity
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.MainActivity
+import id.binar.fp.secondhand.ui.main.order.OrderFragment
 import id.binar.fp.secondhand.ui.main.seller.SellerFragment
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Result
@@ -29,17 +29,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
 
     private val authViewModel: AuthViewModel by viewModels()
 
-    private lateinit var user: UserDto
-
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentProfileBinding
         get() = FragmentProfileBinding::inflate
 
     override fun setup() {
         super.setup()
-        setupSwipeLayout()
+        setupRefresh()
 
         onEditClicked()
         onSellerClicked()
+        onOrderClicked()
         onLoginClicked()
         onLogoutClicked()
     }
@@ -53,6 +52,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
                     tvEmail.isVisible = true
                     ivEdit.isVisible = true
                     menu.seller.isVisible = true
+                    menu.order.isVisible = true
                     menu.logout.isVisible = true
                     btnLogin.isVisible = false
                 }
@@ -62,10 +62,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         }
     }
 
-    private fun setupSwipeLayout() {
-        binding.swipeRefresh.setOnRefreshListener {
-            observeUser()
-        }
+    private fun setupRefresh() {
+        binding.swipeRefresh.setOnRefreshListener { observeUser() }
     }
 
     private fun observeUser() {
@@ -73,13 +71,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
             when (result) {
                 is Result.Loading -> {}
                 is Result.Success -> {
-//                    user = result.data
-                    with(binding) {
-                        ivProfile.loadImage(result.data.imageUrl)
-                        tvName.text = result.data.fullName
-                        tvPhone.text = result.data.phoneNumber
-                        tvEmail.text = result.data.email
-                        swipeRefresh.isRefreshing = false
+                    if (result.data != null) {
+                        with(binding) {
+                            ivProfile.loadImage(result.data.imageUrl)
+                            tvName.text = result.data.fullName
+                            tvPhone.text = result.data.phoneNumber
+                            tvEmail.text = result.data.email
+                            swipeRefresh.isRefreshing = false
+                        }
                     }
                 }
                 is Result.Error -> {
@@ -103,6 +102,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>() {
         binding.menu.seller.setOnClickListener {
             parentFragmentManager.beginTransaction().apply {
                 add(R.id.main_nav_host, SellerFragment())
+                addToBackStack(null)
+                commit()
+            }
+        }
+    }
+
+    private fun onOrderClicked() {
+        binding.menu.order.setOnClickListener {
+            parentFragmentManager.beginTransaction().apply {
+                add(R.id.main_nav_host, OrderFragment())
                 addToBackStack(null)
                 commit()
             }

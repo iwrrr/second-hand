@@ -12,12 +12,27 @@
     <color name="colorSecondary">#E2D4F0</color>
     <color name="colorAccent">#8A8A8A</color>
     <color name="colorPlaceholder">#CCCCCC</color>
-    <color name="colorSearch">#FAFAFA</color>
+    <color name="colorSearch">#F2F3F7</color>
 
-    <color name="iconTintPrimary">#151515</color>
+    <color name="colorTextPrimary">#464649</color>
+    <color name="colorTextSecondary">#848586</color>
+    <color name="colorTextTertiary">#7126B5</color>
+
+    <color name="iconTintPrimary">#707070</color>
 
     <color name="colorTab">#F9F8FD</color>
     <color name="colorTabSelected">#575CE4</color>
     <color name="colorTabText">#A0A0B0</color>
     <color name="colorTabTextSelected">#FFFFFF</color>
+
+    <color name="colorBgWindow">#F2F3F7</color>
+    <color name="colorBgPending">#FFFBD7</color>
+    <color name="colorBgAccept">#D7FFE0</color>
+    <color name="colorBgDeclined">#FFEAEF</color>
+    <color name="colorBgSuccess">#73CA5C</color>
+    <color name="colorBgFailed">#DB4848</color>
+
+    <color name="colorTextPending">#C8A938</color>
+    <color name="colorTextAccept">#38C842</color>
+    <color name="colorTextDeclined">#D9335C</color>
 </resources>

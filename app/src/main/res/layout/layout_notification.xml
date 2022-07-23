@@ -10,10 +10,14 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_notification_list" />
+        tools:listitem="@layout/item_notification" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

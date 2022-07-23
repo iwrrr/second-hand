@@ -7,9 +7,7 @@
     <uses-permission android:name="android.webkit.PermissionRequest" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MainApplication"
@@ -20,7 +18,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SecondHand"
+        android:theme="@style/Theme.App.Starting"
         tools:targetApi="31">
         <activity
             android:name=".ui.auth.AuthActivity"
@@ -29,7 +27,7 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,6 +44,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
     </application>
 
 </manifest>

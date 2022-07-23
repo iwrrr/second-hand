@@ -1,29 +1,44 @@
 package id.binar.fp.secondhand.ui.main.bottomsheet
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.BottomSheetContactBinding
+import id.binar.fp.secondhand.domain.model.SellerOrder
+import id.binar.fp.secondhand.ui.base.BaseBottomSheet
+import id.binar.fp.secondhand.util.Extensions.loadImage
+import id.binar.fp.secondhand.util.Helper
 
-class ContactBottomSheet : BottomSheetDialogFragment() {
+class ContactBottomSheet : BaseBottomSheet<BottomSheetContactBinding>() {
 
-    private var _binding: BottomSheetContactBinding? = null
-    private val binding get() = _binding!!
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> BottomSheetContactBinding
+        get() = BottomSheetContactBinding::inflate
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetContactBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun setup() {
+        super.setup()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        val order = arguments?.getParcelable<SellerOrder>("order") as SellerOrder
+        binding.apply {
+            val basePrice = Helper.numberFormatter(order.basePrice)
+            val bidPrice = Helper.numberFormatter(order.price)
+            val bidStatus = "Berhasil ditawar"
+
+            ivProfile.loadImage(order.user?.imageUrl)
+            tvName.text = order.user?.fullName
+            tvCity.text = order.user?.city
+
+            ivProductImage.loadImage(order.product?.imageUrl)
+            tvProductName.text = order.productName
+            tvProductPrice.text = requireContext().getString(
+                R.string.text_seller_order_base_price,
+                basePrice
+            )
+            tvProductBid.text = requireContext().getString(
+                R.string.text_seller_order_bid_price,
+                bidStatus,
+                bidPrice
+            )
+        }
     }
 
     companion object {

@@ -17,21 +17,20 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bottom_sheet_title"
+        style="@style/Text.Primary.Bold.20"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:text="Masukkan Harga Tawarmu"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:text="@string/text_bid_product_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_bottom_sheet_subtitle"
+        style="@style/Text.Secondary.14"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -39,8 +38,7 @@
         android:layout_marginEnd="32dp"
         android:lines="2"
         android:maxLines="2"
-        android:text="Harga tawaranmu akan diketahui penual, jika penjual cocok kamu akan segera dihubungi penjual."
-        android:textColor="@color/colorAccent"
+        android:text="@string/text_bid_product_subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_title" />
@@ -52,7 +50,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="8dp"
         app:cardElevation="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,14 +73,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_product_name"
+                style="@style/Text.Primary.Bold.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_product_name"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/tv_product_price"
                 app:layout_constraintStart_toEndOf="@+id/iv_product_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_product_image"
@@ -90,10 +87,10 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_product_price"
+                style="@style/Text.Primary.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@string/text_product_price"
@@ -108,6 +105,7 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@id/tv_product_bid_price"
+        style="@style/Text.Primary.16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -115,7 +113,7 @@
         android:layout_marginEnd="32dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Harga Tawar"
+        android:text="@string/text_bid_product_bid_price"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,6 +134,9 @@
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusTopStart="12dp"
         app:boxStrokeColor="@color/colorPrimary"
+        app:endIconMode="clear_text"
+        app:expandedHintEnabled="false"
+        app:hintAnimationEnabled="false"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,12 +144,14 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_product_bid_price"
+            style="@style/Text.Primary.14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/text_add_product_hint_price"
+            android:hint="@string/text_add_edit_product_hint_price"
             android:inputType="number"
             android:maxLength="12"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:padding="16dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -158,11 +161,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="36dp"
         android:backgroundTint="@color/colorPrimary"
-        android:padding="14dp"
-        android:text="Kirim"
+        android:padding="12dp"
+        android:text="@string/text_btn_send"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
-        app:cornerRadius="16dp"
+        android:theme="@style/Text.Bold"
+        app:cornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/cv_product"
         app:layout_constraintStart_toStartOf="@+id/cv_product"

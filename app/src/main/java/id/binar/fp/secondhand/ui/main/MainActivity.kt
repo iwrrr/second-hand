@@ -2,8 +2,8 @@ package id.binar.fp.secondhand.ui.main
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentTransaction
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.ActivityMainBinding
-import id.binar.fp.secondhand.ui.auth.AuthViewModel
 import id.binar.fp.secondhand.ui.main.history.HistoryFragment
 import id.binar.fp.secondhand.ui.main.home.HomeFragment
 import id.binar.fp.secondhand.ui.main.notification.NotificationFragment
@@ -28,8 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val authViewModel: AuthViewModel by viewModels()
-
     private val homeFragment = HomeFragment()
     private val notificationFragment = NotificationFragment()
     private val addProductFragment = AddProductFragment()
@@ -37,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     private val profileFragment = ProfileFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,12 +50,24 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.backStackEntryCount > 1) {
             supportFragmentManager.popBackStack()
             setVisibilityBottomNav(false)
+        } else if (supportFragmentManager.backStackEntryCount > 0 && !homeFragment.isHidden) {
+            supportFragmentManager.popBackStack()
+            setVisibilityBottomNav(true)
+        } else if (supportFragmentManager.backStackEntryCount > 0 && (addProductFragment.isHidden && profileFragment.isHidden)) {
+            supportFragmentManager.popBackStack()
+        } else if (supportFragmentManager.backStackEntryCount > 0 && homeFragment.isHidden) {
+            supportFragmentManager.popBackStack()
+            addProductFragment.clearView()
+            setVisibilityBottomNav(true)
+            setTabStateFragment(TabState.PROFILE).commit()
+            binding.bottomNavigationView.menu.findItem(R.id.navigation_profile).isChecked = true
         } else if (supportFragmentManager.backStackEntryCount > 0 || !homeFragment.isHidden) {
             super.onBackPressed()
             setVisibilityBottomNav(true)
         } else {
-            setTabStateFragment(TabState.HOME).commit()
+            addProductFragment.clearView()
             setVisibilityBottomNav(true)
+            setTabStateFragment(TabState.HOME).commit()
             binding.bottomNavigationView.menu.findItem(R.id.navigation_home).isChecked = true
         }
     }

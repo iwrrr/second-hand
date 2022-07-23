@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorBgWindow"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_product_image"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/shimmer_placeholder" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cv_product"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?android:windowBackground"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_product_image">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_product_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shimmer_placeholder"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_product_price"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/shimmer_placeholder"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_product_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cv_seller"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?android:windowBackground"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_product">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_profile"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:scaleType="centerCrop"
+                    android:theme="@style/ShapeAppearanceOverlay.App.CornerSize.12"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/shimmer_placeholder" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/shimmer_placeholder"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_city"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_city"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/shimmer_placeholder"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/iv_profile"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cv_product_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="24dp"
+                android:background="?android:windowBackground"
+                android:padding="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cv_seller"
+                app:layout_constraintVertical_bias="0.0">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_title_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shimmer_placeholder"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_title_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shimmer_placeholder"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_product_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_title_description" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_product_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/shimmer_placeholder"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_title_category"
+                    app:layout_constraintTop_toTopOf="@+id/tv_title_category" />
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:id="@+id/divider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_product_category" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tv_product_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/shimmer_placeholder"
+                    android:lines="4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

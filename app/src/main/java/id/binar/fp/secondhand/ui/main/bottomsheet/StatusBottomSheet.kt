@@ -1,34 +1,23 @@
 package id.binar.fp.secondhand.ui.main.bottomsheet
 
-import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.BottomSheetStatusBinding
+import id.binar.fp.secondhand.ui.base.BaseBottomSheet
+import id.binar.fp.secondhand.util.Status
 
-class StatusBottomSheet : BottomSheetDialogFragment() {
-
-    private var _binding: BottomSheetStatusBinding? = null
-    private val binding get() = _binding!!
+class StatusBottomSheet : BaseBottomSheet<BottomSheetStatusBinding>() {
 
     var bottomSheetCallback: BottomSheetCallback? = null
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BottomSheetStatusBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> BottomSheetStatusBinding
+        get() = BottomSheetStatusBinding::inflate
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun setup() {
+        val productId = arguments?.getInt("product_id") as Int
         binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
             binding.btnSetStatus.backgroundTintList =
                 ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
@@ -39,24 +28,19 @@ class StatusBottomSheet : BottomSheetDialogFragment() {
                 var status = ""
                 when (radio.id) {
                     R.id.radio_success -> {
-                        status = "success"
+                        status = Status.SUCCESS
                     }
                     R.id.radio_cancel -> {
-                        status = "cancel"
+                        status = Status.CANCEL
                     }
                 }
-                bottomSheetCallback?.onStatusUpdate(status)
+                bottomSheetCallback?.onStatusUpdate(productId, status)
             }
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     interface BottomSheetCallback {
-        fun onStatusUpdate(status: String)
+        fun onStatusUpdate(productId: Int, status: String)
     }
 
     companion object {

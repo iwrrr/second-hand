@@ -1,6 +1,7 @@
 package id.binar.fp.secondhand.domain.model
 
 import android.os.Parcelable
+import id.binar.fp.secondhand.data.source.local.entity.UserEntity
 import id.binar.fp.secondhand.data.source.network.response.UserDto
 import kotlinx.parcelize.Parcelize
 
@@ -23,6 +24,24 @@ data class User(
 
     fun toDto(): UserDto {
         return UserDto(
+            id,
+            fullName,
+            email,
+            password,
+            phoneNumber,
+            city,
+            address,
+            imageUrl,
+            createdAt,
+            updatedAt,
+            accessToken,
+            error,
+            message
+        )
+    }
+
+    fun toEntity(): UserEntity {
+        return UserEntity(
             id,
             fullName,
             email,

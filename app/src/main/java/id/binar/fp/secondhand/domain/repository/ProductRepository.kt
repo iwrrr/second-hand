@@ -2,13 +2,15 @@ package id.binar.fp.secondhand.domain.repository
 
 import androidx.lifecycle.LiveData
 import id.binar.fp.secondhand.data.source.network.response.MessageDto
+import id.binar.fp.secondhand.domain.model.Banner
 import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.util.Result
 import kotlinx.coroutines.flow.Flow
-import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 interface ProductRepository {
+
+    fun getBanner(): LiveData<Result<List<Banner>>>
 
     fun addSellerProduct(
         body: RequestBody
@@ -18,14 +20,9 @@ interface ProductRepository {
 
     fun getSellerProductById(id: Int): LiveData<Result<Product>>
 
-    fun updateSellerProduct(
-        name: String,
-        description: String,
-        basePrice: String,
-        categoryIds: List<Int>,
-        location: String,
-        image: MultipartBody.Part,
-    ): LiveData<Result<Product>>
+    fun updateSellerProductById(id: Int, body: RequestBody): LiveData<Result<Product>>
+
+    fun updateSellerProductById(id: Int, status: String): LiveData<Result<Product>>
 
     fun deleteSellerProductById(id: Int): LiveData<Result<MessageDto>>
 

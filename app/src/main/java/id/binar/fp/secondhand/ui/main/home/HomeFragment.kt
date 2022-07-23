@@ -3,7 +3,8 @@ package id.binar.fp.secondhand.ui.main.home
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,8 @@ import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.adapter.home.CategoryAdapter
 import id.binar.fp.secondhand.ui.main.adapter.home.ProductAdapter
-import id.binar.fp.secondhand.ui.main.product.ProductDetailFragment
+import id.binar.fp.secondhand.ui.main.product.DetailProductFragment
+import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
 import id.binar.fp.secondhand.util.Status
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -40,7 +42,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun setup() {
         super.setup()
         setupSearch()
+        setupBanner()
         setupRecyclerView()
+        setupRefresh()
     }
 
     private fun setupSearch() {
@@ -53,6 +57,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    private fun setupBanner() {
+        observeBanner()
+    }
+
     private fun setupRecyclerView() {
         binding.rvCategory.adapter = categoryAdapter
         binding.rvCategory.layoutManager =
@@ -61,41 +69,83 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
         binding.rvProduct.adapter = productAdapter
         binding.rvProduct.layoutManager = GridLayoutManager(requireContext(), 2)
-        observeListProduct()
+        observeProduct()
+    }
+
+    private fun setupRefresh() {
+        binding.appBar.addOnOffsetChangedListener { _, verticalOffset ->
+            binding.swipeRefresh.isEnabled = verticalOffset == 0
+        }
+        binding.swipeRefresh.setOnRefreshListener {
+            observeBanner()
+            observeCategory()
+            observeProduct()
+        }
+    }
+
+    private fun observeBanner() {
+        viewModel.getBanner().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    showShimmerBanner()
+                }
+                is Result.Success -> {
+                    hideShimmerBanner()
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        binding.ivBanner.setImageList(result.data.map { it.imageUrl })
+                    }
+                }
+                is Result.Error -> {
+                    hideShimmerBanner()
+                }
+            }
+        }
     }
 
     private fun observeCategory() {
         viewModel.getCategory().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-
+                    showShimmerCategory()
                 }
                 is Result.Success -> {
-                    val allCategory = result.data.toMutableList()
-                    allCategory.add(0, Category(id = 0, name = "Semua"))
-                    categoryAdapter.submitList(allCategory as List<Category>)
-                    categories = allCategory
+                    hideShimmerCategory()
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        val allCategory = result.data.toMutableList()
+                        allCategory.add(0, Category(id = 0, name = "Semua"))
+                        categoryAdapter.submitList(allCategory as List<Category>)
+                        categories = allCategory
+                    }
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    hideShimmerCategory()
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
     }
 
-    private fun observeListProduct() {
+    private fun observeProduct() {
         viewModel.getAllProduct().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-
+                    showShimmerProduct()
                 }
                 is Result.Success -> {
-                    val availableProduct = result.data.filter { it.status == Status.AVAILABLE }
-                    productAdapter.submitList(availableProduct)
-                    products = availableProduct
+                    hideShimmerProduct()
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        val availableProduct =
+                            result.data.filter { it.status == Status.AVAILABLE }
+                        productAdapter.submitList(availableProduct)
+                        products = availableProduct
+                    }
                 }
                 is Result.Error -> {
-                    Toast.makeText(requireContext(), result.error, Toast.LENGTH_SHORT).show()
+                    hideShimmerProduct()
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
@@ -113,7 +163,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun onProductClicked(product: Product) {
-        val detailFragment = ProductDetailFragment()
+        val detailFragment = DetailProductFragment()
         val bundle = Bundle()
         bundle.putInt("id", product.id)
         detailFragment.arguments = bundle
@@ -122,6 +172,54 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             add(R.id.main_nav_host, detailFragment)
             addToBackStack(null)
             commit()
+        }
+    }
+
+    private fun showShimmerBanner() {
+        binding.apply {
+            shimmerBanner.root.isInvisible = false
+            shimmerBanner.root.startShimmer()
+            ivBanner.isInvisible = true
+        }
+    }
+
+    private fun hideShimmerBanner() {
+        binding.apply {
+            shimmerBanner.root.isInvisible = true
+            shimmerBanner.root.stopShimmer()
+            ivBanner.isInvisible = false
+        }
+    }
+
+    private fun showShimmerCategory() {
+        binding.apply {
+            shimmerCategory.root.isVisible = true
+            shimmerCategory.root.startShimmer()
+            rvCategory.isVisible = false
+        }
+    }
+
+    private fun hideShimmerCategory() {
+        binding.apply {
+            shimmerCategory.root.isVisible = false
+            shimmerCategory.root.stopShimmer()
+            rvCategory.isVisible = true
+        }
+    }
+
+    private fun showShimmerProduct() {
+        binding.apply {
+            shimmerProduct.root.isVisible = true
+            shimmerProduct.root.startShimmer()
+            rvProduct.isVisible = false
+        }
+    }
+
+    private fun hideShimmerProduct() {
+        binding.apply {
+            shimmerProduct.root.isVisible = false
+            shimmerProduct.root.stopShimmer()
+            rvProduct.isVisible = true
         }
     }
 }

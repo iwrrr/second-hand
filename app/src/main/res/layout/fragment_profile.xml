@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:windowBackground"
+    android:clickable="true"
+    android:focusable="true"
     android:overScrollMode="never"
     tools:context=".ui.main.profile.ProfileFragment">
 
@@ -21,14 +23,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_title_page"
+                style="@style/Text.Primary.Bold.20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:text="@string/text_title_page_profile"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,16 +47,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_name"
+                style="@style/Text.Primary.Bold.16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Nama Penjual"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/tv_phone"
                 app:layout_constraintEnd_toStartOf="@+id/iv_edit"
@@ -66,14 +63,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_phone"
+                style="@style/Text.Primary.12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="16dp"
-                android:text="08123456789"
-                android:textColor="@android:color/black"
-                android:textSize="12sp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/tv_email"
                 app:layout_constraintEnd_toStartOf="@+id/iv_edit"
@@ -82,14 +77,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_email"
+                style="@style/Text.Primary.12"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginEnd="16dp"
-                android:text="test@mail.com"
-                android:textColor="@android:color/black"
-                android:textSize="12sp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
                 app:layout_constraintEnd_toStartOf="@+id/iv_edit"
@@ -98,9 +91,9 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_marginEnd="24dp"
                 android:scaleType="centerCrop"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_profile"
@@ -126,17 +119,19 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="@color/colorPrimary"
-                android:padding="14dp"
+                android:padding="12dp"
                 android:text="@string/text_auth_login"
                 android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Button"
-                app:cornerRadius="16dp"
+                android:theme="@style/Text.Bold"
+                app:cornerRadius="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/menu" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_version"
+                style="@style/Text.Primary.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

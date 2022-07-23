@@ -7,6 +7,4 @@ import id.binar.fp.secondhand.util.Result
 interface CategoryRepository {
 
     fun getCategory(): LiveData<Result<List<Category>>>
-
-    suspend fun getCategoryById(id: Int): LiveData<Result<Category>>
 }

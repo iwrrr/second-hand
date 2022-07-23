@@ -3,6 +3,7 @@ package id.binar.fp.secondhand.ui.main.seller.interested
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,7 +24,7 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
 
     private val sellerViewModel: SellerViewModel by viewModels()
 
-    private val sellerAdapter by lazy { SellerAdapter(SellerType.INTERESTED, ::onProductClicked) }
+    private val sellerAdapter by lazy { SellerAdapter<SellerOrder>(SellerType.INTERESTED) }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentInterestedBinding
         get() = FragmentInterestedBinding::inflate
@@ -45,48 +46,77 @@ class InterestedFragment : BaseFragment<FragmentInterestedBinding>() {
             addItemDecoration(itemDecoration)
         }
 
+        sellerAdapter.itemClickCallback = object : SellerAdapter.ItemClickCallback<SellerOrder> {
+            override fun onClick(data: SellerOrder) {
+                onProductClicked(data)
+            }
+
+            override fun onDelete(id: Int) {}
+        }
+
         observeProduct()
     }
 
     private fun setupRefresh() {
-        swipeRefreshLayout.setOnRefreshListener { observeProduct() }
+        binding.swipeRefresh.setOnRefreshListener { observeProduct() }
     }
 
     private fun observeProduct() {
         sellerViewModel.getSellerOrder().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.loading.root.isVisible = true
+                    showShimmer()
                 }
                 is Result.Success -> {
-                    binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
-                    if (result.data.isNotEmpty()) {
-                        sellerAdapter.submitList(result.data)
-                    } else {
-                        binding.content.root.isVisible = false
-                        binding.empty.root.isVisible = true
+                    hideShimmer()
+                    if (result.data != null) {
+                        binding.swipeRefresh.isRefreshing = false
+                        if (result.data.isNotEmpty()) {
+                            sellerAdapter.submitList(result.data)
+                        } else {
+                            binding.content.root.isVisible = false
+                            binding.empty.root.isVisible = true
+                            binding.empty.tvEmpty.text = getString(R.string.text_product_sold_empty)
+                        }
                     }
                 }
                 is Result.Error -> {
-                    binding.loading.root.isVisible = false
-                    swipeRefreshLayout.isRefreshing = false
-                    Helper.showToast(requireContext(), result.error)
+                    hideShimmer()
+                    binding.swipeRefresh.isRefreshing = false
+                    Helper.showToast(requireContext(), result.message.toString())
                 }
             }
         }
     }
 
-    private fun onProductClicked(product: SellerOrder) {
+    private fun onProductClicked(order: SellerOrder) {
         requireParentFragment().parentFragmentManager.beginTransaction().apply {
             val bidderInfoFragment = BidderInfoFragment()
             val bundle = Bundle().apply {
-                putParcelable("product", product)
+                putParcelable("order", order)
             }
             bidderInfoFragment.arguments = bundle
             add(R.id.main_nav_host, bidderInfoFragment)
             addToBackStack(null)
             commit()
+        }
+    }
+
+    private fun showShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = false
+            shimmer.root.startShimmer()
+            content.root.isInvisible = true
+            empty.root.isInvisible = true
+        }
+    }
+
+    private fun hideShimmer() {
+        binding.apply {
+            shimmer.root.isInvisible = true
+            shimmer.root.stopShimmer()
+            content.root.isInvisible = false
+            empty.root.isInvisible = true
         }
     }
 }
