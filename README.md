@@ -9,10 +9,10 @@
   - [Daftar Isi](#daftar-isi)
   - [Apa itu SecondHand?](#apa-itu-secondhand)
     - [Konsep SecondHand](#konsep-secondhand)
-      - [Kenapa barang bekas yang masih bisa dipakai harus dijual ?](#kenapa-barang-bekas-yang-masih-bisa-dipakai-harus-dijual-)
-      - [Barang bekas emang ada yang mau beli ?](#barang-bekas-emang-ada-yang-mau-beli-)
-      - [User dapet keuntungan apa si dari pake aplikasi ini ?](#user-dapet-keuntungan-apa-si-dari-pake-aplikasi-ini-)
-  - [Teknologi yang diterapkan ](#teknologi-yang-diterapkan)
+      - [Kenapa barang bekas yang masih bisa dipakai harus dijual?](#kenapa-barang-bekas-yang-masih-bisa-dipakai-harus-dijual-)
+      - [Barang bekas emang ada yang mau beli?](#barang-bekas-emang-ada-yang-mau-beli-)
+      - [User dapet keuntungan apa sih dari pake aplikasi ini?](#user-dapet-keuntungan-apa-sih-dari-pake-aplikasi-ini-)
+  - [Teknologi yang diterapkan](#teknologi-yang-diterapkan)
   - [Creator](#creator)
   - [Didukung Oleh](#didukung-oleh)
 
@@ -30,34 +30,32 @@ Barang bekas yang sudah tidak dipakai lama-lama akan menjadi sampah dan menghabi
 dirumah kamu, daripada menjadi sampah mending dijual aja. Rumah kamu jadi banyak _space_ plus kamu
 dapet uang.
 
-Jadi masih ragu buat jual barang bekas ? Harusnya nggak sih hehehehe
+Jadi masih ragu buat jual barang bekas? Harusnya nggak sih hehehehe
 
-#### Kenapa barang bekas yang masih bisa dipakai harus dijual ?
+#### Kenapa barang bekas yang masih bisa dipakai harus dijual?
 
-Kamu tau gak sih ? Menggunakan kembali barang bekas itu bisa menjaga lingkungan loh. Jadi secara
-tidak langsung kamu ikut menjaga lingkungan dengan menjual barang bekas mu.
+Kamu tau gak sih? Menggunakan kembali barang bekas itu bisa menjaga lingkungan loh. Jadi secara
+tidak langsung kamu ikut menjaga lingkungan dengan menjual barang bekasmu.
 
-#### Barang bekas emang ada yang mau beli ?
+#### Barang bekas emang ada yang mau beli?
 
 Jangan khawatir, pasti ada orang yang mau beli barang bekas kok selagi masih bisa dipakai.
 
-#### User dapet keuntungan apa si dari pake aplikasi ini ?
+#### User dapet keuntungan apa sih dari pake aplikasi ini?
 
 Ya jelas dapet uang dong dari barang bekasmu yang berhasil dijual _plus_ rumahmu jadi lebih bersih
 karna bebas dari barang gak guna.
 
-Bagaimana ? Kamu dah tertarik belum nih pake aplikasi ini hehehehehe
+Bagaimana? Kamu dah tertarik belum nih pake aplikasi ini :D
 
 ## Teknologi yang diterapkan
 
-- Coroutine/RxJava - Untuk background Proses
-- Room - Untuk menyimpan database lokal
-- Dagger Hilt - Untuk dependency injection
-- Datastore - Untuk menyimpan key-value
-- MVVM - Architecture pattern
-- Offline First - Untuk menampilkan data sementara ketika device sedang offline
-- API - Untuk terhubung dengan database
-- Unit Testing - Untuk melakukan testing
+- Coroutine/Flow
+- Room
+- Dagger Hilt
+- Datastore
+- MVVM
+- Offline First
 
 ## Creator
 
