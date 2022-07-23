@@ -146,6 +146,7 @@
     <string name="text_delete_product_success">Produk berhasil dihapus</string>
     <string name="text_bid_status_success">Status produk berhasil diperbarui</string>
     <string name="text_update_profile_success">Profil berhasil diperbarui</string>
+    <string name="text_change_password_success">Kata sandi berhasil diperbarui</string>
 
     <string name="text_product_name_required">Nama produk tidak boleh kosong</string>
     <string name="text_product_price_required">Harga tidak boleh kosong</string>

@@ -12,6 +12,7 @@ import id.binar.fp.secondhand.ui.main.product.ProductViewModel
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 
 @AndroidEntryPoint
 class BidBottomSheet : BaseBottomSheet<BottomSheetBidBinding>() {
@@ -58,7 +59,12 @@ class BidBottomSheet : BaseBottomSheet<BottomSheetBidBinding>() {
                             binding.progressBar.isVisible = false
                             statusOrder = 0
                             dialog?.dismiss()
-                            Helper.showToast(requireContext(), result.message.toString())
+                            Helper.showSnackbar(
+                                requireContext(),
+                                binding.root,
+                                result.message.toString(),
+                                Status.FAILED
+                            )
                         }
                     }
                 }

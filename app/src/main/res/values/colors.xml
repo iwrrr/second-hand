@@ -29,6 +29,8 @@
     <color name="colorBgPending">#FFFBD7</color>
     <color name="colorBgAccept">#D7FFE0</color>
     <color name="colorBgDeclined">#FFEAEF</color>
+    <color name="colorBgSuccess">#73CA5C</color>
+    <color name="colorBgFailed">#DB4848</color>
 
     <color name="colorTextPending">#C8A938</color>
     <color name="colorTextAccept">#38C842</color>

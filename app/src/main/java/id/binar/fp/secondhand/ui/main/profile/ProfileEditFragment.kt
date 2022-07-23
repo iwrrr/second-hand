@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentProfileEditBinding
 import id.binar.fp.secondhand.domain.model.User
 import id.binar.fp.secondhand.ui.auth.AuthViewModel
@@ -21,6 +22,7 @@ import id.binar.fp.secondhand.util.Constants
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 import java.io.File
 
 @AndroidEntryPoint
@@ -76,13 +78,12 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
         val editProfileBottomSheet = EditProfileBottomSheet()
         val changePasswordBottomSheet = ChangePasswordBottomSheet()
         val bundle = Bundle()
-
         bundle.putString("data", data)
-        editProfileBottomSheet.arguments = bundle
-        editProfileBottomSheet.title = title
-        editProfileBottomSheet.hint = hint
 
         if (hint != Constants.HINT_PASSWORD) {
+            editProfileBottomSheet.arguments = bundle
+            editProfileBottomSheet.title = title
+            editProfileBottomSheet.hint = hint
             editProfileBottomSheet.show(childFragmentManager, null)
             when (hint) {
                 Constants.HINT_NAME -> {
@@ -190,12 +191,21 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), "Profil berhasil diperbarui")
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            getString(R.string.text_update_profile_success)
+                        )
                         observeUser()
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), result.message.toString())
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            result.message.toString(),
+                            Status.FAILED
+                        )
                     }
                 }
             }
@@ -214,12 +224,21 @@ class ProfileEditFragment : BaseFragment<FragmentProfileEditBinding>() {
                     }
                     is Result.Success -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), "Kata sandi berhasil diperbarui")
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            getString(R.string.text_change_password_success)
+                        )
                         observeUser()
                     }
                     is Result.Error -> {
                         binding.progressBar.isVisible = false
-                        Helper.showToast(requireContext(), result.message.toString())
+                        Helper.showSnackbar(
+                            requireContext(),
+                            binding.root,
+                            result.message.toString(),
+                            Status.FAILED
+                        )
                     }
                 }
             }

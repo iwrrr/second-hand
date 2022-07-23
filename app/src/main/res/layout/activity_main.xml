@@ -26,12 +26,12 @@
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation_view"
             android:layout_width="match_parent"
-            app:itemTextAppearanceActive="@style/Text.Primary.12"
-            app:itemTextAppearanceInactive="@style/Text.Primary.12"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             app:itemIconTint="@drawable/nav_selector"
             app:itemRippleColor="@android:color/transparent"
+            app:itemTextAppearanceActive="@style/Text.Primary.12"
+            app:itemTextAppearanceInactive="@style/Text.Primary.12"
             app:itemTextColor="@drawable/nav_selector"
             app:labelVisibilityMode="labeled"
             app:menu="@menu/nav_menu" />
@@ -46,6 +46,7 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/colorPrimary"
         app:layout_anchor="@+id/bottom_app_bar"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:tint="@android:color/white" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

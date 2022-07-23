@@ -23,6 +23,7 @@ import id.binar.fp.secondhand.util.Extensions.clear
 import id.binar.fp.secondhand.util.Extensions.loadImage
 import id.binar.fp.secondhand.util.Helper
 import id.binar.fp.secondhand.util.Result
+import id.binar.fp.secondhand.util.Status
 import java.io.File
 import kotlin.collections.set
 
@@ -196,7 +197,12 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
-                    Helper.showToast(requireContext(), result.message.toString())
+                    Helper.showSnackbar(
+                        requireContext(),
+                        binding.root,
+                        result.message.toString(),
+                        Status.FAILED
+                    )
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textview.MaterialTextView
@@ -54,7 +55,7 @@ object Helper {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun showSnackbar(context: Context, view: View, text: String) {
+    fun showSnackbar(context: Context, view: View, text: String, status: String = Status.SUCCESS) {
         val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_LONG)
         val customSnackView = LayoutInflater.from(context).inflate(R.layout.layout_snackbar, null)
 
@@ -70,8 +71,14 @@ object Helper {
         val snackbarLayout = snackbarView as Snackbar.SnackbarLayout
         snackbarLayout.setPadding(0, 0, 0, 0)
 
+        val card = customSnackView.findViewById<MaterialCardView>(R.id.cv_snackbar)
         val message = customSnackView.findViewById<MaterialTextView>(R.id.tv_message)
         val btnClose = customSnackView.findViewById<ShapeableImageView>(R.id.btn_close)
+
+        when (status) {
+            Status.SUCCESS -> card.setCardBackgroundColor(context.getColor(R.color.colorBgSuccess))
+            Status.FAILED -> card.setCardBackgroundColor(context.getColor(R.color.colorBgFailed))
+        }
 
         message.text = text
         btnClose.setOnClickListener {

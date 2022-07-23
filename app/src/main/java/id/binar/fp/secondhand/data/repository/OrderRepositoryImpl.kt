@@ -74,8 +74,8 @@ class OrderRepositoryImpl @Inject constructor(
                 emit(Result.Success(response))
             } catch (e: HttpException) {
                 when (e.code()) {
-                    400 -> emit(Result.Error("Produk ini memiliki pesanan maksimum"))
-                    403 -> emit(Result.Error("Kamu sudah menawar barang ini"))
+                    400 -> emit(Result.Error("Kamu sudah menawar barang ini"))
+                    500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
                     else -> emit(Result.Error(e.message()))
                 }
             } catch (e: NullPointerException) {

@@ -34,7 +34,11 @@ class AuthRepositoryImpl @Inject constructor(
 
             emit(Result.Success(user.toDomain()))
         } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            when (e.code()) {
+                400 -> emit(Result.Error("Email sudah digunakan"))
+                500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
+                else -> emit(Result.Error(e.message()))
+            }
         } catch (e: NullPointerException) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
         } catch (e: Exception) {
@@ -50,7 +54,11 @@ class AuthRepositoryImpl @Inject constructor(
 
             emit(Result.Success(user.toDomain()))
         } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            when (e.code()) {
+                401 -> emit(Result.Error("Email atau kata sandi salah"))
+                500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
+                else -> emit(Result.Error(e.message()))
+            }
         } catch (e: NullPointerException) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
         } catch (e: Exception) {
@@ -64,7 +72,10 @@ class AuthRepositoryImpl @Inject constructor(
             val user = apiService.getUser()
             emit(Result.Success(user.toDomain()))
         } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            when (e.code()) {
+                500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
+                else -> emit(Result.Error(e.message()))
+            }
         } catch (e: NullPointerException) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
         } catch (e: Exception) {
@@ -82,7 +93,11 @@ class AuthRepositoryImpl @Inject constructor(
                 apiService.updateUser(body)
             emit(Result.Success(user.toDomain()))
         } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            when (e.code()) {
+                400 -> emit(Result.Error("Email sudah digunakan"))
+                500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
+                else -> emit(Result.Error(e.message()))
+            }
         } catch (e: NullPointerException) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
         } catch (e: Exception) {
@@ -96,7 +111,11 @@ class AuthRepositoryImpl @Inject constructor(
             val data = apiService.changePassword(body)
             emit(Result.Success(data))
         } catch (e: HttpException) {
-            emit(Result.Error(e.message()))
+            when (e.code()) {
+                400 -> emit(Result.Error("Kata sandi tidak sesuai"))
+                500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
+                else -> emit(Result.Error(e.message()))
+            }
         } catch (e: NullPointerException) {
             emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
         } catch (e: Exception) {

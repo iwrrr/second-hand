@@ -10,6 +10,7 @@ object Status {
     const val DECLINED = "declined"
 
     const val SUCCESS = "success"
+    const val FAILED = "failed"
     const val CANCEL = "cancel"
 
     const val CREATE = "create"

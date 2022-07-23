@@ -50,6 +50,7 @@ class ProductRepositoryImpl @Inject constructor(
         } catch (e: HttpException) {
             when (e.code()) {
                 400 -> emit(Result.Error("Kamu sudah menerbitkan 5 produk"))
+                500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
                 else -> emit(Result.Error(e.message()))
             }
         } catch (e: NullPointerException) {
@@ -103,7 +104,10 @@ class ProductRepositoryImpl @Inject constructor(
                 val response = apiService.updateSellerProductById(id, body)
                 emit(Result.Success(response.toDomain()))
             } catch (e: HttpException) {
-                emit(Result.Error(e.message()))
+                when (e.code()) {
+                    500 -> emit(Result.Error("Silakan coba beberapa saat lagi"))
+                    else -> emit(Result.Error(e.message()))
+                }
             } catch (e: NullPointerException) {
                 emit(Result.Error(e.localizedMessage?.toString() ?: "Data not found"))
             } catch (e: Exception) {
