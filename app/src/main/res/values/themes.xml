@@ -280,4 +280,10 @@
     <style name="Search">
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="windowSplashScreenBackground">@android:color/white</item>
+        <item name="postSplashScreenTheme">@style/Theme.SecondHand</item>
+    </style>
 </resources>
