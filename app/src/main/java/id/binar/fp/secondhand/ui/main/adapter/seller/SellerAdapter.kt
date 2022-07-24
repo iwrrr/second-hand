@@ -157,6 +157,7 @@ class SellerAdapter<T>(
                     price
                 )
                 ivProductImage.loadImage(data.imageUrl)
+                btnDelete.setOnClickListener { itemClickCallback?.onDelete(data.id) }
                 itemView.setOnClickListener {
                     itemClickCallback?.onClick(data as T)
                 }

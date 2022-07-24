@@ -145,6 +145,7 @@
     <string name="text_update_product_success">Produk berhasil diperbarui</string>
     <string name="text_delete_product_success">Produk berhasil dihapus</string>
     <string name="text_bid_status_success">Status produk berhasil diperbarui</string>
+    <string name="text_order_status_success">Status order berhasil diperbarui</string>
     <string name="text_update_profile_success">Profil berhasil diperbarui</string>
     <string name="text_change_password_success">Kata sandi berhasil diperbarui</string>
 

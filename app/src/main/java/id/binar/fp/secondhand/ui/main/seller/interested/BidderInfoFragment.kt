@@ -212,11 +212,6 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                     contentBtnAccepted.root.isVisible = true
                     contentProduct.tvProductStatus.text = "Penawaran produk"
                 }
-                Helper.showSnackbar(
-                    requireContext(),
-                    binding.root,
-                    getString(R.string.text_bid_status_success)
-                )
             }
             is Result.Error -> {
                 binding.progressBar.isVisible = false
@@ -302,7 +297,7 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                 Helper.showSnackbar(
                     requireContext(),
                     binding.root,
-                    getString(R.string.text_bid_status_success)
+                    getString(R.string.text_order_status_success)
                 )
                 setupBottomSheetContact()
             }
@@ -352,7 +347,7 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                 Helper.showSnackbar(
                     requireContext(),
                     binding.root,
-                    getString(R.string.text_bid_status_success)
+                    getString(R.string.text_order_status_success)
                 )
             }
             is Result.Error -> {

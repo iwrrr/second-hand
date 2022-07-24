@@ -194,6 +194,8 @@ class AddProductFragment : BaseFragment<FragmentAddProductBinding>() {
                         addToBackStack(null)
                         commit()
                     }
+                    getFile = null
+                    this.categoryIds.clear()
                 }
                 is Result.Error -> {
                     binding.progressBar.isVisible = false
