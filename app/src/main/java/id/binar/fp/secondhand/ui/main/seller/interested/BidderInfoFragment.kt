@@ -9,7 +9,6 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import id.binar.fp.secondhand.R
 import id.binar.fp.secondhand.databinding.FragmentBidderInfoBinding
-import id.binar.fp.secondhand.domain.model.Product
 import id.binar.fp.secondhand.domain.model.SellerOrder
 import id.binar.fp.secondhand.ui.base.BaseFragment
 import id.binar.fp.secondhand.ui.main.bottomsheet.ContactBottomSheet
@@ -34,7 +33,6 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
     private var order: SellerOrder? = null
     private var productId: Int = 0
     private var orderId: Int = 0
-    private var status: String = ""
 
     override fun setup() {
         super.setup()
@@ -49,13 +47,13 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
 
     private fun setupButtonStatus() {
         binding.contentBtnNotAcceptedYet.btnReject.setOnClickListener {
-            status = Status.DECLINED
-            observeOrder(status, ::declined)
+            observeOrder(Status.DECLINED, ::status)
         }
 
         binding.contentBtnNotAcceptedYet.btnAccept.setOnClickListener {
-            status = Status.ACCEPTED
-            observeOrder(status, ::accepted)
+            binding.contentBtnNotAcceptedYet.root.isVisible = false
+            binding.contentBtnAccepted.root.isVisible = true
+            setupBottomSheetContact()
         }
 
         binding.contentBtnAccepted.btnContact.setOnClickListener {
@@ -89,11 +87,10 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
             override fun onStatusUpdate(productId: Int, status: String) {
                 when (status) {
                     Status.CANCEL -> {
-                        observeProductStatus(productId, Status.AVAILABLE, ::available)
-                        observeOrder(Status.DECLINED, ::declined)
+                        observeOrder(Status.DECLINED, ::status)
                     }
                     Status.SUCCESS -> {
-                        observeProductStatus(productId, Status.SOLD, ::sold)
+                        observeOrder(Status.ACCEPTED, ::status)
                     }
                 }
                 bottomSheet.dismiss()
@@ -186,129 +183,12 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
         }
     }
 
-    private fun observeProductStatus(
-        productId: Int,
-        status: String,
-        statusProduct: (Result<Product>) -> Unit
-    ) {
-        sellerViewModel.updateSellerProductById(productId, status)
-            .observe(viewLifecycleOwner, statusProduct)
-    }
-
     private fun observeOrder(status: String, statusOrder: (Result<SellerOrder>) -> Unit) {
         sellerViewModel.updateSellerOrderById(orderId, status)
             .observe(viewLifecycleOwner, statusOrder)
     }
 
-    private fun available(result: Result<Product>) {
-        when (result) {
-            is Result.Loading -> {
-                binding.progressBar.isVisible = true
-            }
-            is Result.Success -> {
-                binding.apply {
-                    progressBar.isVisible = false
-                    contentBtnNotAcceptedYet.root.isVisible = false
-                    contentBtnAccepted.root.isVisible = true
-                    contentProduct.tvProductStatus.text = "Penawaran produk"
-                }
-            }
-            is Result.Error -> {
-                binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.message.toString())
-            }
-        }
-    }
-
-    private fun sold(result: Result<Product>) {
-        when (result) {
-            is Result.Loading -> {
-                binding.progressBar.isVisible = true
-            }
-            is Result.Success -> {
-                binding.apply {
-                    progressBar.isVisible = false
-                    contentBtnNotAcceptedYet.root.isVisible = false
-                    contentBtnAccepted.root.isVisible = false
-                    contentProduct.tvProductStatus.text = "Berhasil terjual"
-                }
-                Helper.showSnackbar(
-                    requireContext(),
-                    binding.root,
-                    getString(R.string.text_bid_status_success)
-                )
-            }
-            is Result.Error -> {
-                binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.message.toString())
-            }
-        }
-    }
-
-    private fun accepted(result: Result<SellerOrder>) {
-        when (result) {
-            is Result.Loading -> {
-                binding.progressBar.isVisible = true
-            }
-            is Result.Success -> {
-                if (result.data != null) {
-                    binding.apply {
-                        progressBar.isVisible = false
-                        contentBtnNotAcceptedYet.root.isVisible = false
-                        contentBtnAccepted.root.isVisible = true
-                        contentProduct.apply {
-                            val date = Helper.dateFormatter(result.data.transactionDate)
-                            val bidPrice = Helper.numberFormatter(result.data.price)
-
-                            var productStatus = ""
-                            var bidStatus = ""
-
-                            when (result.data.status) {
-                                Status.ACCEPTED -> {
-                                    if (result.data.product?.status == Status.SOLD) {
-                                        productStatus = "Berhasil terjual"
-                                        observeProductStatus(
-                                            result.data.productId as Int,
-                                            Status.SOLD,
-                                            ::sold
-                                        )
-                                    } else {
-                                        productStatus = "Penawaran produk"
-                                        observeProductStatus(
-                                            result.data.productId as Int,
-                                            Status.AVAILABLE,
-                                            ::available
-                                        )
-                                    }
-                                    bidStatus = "Berhasil Ditawar"
-                                }
-                            }
-
-                            tvProductTime.text = date
-                            tvProductStatus.text = productStatus
-                            tvProductBid.text = requireContext().getString(
-                                R.string.text_seller_order_bid_price,
-                                bidStatus,
-                                bidPrice
-                            )
-                        }
-                    }
-                }
-                Helper.showSnackbar(
-                    requireContext(),
-                    binding.root,
-                    getString(R.string.text_order_status_success)
-                )
-                setupBottomSheetContact()
-            }
-            is Result.Error -> {
-                binding.progressBar.isVisible = false
-                Helper.showToast(requireContext(), result.message.toString())
-            }
-        }
-    }
-
-    private fun declined(result: Result<SellerOrder>) {
+    private fun status(result: Result<SellerOrder>) {
         when (result) {
             is Result.Loading -> {
                 binding.progressBar.isVisible = true
@@ -320,13 +200,19 @@ class BidderInfoFragment : BaseFragment<FragmentBidderInfoBinding>() {
                         contentBtnNotAcceptedYet.root.isVisible = false
                         contentBtnAccepted.root.isVisible = false
                         contentProduct.apply {
-                            val date = Helper.dateFormatter(result.data.updatedAt)
+                            val date = Helper.dateFormatter(result.data.transactionDate)
                             val bidPrice = Helper.numberFormatter(result.data.price)
 
                             var productStatus = ""
                             var bidStatus = ""
 
                             when (result.data.status) {
+                                Status.ACCEPTED -> {
+                                    productStatus = "Berhasil terjual"
+                                    bidStatus = "Berhasil Ditawar"
+                                    tvProductBid.paintFlags =
+                                        tvProductBid.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+                                }
                                 Status.DECLINED -> {
                                     productStatus = "Penawaran ditolak"
                                     bidStatus = "Ditolak"
